@@ -1,9 +1,696 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard — JZ PRIME Copilot</title><link rel="stylesheet" href="dashboard.css"></head><body>
-<div class="app"><aside><a class="logo" href="index.html"><span>✦</span><div>JZ PRIME<br><b>Copilot</b></div></a><div class="company"><small>EMPRESA</small><strong>Sua Empresa</strong><i>Plano PRO</i></div><nav><a class="active">⌂ <span>Visão geral</span></a><a href="#copilot">✦ <span>Copilot</span></a><a href="#financeiro">◫ <span>Financeiro</span></a><a href="#clientes">♙ <span>Clientes</span></a><a href="#relatorios">▤ <span>Relatórios</span></a></nav><div class="bottom"><a>⚙ <span>Configurações</span></a><a href="index.html">← <span>Voltar ao site</span></a></div></aside>
-<main><header><div><small>VISÃO GERAL</small><h1>Bom dia, empresário.</h1><p>Aqui está o que merece sua atenção hoje.</p></div><div class="user">JP</div></header>
-<section class="metrics"><article><span>FATURAMENTO</span><strong>R$ 284.620</strong><i>↗ 14,8%</i></article><article><span>LUCRO ESTIMADO</span><strong>R$ 58.420</strong><i>↗ 9,2%</i></article><article><span>DESPESAS</span><strong>R$ 126.840</strong><i class="gold">→ 2,1%</i></article><article><span>META MENSAL</span><strong>82%</strong><i>18 dias restantes</i></article></section>
-<section class="grid"><article class="panel chart"><div class="head"><div><small>DESEMPENHO</small><h2>Receita nos últimos 6 meses</h2></div><button>6 meses⌄</button></div><div class="bars"><i style="height:48%"></i><i style="height:61%"></i><i style="height:54%"></i><i style="height:73%"></i><i style="height:68%"></i><i style="height:86%"></i></div><div class="axis"><span>Mar</span><span>Abr</span><span>Mai</span><span>Jun</span><span>Jul</span><span>Ago</span></div></article>
-<article class="panel copilot" id="copilot"><div class="head"><div><small>✦ COPILOT</small><h2>3 oportunidades encontradas</h2></div><b>● IA ATIVA</b></div><div class="ai"><div class="aiIcon">✦</div><div><strong>Margem em potencial</strong><p>Suas vendas cresceram <em>14,8%</em>, enquanto as despesas comerciais subiram apenas <em>2,1%</em>. O cenário é favorável para testar uma ação de maior margem.</p><button onclick="openChat()">Perguntar ao Copilot →</button></div></div><div class="chips"><button onclick="ask('Como aumentar minha margem?')">Aumentar margem</button><button onclick="ask('Qual meu maior custo?')">Analisar custos</button><button onclick="ask('Crie um plano de ação')">Plano de ação</button></div></article></section>
-<section class="grid lower"><article class="panel" id="financeiro"><div class="head"><div><small>FINANCEIRO</small><h2>Fluxo de caixa</h2></div><label>SAUDÁVEL</label></div><div class="cash"><div><small>Entradas</small><strong>R$ 312.400</strong></div><div><small>Saídas</small><strong>R$ 126.840</strong></div><div><small>Saldo projetado</small><strong>R$ 185.560</strong></div></div></article><article class="panel" id="clientes"><div class="head"><div><small>CLIENTES</small><h2>Visão comercial</h2></div></div><div class="list"><div><span>Novos clientes</span><b>48</b><i>+12%</i></div><div><span>Conversão</span><b>31,4%</b><i>+4,6%</i></div><div><span>Ticket médio</span><b>R$ 2.840</b><i>+8,1%</i></div></div></article></section>
-<section class="panel report" id="relatorios"><div class="head"><div><small>RELATÓRIOS</small><h2>Resumo executivo</h2></div><button onclick="downloadReport()">Exportar relatório</button></div><p>O negócio apresenta crescimento positivo no período. A receita está avançando mais rápido que as despesas. <strong>Recomendação:</strong> manter o controle de custos e testar ações comerciais de maior margem.</p></section></main></div>
-<div class="overlay" id="overlay" onclick="closeChat(event)"><div class="chat" onclick="event.stopPropagation()"><header><div><strong>✦ JZ PRIME Copilot</strong><small>Seu assistente de inteligência empresarial</small></div><button onclick="closeChat()">×</button></header><div class="messages" id="messages"><div class="bubble ai">Olá. Analisei os indicadores disponíveis. O que você quer entender melhor?</div></div><div class="input"><input id="input" placeholder="Pergunte sobre sua empresa..." onkeydown="if(event.key==='Enter')send()"><button onclick="send()">Enviar</button></div></div></div><script src="dashboard.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JZ Prime Copilot — Dashboard</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0b0d12;
+      color: #f5f7fa;
+      min-height: 100vh;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      width: 250px;
+      background: #10131a;
+      border-right: 1px solid #242832;
+      padding: 24px 16px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 10px 30px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ffffff, #858b98);
+      color: #0b0d12;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 15px;
+      letter-spacing: .5px;
+    }
+
+    .brand-text span {
+      color: #858b98;
+      font-size: 11px;
+    }
+
+    .menu-title {
+      color: #666d79;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0 12px 10px;
+      letter-spacing: 1px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .menu button {
+      border: 0;
+      background: transparent;
+      color: #aeb4bf;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: left;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .menu button:hover,
+    .menu button.active {
+      background: #1c2029;
+      color: white;
+    }
+
+    .menu button.active {
+      border-left: 3px solid white;
+    }
+
+    .sidebar-bottom {
+      position: absolute;
+      bottom: 22px;
+      left: 16px;
+      right: 16px;
+    }
+
+    .user-box {
+      border: 1px solid #242832;
+      background: #151821;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .user-box strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .user-box span {
+      color: #737b88;
+      font-size: 11px;
+    }
+
+    /* MAIN */
+
+    .main {
+      margin-left: 250px;
+      width: calc(100% - 250px);
+      padding: 30px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .topbar h1 {
+      font-size: 25px;
+      margin-bottom: 6px;
+    }
+
+    .topbar p {
+      color: #818894;
+      font-size: 13px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .icon-button {
+      border: 1px solid #292e38;
+      background: #151821;
+      color: white;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* CARDS */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: #11151d;
+      border: 1px solid #252a34;
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .card-label {
+      color: #858c98;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-value {
+      font-size: 25px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .positive {
+      color: #71d89c;
+      font-size: 12px;
+    }
+
+    /* GRID */
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 20px;
+    }
+
+    .panel {
+      background: #11151d;
+      border: 1px solid #252a34;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .panel-header h2 {
+      font-size: 16px;
+    }
+
+    .panel-header span {
+      color: #747c88;
+      font-size: 11px;
+    }
+
+    /* COPILOT */
+
+    .copilot {
+      background: linear-gradient(145deg, #161a23, #10131a);
+      border: 1px solid #303641;
+    }
+
+    .copilot-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .copilot-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: white;
+      color: #0b0d12;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    .copilot h2 {
+      font-size: 17px;
+    }
+
+    .copilot p {
+      color: #8a929f;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .copilot-input {
+      display: flex;
+      gap: 8px;
+    }
+
+    .copilot-input input {
+      flex: 1;
+      background: #0c0f15;
+      border: 1px solid #2b303a;
+      color: white;
+      padding: 13px;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    .copilot-input button {
+      border: 0;
+      background: white;
+      color: #0b0d12;
+      padding: 0 18px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* QUICK ACTIONS */
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .action {
+      border: 1px solid #292e38;
+      background: #151921;
+      color: #dfe3e8;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .action:hover {
+      background: #1c2029;
+    }
+
+    .action strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px;
+    }
+
+    .action span {
+      color: #737b87;
+      font-size: 11px;
+    }
+
+    /* ACTIVITY */
+
+    .activity {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .activity-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #222731;
+    }
+
+    .activity-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .activity-item strong {
+      font-size: 12px;
+    }
+
+    .activity-item span {
+      display: block;
+      color: #747c88;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .status {
+      color: #71d89c;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1000px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .sidebar {
+        width: 70px;
+        padding: 18px 10px;
+      }
+
+      .brand-text,
+      .menu-title,
+      .menu button span,
+      .user-box {
+        display: none;
+      }
+
+      .brand {
+        justify-content: center;
+        padding: 0 0 25px;
+      }
+
+      .menu button {
+        text-align: center;
+        padding: 12px 5px;
+      }
+
+      .main {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+        padding: 20px 14px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .topbar h1 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="brand-icon">JZ</div>
+      <div class="brand-text">
+        <strong>JZ PRIME</strong>
+        <span>Copilot</span>
+      </div>
+    </div>
+
+    <div class="menu-title">Menu principal</div>
+
+    <nav class="menu">
+
+      <button class="active" onclick="showMessage('Visão Geral')">
+        🏠 <span>Visão Geral</span>
+      </button>
+
+      <button onclick="showMessage('Clientes')">
+        👥 <span>Clientes</span>
+      </button>
+
+      <button onclick="showMessage('Indicadores')">
+        📊 <span>Indicadores</span>
+      </button>
+
+      <button onclick="showMessage('Financeiro')">
+        💰 <span>Financeiro</span>
+      </button>
+
+      <button onclick="showMessage('Tarefas')">
+        📋 <span>Tarefas</span>
+      </button>
+
+      <button onclick="showMessage('Relatórios')">
+        📈 <span>Relatórios</span>
+      </button>
+
+      <button onclick="showMessage('Configurações')">
+        ⚙️ <span>Configurações</span>
+      </button>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="user-box">
+        <strong>Minha empresa</strong>
+        <span>Plano profissional</span>
+      </div>
+    </div>
+
+  </aside>
+
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div>
+        <h1>Visão geral</h1>
+        <p>Tenha uma visão clara do desempenho da sua empresa.</p>
+      </div>
+
+      <div class="top-actions">
+        <button class="icon-button" onclick="showMessage('Notificações')">🔔</button>
+        <button class="icon-button" onclick="showMessage('Perfil')">👤</button>
+      </div>
+
+    </header>
+
+
+    <section class="cards">
+
+      <div class="card">
+        <div class="card-label">Faturamento</div>
+        <div class="card-value">R$ 84.520</div>
+        <div class="positive">↑ 12,8% este mês</div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Clientes ativos</div>
+        <div class="card-value">128</div>
+        <div class="positive">↑ 8 novos clientes</div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Tarefas pendentes</div>
+        <div class="card-value">17</div>
+        <div class="positive">5 para hoje</div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Oportunidades</div>
+        <div class="card-value">34</div>
+        <div class="positive">↑ 6 novas</div>
+      </div>
+
+    </section>
+
+
+    <div class="content-grid">
+
+      <div>
+
+        <section class="panel copilot">
+
+          <div class="copilot-title">
+            <div class="copilot-icon">✦</div>
+
+            <div>
+              <h2>JZ Prime Copilot</h2>
+              <span>Assistente estratégico</span>
+            </div>
+          </div>
+
+          <p>
+            Analise sua empresa, identifique oportunidades e transforme
+            informações em decisões mais inteligentes.
+          </p>
+
+          <div class="copilot-input">
+            <input
+              id="copilotInput"
+              type="text"
+              placeholder="Pergunte algo sobre sua empresa..."
+            >
+
+            <button onclick="askCopilot()">Enviar</button>
+          </div>
+
+        </section>
+
+
+        <section class="panel">
+
+          <div class="panel-header">
+            <h2>Atividade recente</h2>
+            <span>Últimas atualizações</span>
+          </div>
+
+          <div class="activity">
+
+            <div class="activity-item">
+              <div>
+                <strong>Novo cliente cadastrado</strong>
+                <span>Empresa adicionada ao sistema</span>
+              </div>
+              <div class="status">Concluído</div>
+            </div>
+
+            <div class="activity-item">
+              <div>
+                <strong>Relatório financeiro atualizado</strong>
+                <span>Dados do mês atualizados</span>
+              </div>
+              <div class="status">Atualizado</div>
+            </div>
+
+            <div class="activity-item">
+              <div>
+                <strong>Nova oportunidade identificada</strong>
+                <span>Potencial de crescimento detectado</span>
+              </div>
+              <div class="status">Nova</div>
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+
+      <div>
+
+        <section class="panel">
+
+          <div class="panel-header">
+            <h2>Ações rápidas</h2>
+            <span>Atalhos</span>
+          </div>
+
+          <div class="actions">
+
+            <button class="action" onclick="showMessage('Analisando vendas...')">
+              <strong>📊 Analisar vendas</strong>
+              <span>Veja o desempenho comercial</span>
+            </button>
+
+            <button class="action" onclick="showMessage('Criando plano de ação...')">
+              <strong>⚡ Plano de ação</strong>
+              <span>Defina seus próximos passos</span>
+            </button>
+
+            <button class="action" onclick="showMessage('Abrindo clientes...')">
+              <strong>👥 Clientes</strong>
+              <span>Gerencie sua carteira</span>
+            </button>
+
+            <button class="action" onclick="showMessage('Gerando relatório...')">
+              <strong>📈 Relatório</strong>
+              <span>Consulte seus resultados</span>
+            </button>
+
+          </div>
+
+        </section>
+
+
+        <section class="panel">
+
+          <div class="panel-header">
+            <h2>Resumo estratégico</h2>
+            <span>Hoje</span>
+          </div>
+
+          <p style="color:#8b929e;font-size:13px;line-height:1.7;">
+            Sua empresa apresenta crescimento positivo.
+            Existem oportunidades para melhorar a conversão comercial
+            e acompanhar as tarefas prioritárias.
+          </p>
+
+        </section>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+
+<script>
+
+  function showMessage(message) {
+    alert(message);
+  }
+
+  function askCopilot() {
+
+    const input = document.getElementById("copilotInput");
+
+    const question = input.value.trim();
+
+    if (!question) {
+      alert("Digite uma pergunta para o Copilot.");
+      return;
+    }
+
+    alert(
+      "JZ Prime Copilot recebeu sua pergunta:\n\n" +
+      question +
+      "\n\nA IA real será conectada na próxima etapa."
+    );
+
+    input.value = "";
+  }
+
+</script>
+
+</body>
+</html>
