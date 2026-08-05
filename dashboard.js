@@ -2,13 +2,8 @@ function openChat() {
 const overlay = document.getElementById("overlay");
 const input = document.getElementById("input");
 
-if (overlay) {
-overlay.classList.add("open");
-}
-
-if (input) {
-input.focus();
-}
+if (overlay) overlay.classList.add("open");
+if (input) input.focus();
 }
 
 function closeChat(event) {
