@@ -1430,6 +1430,144 @@
     }
 
   </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+    const dados = localStorage.getItem("jzPrimeEmpresa");
+
+    if (!dados) {
+      return;
+    }
+
+    const empresa = JSON.parse(dados);
+
+    const titulo = document.querySelector(".topbar h1");
+    const descricao = document.querySelector(".topbar p");
+
+    if (titulo && empresa.empresa) {
+      titulo.textContent = empresa.empresa;
+    }
+
+    if (descricao) {
+      descricao.textContent =
+        "Copilot estratégico para " +
+        (empresa.responsavel || "sua empresa") +
+        " • " +
+        (empresa.segmento || "empresa");
+    }
+
+    const cards = document.querySelectorAll(".card-value");
+
+    if (cards.length >= 4) {
+
+      if (empresa.faturamento) {
+        const valor = Number(empresa.faturamento);
+
+        cards[0].textContent =
+          valor.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+          });
+      }
+
+      if (empresa.clientes) {
+        cards[1].textContent = empresa.clientes;
+      }
+
+      if (empresa.meta) {
+        const faturamento = Number(empresa.faturamento || 0);
+        const meta = Number(empresa.meta || 0);
+
+        if (meta > 0) {
+          const percentual = Math.round(
+            (faturamento / meta) * 100
+          );
+
+          cards[3].textContent = percentual + "%";
+        }
+      }
+    }
+
+    const resumo = document.querySelector(".panel p");
+
+    if (resumo && empresa.objetivo) {
+      resumo.textContent =
+        "Objetivo principal: " +
+        empresa.objetivo +
+        ". O JZ Prime Copilot utilizará essas informações para orientar as próximas análises estratégicas.";
+    }
+
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+    const dados = localStorage.getItem("jzPrimeEmpresa");
+
+    if (!dados) {
+      return;
+    }
+
+    const empresa = JSON.parse(dados);
+
+    const titulo = document.querySelector(".topbar h1");
+    const descricao = document.querySelector(".topbar p");
+
+    if (titulo && empresa.empresa) {
+      titulo.textContent = empresa.empresa;
+    }
+
+    if (descricao) {
+      descricao.textContent =
+        "Copilot estratégico para " +
+        (empresa.responsavel || "sua empresa") +
+        " • " +
+        (empresa.segmento || "empresa");
+    }
+
+    const cards = document.querySelectorAll(".card-value");
+
+    if (cards.length >= 4) {
+
+      if (empresa.faturamento) {
+        const valor = Number(empresa.faturamento);
+
+        cards[0].textContent =
+          valor.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+          });
+      }
+
+      if (empresa.clientes) {
+        cards[1].textContent = empresa.clientes;
+      }
+
+      if (empresa.meta) {
+        const faturamento = Number(empresa.faturamento || 0);
+        const meta = Number(empresa.meta || 0);
+
+        if (meta > 0) {
+          const percentual = Math.round(
+            (faturamento / meta) * 100
+          );
+
+          cards[3].textContent = percentual + "%";
+        }
+      }
+    }
+
+    const resumo = document.querySelector(".panel p");
+
+    if (resumo && empresa.objetivo) {
+      resumo.textContent =
+        "Objetivo principal: " +
+        empresa.objetivo +
+        ". O JZ Prime Copilot utilizará essas informações para orientar as próximas análises estratégicas.";
+    }
+
+  });
+</script>
 
 </body>
 </html>
