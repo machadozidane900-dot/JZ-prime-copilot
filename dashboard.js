@@ -2,8 +2,13 @@ function openChat() {
 const overlay = document.getElementById("overlay");
 const input = document.getElementById("input");
 
-if (overlay) overlay.classList.add("open");
-if (input) input.focus();
+if (overlay) {
+overlay.classList.add("open");
+}
+
+if (input) {
+input.focus();
+}
 }
 
 function closeChat(event) {
@@ -34,7 +39,7 @@ if (!messages) return;
 
 const bubble = document.createElement("div");
 
-bubble.className = `bubble ${type}`;
+bubble.className = "bubble " + type;
 bubble.textContent = text;
 
 messages.appendChild(bubble);
@@ -57,7 +62,7 @@ input.value = "";
 addMessage("Analisando sua pergunta...", "ai");
 
 try {
-const response = await fetch("/api/copilot.js", {
+const response = await fetch("/api/copilot", {
 method: "POST",
 headers: {
 "Content-Type": "application/json"
