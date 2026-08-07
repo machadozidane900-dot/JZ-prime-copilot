@@ -149,3 +149,20 @@ link.download = "jz-prime-resumo-executivo.txt";
 
 link.click();
 
+document.addEventListener("DOMContentLoaded", () => {
+    const empresa = JSON.parse(localStorage.getItem("empresa"));
+
+    if (!empresa) return;
+
+    const faturamento = document.getElementById("faturamentoCard");
+    const clientes = document.getElementById("clientesCard");
+
+    if (faturamento) {
+        faturamento.textContent =
+            "R$ " + Number(empresa.faturamento || 0).toLocaleString("pt-BR");
+    }
+
+    if (clientes) {
+        clientes.textContent = empresa.clientes || 0;
+    }
+});
