@@ -149,26 +149,3 @@ link.download = "jz-prime-resumo-executivo.txt";
 
 link.click();
 
-URL.revokeObjectURL(link.href);
-}
-function perguntarCopilot(){
-
-    const pergunta = document.getElementById("perguntaCopilot").value;
-
-    let resposta = "";
-
-    if(pergunta.toLowerCase().includes("venda")){
-        resposta = "Analisei sua situação. Recomendo aumentar o contato com clientes atuais, criar ofertas de recompra e acompanhar suas metas semanalmente.";
-    }
-
-    else if(pergunta.toLowerCase().includes("lucro")){
-        resposta = "Para aumentar o lucro, avalie custos, margem dos produtos e priorize clientes com maior potencial.";
-    }
-
-    else{
-        resposta = "Minha recomendação é analisar seus indicadores, clientes e metas antes de tomar decisões.";
-    }
-
-    document.getElementById("respostaCopilot").innerHTML = resposta;
-
-}
