@@ -336,6 +336,24 @@ document.getElementById("empresaForm").addEventListener("submit", function(e) {
 
     window.location.href = "painel.html";
 });
+  <script>
+document.getElementById("empresaForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const empresa = {
+        nome: document.getElementById("empresa").value,
+        responsavel: document.getElementById("responsavel").value,
+        segmento: document.getElementById("segmento").value,
+        faturamento: document.getElementById("faturamento").value,
+        clientes: document.getElementById("clientes").value,
+        meta: document.getElementById("meta").value,
+        objetivo: document.getElementById("objetivo").value
+    };
+
+    localStorage.setItem("empresa", JSON.stringify(empresa));
+
+    window.location.href = "dashboard.html";
+</script>
 </script>
 </body>
 </html>
