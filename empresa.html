@@ -219,6 +219,38 @@
       a experiência do JZ Prime Copilot.
 
     </p>
+<script>
+document
+  .getElementById("empresaForm")
+  .addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const empresa = {
+      nome: document.getElementById("empresa").value,
+      responsavel: document.getElementById("responsavel").value,
+      segmento: document.getElementById("segmento").value,
+      faturamento: Number(
+        document.getElementById("faturamento").value
+      ),
+      clientes: Number(
+        document.getElementById("clientes").value
+      ),
+      meta: Number(
+        document.getElementById("meta").value
+      ),
+      objetivo: document.getElementById("objetivo").value,
+      oportunidades: 0
+    };
+
+    localStorage.setItem(
+      "empresa",
+      JSON.stringify(empresa)
+    );
+
+    window.location.href = "dashboard.html";
+});
+</script>
 
   </section>
 
