@@ -11,114 +11,140 @@
 
   <title>JZ Prime Copilot — Dashboard</title>
 
-  <link rel="stylesheet" href="dashboard.css">
+  <link
+    rel="stylesheet"
+    href="dashboard.css"
+  >
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
 <div class="app">
 
-  <!-- ================================
+  <!-- =====================================================
        SIDEBAR
-  ================================= -->
+  ====================================================== -->
 
   <aside class="sidebar">
 
-    <a class="logo" href="index.html">
+    <a href="index.html" class="brand">
 
-      <span>JZ</span>
+      <div class="brand-icon">
+        JZ
+      </div>
 
-      <div>
-        JZ PRIME
-        <b>Copilot</b>
+      <div class="brand-text">
+        <strong>JZ PRIME</strong>
+        <span>Copilot</span>
       </div>
 
     </a>
 
 
-    <div class="company">
-
-      <small>EMPRESA</small>
-
-      <strong id="empresaNome">
-        Minha empresa
-      </strong>
-
-      <i id="empresaSegmento">
-        Plano profissional
-      </i>
-
+    <div class="menu-title">
+      MENU PRINCIPAL
     </div>
 
 
-    <nav>
+    <nav class="menu">
 
-      <a href="#" class="active">
-        🏠
-        <span>Visão Geral</span>
-      </a>
+      <button
+        class="active"
+        onclick="notifyUser('Visão Geral')"
+      >
+        <span>🏠</span>
+        <b>Visão Geral</b>
+      </button>
 
-      <a href="#" onclick="notifyUser('Clientes em desenvolvimento.')">
-        👥
-        <span>Clientes</span>
-      </a>
 
-      <a href="#" onclick="notifyUser('Indicadores em desenvolvimento.')">
-        📊
-        <span>Indicadores</span>
-      </a>
+      <button
+        onclick="notifyUser('Clientes')"
+      >
+        <span>👥</span>
+        <b>Clientes</b>
+      </button>
 
-      <a href="#" onclick="notifyUser('Financeiro em desenvolvimento.')">
-        💰
-        <span>Financeiro</span>
-      </a>
 
-      <a href="#" onclick="notifyUser('Tarefas em desenvolvimento.')">
-        📋
-        <span>Tarefas</span>
-      </a>
+      <button
+        onclick="notifyUser('Indicadores')"
+      >
+        <span>📊</span>
+        <b>Indicadores</b>
+      </button>
 
-      <a href="#" onclick="notifyUser('Relatórios em desenvolvimento.')">
-        📈
-        <span>Relatórios</span>
-      </a>
 
-      <a href="#" onclick="notifyUser('Configurações em desenvolvimento.')">
-        ⚙️
-        <span>Configurações</span>
-      </a>
+      <button
+        onclick="notifyUser('Financeiro')"
+      >
+        <span>💰</span>
+        <b>Financeiro</b>
+      </button>
+
+
+      <button
+        onclick="notifyUser('Tarefas')"
+      >
+        <span>📋</span>
+        <b>Tarefas</b>
+      </button>
+
+
+      <button
+        onclick="notifyUser('Relatórios')"
+      >
+        <span>📈</span>
+        <b>Relatórios</b>
+      </button>
+
+
+      <button
+        onclick="notifyUser('Configurações')"
+      >
+        <span>⚙️</span>
+        <b>Configurações</b>
+      </button>
 
     </nav>
 
 
-    <div class="bottom">
+    <div class="sidebar-bottom">
 
-      <a href="empresa.html">
-        ⚙️
-        <span>Dados da empresa</span>
-      </a>
+      <div class="user-box">
 
-      <a href="index.html">
-        ←
-        <span>Sair</span>
-      </a>
+        <strong data-empresa>
+          Minha empresa
+        </strong>
+
+        <span>
+          Plano profissional
+        </span>
+
+      </div>
 
     </div>
 
   </aside>
 
 
-  <!-- ================================
+  <!-- =====================================================
        CONTEÚDO PRINCIPAL
-  ================================= -->
+  ====================================================== -->
 
-  <main>
+  <main class="main">
 
-    <header>
+
+    <!-- TOPO -->
+
+    <header class="topbar">
 
       <div>
 
-        <small>JZ PRIME COPILOT</small>
+        <div class="top-label">
+          JZ PRIME COPILOT
+        </div>
 
         <h1 id="saudacao">
           Visão geral
@@ -131,270 +157,286 @@
       </div>
 
 
-      <div class="user">
-        JZ
+      <div class="top-actions">
+
+        <button
+          class="icon-button"
+          onclick="notifyUser('Você não possui novas notificações.')"
+        >
+          🔔
+        </button>
+
+
+        <button
+          class="profile-button"
+          onclick="notifyUser('Perfil da empresa')"
+        >
+          👤
+        </button>
+
       </div>
 
     </header>
 
 
-    <!-- ================================
-         INDICADORES
-    ================================= -->
+    <!-- =====================================================
+         CARDS
+    ====================================================== -->
 
-    <section class="metrics">
+    <section class="cards">
 
-      <article>
 
-        <span>FATURAMENTO MENSAL</span>
+      <div class="card">
 
-        <strong id="faturamentoCard">
+        <div class="card-label">
+          FATURAMENTO
+        </div>
+
+        <div
+          class="card-value"
+          id="faturamentoCard"
+        >
           R$ 0
-        </strong>
+        </div>
 
-        <i>
-          ↑ Meta em acompanhamento
-        </i>
+        <div class="positive">
+          ↑ 12,8% este mês
+        </div>
 
-      </article>
+      </div>
 
 
-      <article>
+      <div class="card">
 
-        <span>CLIENTES ATIVOS</span>
+        <div class="card-label">
+          CLIENTES ATIVOS
+        </div>
 
-        <strong id="clientesCard">
+        <div
+          class="card-value"
+          id="clientesCard"
+        >
           0
-        </strong>
+        </div>
 
-        <i>
-          ↑ Base de clientes
-        </i>
+        <div class="positive">
+          ↑ crescimento da carteira
+        </div>
 
-      </article>
+      </div>
 
 
-      <article>
+      <div class="card">
 
-        <span>META MENSAL</span>
+        <div class="card-label">
+          META MENSAL
+        </div>
 
-        <strong id="metaCard">
+        <div
+          class="card-value"
+          data-meta
+        >
           R$ 0
-        </strong>
+        </div>
 
-        <i>
-          Objetivo definido
-        </i>
+        <div class="positive">
+          <span data-progresso>0%</span>
+          da meta atingida
+        </div>
 
-      </article>
+      </div>
 
 
-      <article>
+      <div class="card">
 
-        <span>OPORTUNIDADES</span>
+        <div class="card-label">
+          OPORTUNIDADES
+        </div>
 
-        <strong id="oportunidadesCard">
+        <div
+          class="card-value"
+          id="oportunidadesCard"
+        >
           0
-        </strong>
+        </div>
 
-        <i class="gold">
-          ✦ Potenciais identificados
-        </i>
+        <div class="positive">
+          ↑ oportunidades identificadas
+        </div>
 
-      </article>
+      </div>
 
     </section>
 
 
-    <!-- ================================
+    <!-- =====================================================
          GRÁFICOS
-    ================================= -->
+    ====================================================== -->
 
-    <section class="grid">
+    <section class="charts-grid">
 
-      <!-- GRÁFICO DE FATURAMENTO -->
 
-      <div class="panel chart">
+      <!-- FATURAMENTO -->
 
-        <div class="head">
+      <section class="panel chart-panel">
+
+        <div class="panel-header">
 
           <div>
-
-            <small>PERFORMANCE</small>
 
             <h2>
               Evolução do faturamento
             </h2>
 
+            <span>
+              Desempenho mensal estimado
+            </span>
+
           </div>
 
-          <button onclick="notifyUser('Gráfico de faturamento atualizado.')">
-            Atualizar
-          </button>
+          <div class="chart-badge">
+            FATURAMENTO
+          </div>
 
         </div>
 
 
-        <div class="chart-area">
+        <div class="chart-container">
 
-          <div class="y-axis">
+          <canvas
+            id="faturamentoChart"
+          ></canvas>
 
-            <span>100%</span>
-            <span>75%</span>
-            <span>50%</span>
-            <span>25%</span>
-            <span>0%</span>
+        </div>
 
-          </div>
+      </section>
 
 
-          <div class="chart-content">
+      <!-- CLIENTES -->
 
-            <div class="bars">
+      <section class="panel chart-panel">
 
-              <div class="bar-wrap">
+        <div class="panel-header">
 
-                <i style="height:45%"></i>
+          <div>
 
-                <span>JAN</span>
+            <h2>
+              Crescimento de clientes
+            </h2>
 
-              </div>
-
-
-              <div class="bar-wrap">
-
-                <i style="height:58%"></i>
-
-                <span>FEV</span>
-
-              </div>
-
-
-              <div class="bar-wrap">
-
-                <i style="height:51%"></i>
-
-                <span>MAR</span>
-
-              </div>
-
-
-              <div class="bar-wrap">
-
-                <i style="height:67%"></i>
-
-                <span>ABR</span>
-
-              </div>
-
-
-              <div class="bar-wrap">
-
-                <i style="height:73%"></i>
-
-                <span>MAI</span>
-
-              </div>
-
-
-              <div class="bar-wrap">
-
-                <i style="height:86%"></i>
-
-                <span>JUN</span>
-
-              </div>
-
-
-              <div class="bar-wrap">
-
-                <i style="height:94%"></i>
-
-                <span>JUL</span>
-
-              </div>
-
-            </div>
+            <span>
+              Evolução da carteira
+            </span>
 
           </div>
+
+          <div class="chart-badge">
+            CLIENTES
+          </div>
+
+        </div>
+
+
+        <div class="chart-container">
+
+          <canvas
+            id="clientesChart"
+          ></canvas>
+
+        </div>
+
+      </section>
+
+
+    </section>
+
+
+    <!-- =====================================================
+         META
+    ====================================================== -->
+
+    <section class="panel meta-panel">
+
+      <div class="panel-header">
+
+        <div>
+
+          <h2>
+            Progresso da meta mensal
+          </h2>
+
+          <span>
+            Acompanhamento do objetivo financeiro
+          </span>
+
+        </div>
+
+        <div class="meta-percent">
+
+          <span data-progresso>
+            0%
+          </span>
 
         </div>
 
       </div>
 
 
-      <!-- META -->
+      <div class="meta-content">
 
-      <div class="panel">
+        <div class="meta-chart-container">
 
-        <div class="head">
-
-          <div>
-
-            <small>OBJETIVO</small>
-
-            <h2>
-              Progresso da meta
-            </h2>
-
-          </div>
-
-          <label>
-            MENSAL
-          </label>
+          <canvas
+            id="metaChart"
+          ></canvas>
 
         </div>
 
 
-        <div class="goal">
+        <div class="meta-info">
 
-          <div class="goal-circle">
+          <div class="meta-row">
 
-            <div>
+            <span>
+              Faturamento atual
+            </span>
 
-              <strong id="metaPercent">
-                0%
-              </strong>
-
-              <span>
-                alcançado
-              </span>
-
-            </div>
+            <strong id="metaFaturamento">
+              R$ 0
+            </strong>
 
           </div>
 
 
-          <div class="goal-info">
-
-            <strong id="metaAtual">
-              R$ 0
-            </strong>
+          <div class="meta-row">
 
             <span>
-              faturamento atual
+              Meta mensal
             </span>
 
-
-            <strong id="metaObjetivo">
+            <strong data-meta>
               R$ 0
             </strong>
-
-            <span>
-              meta mensal
-            </span>
 
           </div>
 
-        </div>
+
+          <div class="progress">
+
+            <div
+              class="progress-bar"
+              data-progresso-bar
+            ></div>
+
+          </div>
 
 
-        <div class="progress">
-
-          <div
-            id="progressBar"
-            style="width:0%"
-          ></div>
+          <p>
+            Objetivo principal:
+            <strong data-objetivo>
+              Aumentar vendas
+            </strong>
+          </p>
 
         </div>
 
@@ -403,679 +445,409 @@
     </section>
 
 
-    <!-- ================================
-         COPILOT + RESUMO FINANCEIRO
-    ================================= -->
+    <!-- =====================================================
+         COPILOT + AÇÕES
+    ====================================================== -->
 
-    <section class="grid lower">
+    <section class="content-grid">
 
 
       <!-- COPILOT -->
 
-      <div class="panel copilot">
+      <section class="panel copilot">
 
-        <div class="head">
+        <div class="copilot-title">
+
+          <div class="copilot-icon">
+            ✦
+          </div>
 
           <div>
-
-            <small>INTELIGÊNCIA</small>
 
             <h2>
               JZ Prime Copilot
             </h2>
 
+            <span>
+              Seu assistente estratégico
+            </span>
+
           </div>
 
-          <b>
-            ● ONLINE
-          </b>
+          <div class="online">
+
+            <span class="online-dot"></span>
+
+            Online
+
+          </div>
 
         </div>
 
 
-        <div class="ai">
+        <div
+          class="chat-box"
+          id="chatBox"
+        >
 
-          <div class="aiIcon">
-            ✦
+          <div class="message">
+
+            <div class="avatar">
+              ✦
+            </div>
+
+            <div class="message-content">
+
+              <strong>
+                JZ Prime Copilot
+              </strong>
+
+              <p>
+                Olá! Sou seu Copilot estratégico.
+                Posso analisar seus indicadores,
+                vendas, custos, clientes e metas.
+              </p>
+
+            </div>
+
           </div>
 
+        </div>
+
+
+        <div class="suggestions">
+
+          <button
+            onclick="askCopilot('Como estão minhas vendas?')"
+          >
+            📊 Como estão minhas vendas?
+          </button>
+
+
+          <button
+            onclick="askCopilot('Onde posso reduzir custos?')"
+          >
+            💰 Onde posso reduzir custos?
+          </button>
+
+
+          <button
+            onclick="askCopilot('Como melhorar minha margem?')"
+          >
+            📈 Como melhorar minha margem?
+          </button>
+
+
+          <button
+            onclick="askCopilot('Crie um plano de ação')"
+          >
+            ⚡ Criar plano de ação
+          </button>
+
+        </div>
+
+
+        <div class="copilot-input">
+
+          <input
+            id="copilotInput"
+            type="text"
+            placeholder="Pergunte algo sobre sua empresa..."
+            onkeydown="handleEnter(event)"
+          >
+
+          <button
+            onclick="sendCopilot()"
+          >
+            Enviar
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- AÇÕES -->
+
+      <section class="panel">
+
+        <div class="panel-header">
 
           <div>
-
-            <strong>
-              Análise estratégica
-            </strong>
-
-            <p id="aiResumo">
-
-              Cadastre os dados da sua empresa
-              para receber uma análise personalizada.
-
-            </p>
-
-            <button
-              onclick="openChat()"
-            >
-              Perguntar ao Copilot →
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <div class="chips">
-
-          <button
-            onclick="ask('Como estão minhas vendas?')"
-          >
-            📊 Vendas
-          </button>
-
-          <button
-            onclick="ask('Onde posso reduzir custos?')"
-          >
-            💰 Custos
-          </button>
-
-          <button
-            onclick="ask('Como aumentar meu lucro?')"
-          >
-            📈 Lucro
-          </button>
-
-          <button
-            onclick="ask('Crie um plano de ação')"
-          >
-            ⚡ Plano de ação
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- RESUMO FINANCEIRO -->
-
-      <div class="panel report">
-
-        <div class="head">
-
-          <div>
-
-            <small>FINANCEIRO</small>
 
             <h2>
-              Resumo financeiro
+              Ações rápidas
             </h2>
+
+            <span>
+              Atalhos estratégicos
+            </span>
 
           </div>
 
-          <button onclick="downloadReport()">
-            Relatório
+        </div>
+
+
+        <div class="actions">
+
+
+          <button
+            class="action"
+            onclick="askCopilot('Analise minhas vendas')"
+          >
+
+            <strong>
+              📊 Analisar vendas
+            </strong>
+
+            <span>
+              Identifique oportunidades comerciais.
+            </span>
+
+          </button>
+
+
+          <button
+            class="action"
+            onclick="askCopilot('Crie um plano de ação')"
+          >
+
+            <strong>
+              ⚡ Plano de ação
+            </strong>
+
+            <span>
+              Defina os próximos passos.
+            </span>
+
+          </button>
+
+
+          <button
+            class="action"
+            onclick="notifyUser('Área de clientes preparada para a próxima etapa.')"
+          >
+
+            <strong>
+              👥 Clientes
+            </strong>
+
+            <span>
+              Gerencie sua carteira.
+            </span>
+
+          </button>
+
+
+          <button
+            class="action"
+            onclick="downloadReport()"
+          >
+
+            <strong>
+              📈 Relatório
+            </strong>
+
+            <span>
+              Baixe seu resumo executivo.
+            </span>
+
           </button>
 
         </div>
 
+      </section>
 
-        <div class="cash">
-
-          <div>
-
-            <small>
-              FATURAMENTO
-            </small>
-
-            <strong id="cashFaturamento">
-              R$ 0
-            </strong>
-
-          </div>
+    </section>
 
 
-          <div>
+    <!-- =====================================================
+         RESUMO E ATIVIDADE
+    ====================================================== -->
 
-            <small>
-              META
-            </small>
+    <section class="lower-grid">
 
-            <strong id="cashMeta">
-              R$ 0
-            </strong>
 
-          </div>
+      <section class="panel">
 
+        <div class="panel-header">
 
           <div>
 
-            <small>
-              DIFERENÇA
-            </small>
+            <h2>
+              Resumo estratégico
+            </h2>
 
-            <strong id="cashDiferenca">
-              R$ 0
-            </strong>
+            <span>
+              Análise atual
+            </span>
 
           </div>
 
         </div>
 
 
-        <p id="financialText">
+        <p class="strategy-text">
 
-          Informe os dados da empresa para
-          gerar o resumo financeiro.
+          O JZ Prime Copilot utiliza os dados
+          cadastrados da empresa para orientar
+          decisões e identificar oportunidades
+          de crescimento.
 
         </p>
 
-      </div>
+
+        <div class="strategy-list">
+
+
+          <div class="strategy-item">
+
+            <div class="strategy-number">
+              1
+            </div>
+
+            Acompanhar conversão de vendas
+
+          </div>
+
+
+          <div class="strategy-item">
+
+            <div class="strategy-number">
+              2
+            </div>
+
+            Priorizar clientes de maior potencial
+
+          </div>
+
+
+          <div class="strategy-item">
+
+            <div class="strategy-number">
+              3
+            </div>
+
+            Controlar custos e margem
+
+          </div>
+
+
+          <div class="strategy-item">
+
+            <div class="strategy-number">
+              4
+            </div>
+
+            Revisar resultados semanalmente
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <h2>
+              Atividade recente
+            </h2>
+
+            <span>
+              Últimas atualizações
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="activity">
+
+
+          <div class="activity-item">
+
+            <div>
+
+              <strong>
+                Empresa configurada
+              </strong>
+
+              <span>
+                Dados empresariais carregados
+              </span>
+
+            </div>
+
+            <div class="status">
+              Concluído
+            </div>
+
+          </div>
+
+
+          <div class="activity-item">
+
+            <div>
+
+              <strong>
+                Indicadores atualizados
+              </strong>
+
+              <span>
+                Dashboard sincronizado
+              </span>
+
+            </div>
+
+            <div class="status">
+              Atualizado
+            </div>
+
+          </div>
+
+
+          <div class="activity-item">
+
+            <div>
+
+              <strong>
+                Copilot disponível
+              </strong>
+
+              <span>
+                Assistente estratégico online
+              </span>
+
+            </div>
+
+            <div class="status">
+              Online
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
 
     </section>
-
-
-    <!-- ================================
-         ATIVIDADE
-    ================================= -->
-
-    <section class="panel">
-
-      <div class="head">
-
-        <div>
-
-          <small>ACOMPANHAMENTO</small>
-
-          <h2>
-            Atividade recente
-          </h2>
-
-        </div>
-
-        <label>
-          HOJE
-        </label>
-
-      </div>
-
-
-      <div class="list">
-
-        <div>
-
-          <strong>
-            Cadastro da empresa
-          </strong>
-
-          <span>
-            Dados configurados
-          </span>
-
-          <i>
-            Concluído
-          </i>
-
-        </div>
-
-
-        <div>
-
-          <strong>
-            Dashboard personalizado
-          </strong>
-
-          <span>
-            Indicadores preparados
-          </span>
-
-          <i>
-            Ativo
-          </i>
-
-        </div>
-
-
-        <div>
-
-          <strong>
-            Copilot estratégico
-          </strong>
-
-          <span>
-            Assistente pronto para análise
-          </span>
-
-          <i>
-            Online
-          </i>
-
-        </div>
-
-      </div>
-
-    </section>
-
 
   </main>
 
 </div>
 
 
-<!-- ================================
-     CHAT DO COPILOT
-================================= -->
-
-<div
-  class="overlay"
-  id="overlay"
-  onclick="closeChat(event)"
->
-
-  <div class="chat">
-
-    <header>
-
-      <div>
-
-        <strong>
-          JZ Prime Copilot
-        </strong>
-
-        <small>
-          Assistente estratégico
-        </small>
-
-      </div>
-
-      <button onclick="closeChat()">
-        ×
-      </button>
-
-    </header>
-
-
-    <div
-      class="messages"
-      id="messages"
-    >
-
-      <div class="bubble ai">
-
-        Olá! Sou o JZ Prime Copilot.
-        Como posso ajudar sua empresa?
-
-      </div>
-
-    </div>
-
-
-    <div class="input">
-
-      <input
-        id="input"
-        type="text"
-        placeholder="Pergunte algo..."
-        onkeydown="if(event.key==='Enter') send()"
-      >
-
-      <button onclick="send()">
-        Enviar
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
 
 <script src="dashboard.js"></script>
-
-
-<script>
-
-/* =================================
-   DADOS DA EMPRESA
-================================= */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-  const empresa = JSON.parse(
-    localStorage.getItem("empresa") || "null"
-  );
-
-
-  if (!empresa) {
-    return;
-  }
-
-
-  const faturamento =
-    Number(empresa.faturamento || 0);
-
-
-  const meta =
-    Number(empresa.meta || 0);
-
-
-  const clientes =
-    Number(empresa.clientes || 0);
-
-
-  const empresaNome =
-    empresa.empresa || "Minha empresa";
-
-
-  const segmento =
-    empresa.segmento || "Plano profissional";
-
-
-  /* EMPRESA */
-
-  const nomeElement =
-    document.getElementById("empresaNome");
-
-  const segmentoElement =
-    document.getElementById("empresaSegmento");
-
-
-  if (nomeElement) {
-    nomeElement.textContent =
-      empresaNome;
-  }
-
-
-  if (segmentoElement) {
-    segmentoElement.textContent =
-      segmento;
-  }
-
-
-  /* FATURAMENTO */
-
-  const faturamentoCard =
-    document.getElementById("faturamentoCard");
-
-
-  if (faturamentoCard) {
-
-    faturamentoCard.textContent =
-      faturamento.toLocaleString(
-        "pt-BR",
-        {
-          style: "currency",
-          currency: "BRL"
-        }
-      );
-
-  }
-
-
-  /* CLIENTES */
-
-  const clientesCard =
-    document.getElementById("clientesCard");
-
-
-  if (clientesCard) {
-    clientesCard.textContent =
-      clientes.toLocaleString("pt-BR");
-  }
-
-
-  /* META */
-
-  const metaCard =
-    document.getElementById("metaCard");
-
-
-  if (metaCard) {
-
-    metaCard.textContent =
-      meta.toLocaleString(
-        "pt-BR",
-        {
-          style: "currency",
-          currency: "BRL"
-        }
-      );
-
-  }
-
-
-  /* PROGRESSO */
-
-  let percentual = 0;
-
-
-  if (meta > 0) {
-
-    percentual =
-      Math.round(
-        (faturamento / meta) * 100
-      );
-
-  }
-
-
-  percentual =
-    Math.min(percentual, 100);
-
-
-  const metaPercent =
-    document.getElementById("metaPercent");
-
-
-  if (metaPercent) {
-    metaPercent.textContent =
-      percentual + "%";
-  }
-
-
-  const progressBar =
-    document.getElementById("progressBar");
-
-
-  if (progressBar) {
-    progressBar.style.width =
-      percentual + "%";
-  }
-
-
-  /* META ATUAL */
-
-  const metaAtual =
-    document.getElementById("metaAtual");
-
-
-  if (metaAtual) {
-
-    metaAtual.textContent =
-      faturamento.toLocaleString(
-        "pt-BR",
-        {
-          style: "currency",
-          currency: "BRL"
-        }
-      );
-
-  }
-
-
-  const metaObjetivo =
-    document.getElementById("metaObjetivo");
-
-
-  if (metaObjetivo) {
-
-    metaObjetivo.textContent =
-      meta.toLocaleString(
-        "pt-BR",
-        {
-          style: "currency",
-          currency: "BRL"
-        }
-      );
-
-  }
-
-
-  /* RESUMO FINANCEIRO */
-
-  const cashFaturamento =
-    document.getElementById(
-      "cashFaturamento"
-    );
-
-
-  if (cashFaturamento) {
-
-    cashFaturamento.textContent =
-      faturamento.toLocaleString(
-        "pt-BR",
-        {
-          style: "currency",
-          currency: "BRL"
-        }
-      );
-
-  }
-
-
-  const cashMeta =
-    document.getElementById(
-      "cashMeta"
-    );
-
-
-  if (cashMeta) {
-
-    cashMeta.textContent =
-      meta.toLocaleString(
-        "pt-BR",
-        {
-          style: "currency",
-          currency: "BRL"
-        }
-      );
-
-  }
-
-
-  const diferenca =
-    meta - faturamento;
-
-
-  const cashDiferenca =
-    document.getElementById(
-      "cashDiferenca"
-    );
-
-
-  if (cashDiferenca) {
-
-    cashDiferenca.textContent =
-      Math.abs(diferenca).toLocaleString(
-        "pt-BR",
-        {
-          style: "currency",
-          currency: "BRL"
-        }
-      );
-
-  }
-
-
-  /* OPORTUNIDADES */
-
-  const oportunidades =
-    Math.max(
-      3,
-      Math.round(clientes * 0.08)
-    );
-
-
-  const oportunidadesCard =
-    document.getElementById(
-      "oportunidadesCard"
-    );
-
-
-  if (oportunidadesCard) {
-
-    oportunidadesCard.textContent =
-      oportunidades;
-
-  }
-
-
-  /* TEXTO DA IA */
-
-  const aiResumo =
-    document.getElementById(
-      "aiResumo"
-    );
-
-
-  if (aiResumo) {
-
-    if (faturamento >= meta && meta > 0) {
-
-      aiResumo.innerHTML =
-        "Sua empresa atingiu ou superou a meta mensal. " +
-        "O próximo foco recomendado é <em>proteger a margem e acelerar o crescimento</em>.";
-
-    } else if (meta > 0) {
-
-      const falta =
-        meta - faturamento;
-
-
-      aiResumo.innerHTML =
-        "Você está a " +
-        falta.toLocaleString(
-          "pt-BR",
-          {
-            style: "currency",
-            currency: "BRL"
-          }
-        ) +
-        " da meta mensal. " +
-        "O foco recomendado é <em>aumentar a eficiência comercial</em>.";
-
-    }
-
-  }
-
-
-  /* TEXTO FINANCEIRO */
-
-  const financialText =
-    document.getElementById(
-      "financialText"
-    );
-
-
-  if (financialText && meta > 0) {
-
-    if (faturamento >= meta) {
-
-      financialText.textContent =
-        "O faturamento atual está acima da meta definida. " +
-        "Continue acompanhando margem, custos e geração de novas oportunidades.";
-
-    } else {
-
-      financialText.textContent =
-        "O faturamento atual ainda está abaixo da meta. " +
-        "Priorize vendas, conversão de clientes e oportunidades de maior potencial.";
-
-    }
-
-  }
-
-});
-
-</script>
 
 </body>
 </html>
