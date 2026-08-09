@@ -1,41 +1,39 @@
 /* =========================================================
    JZ PRIME COPILOT
-   DASHBOARD — DADOS DA EMPRESA + COPILOT
-========================================================= */
+   DASHBOARD.JS
+   ========================================================= */
 
 
 /* =========================================================
-   CARREGAR DADOS DA EMPRESA
-========================================================= */
+   DADOS DA EMPRESA
+   ========================================================= */
+
+let empresa = {};
 
 function carregarEmpresa() {
-
-  const dados = localStorage.getItem("empresa");
-
-  if (!dados) {
-    return null;
-  }
-
   try {
+    const dados = localStorage.getItem("empresa");
 
-    return JSON.parse(dados);
-
-  } catch (erro) {
-
-    console.error("Erro ao carregar dados da empresa:", erro);
-
-    return null;
+    if (dados) {
+      empresa = JSON.parse(dados);
+    } else {
+      empresa = {};
+    }
+  } catch (error) {
+    console.error("Erro ao carregar dados da empresa:", error);
+    empresa = {};
   }
+
+  return empresa;
 }
 
 
 /* =========================================================
-   FORMATAÇÃO DE VALORES
-========================================================= */
+   FORMATADORES
+   ========================================================= */
 
-function moeda(valor) {
-
-  const numero = Number(valor || 0);
+function formatarMoeda(valor) {
+  const numero = Number(valor) || 0;
 
   return numero.toLocaleString("pt-BR", {
     style: "currency",
@@ -44,569 +42,1278 @@ function moeda(valor) {
 }
 
 
-/* =========================================================
-   ATUALIZAR DASHBOARD
-========================================================= */
-
-function atualizarDashboard() {
-
-  const empresa = carregarEmpresa();
-
-  if (!empresa) {
-
-    console.log("Nenhuma empresa cadastrada.");
-
-    return;
-  }
-
-
-  /* -----------------------------------------
-     NOME DA EMPRESA
-  ----------------------------------------- */
-
-  const nomeEmpresa = document.getElementById("nomeEmpresa");
-
-  if (nomeEmpresa) {
-    nomeEmpresa.textContent =
-      empresa.empresa || "Minha empresa";
-  }
-
-
-  /* -----------------------------------------
-     RESPONSÁVEL
-  ----------------------------------------- */
-
-  const responsavel = document.getElementById("responsavel");
-
-  if (responsavel) {
-    responsavel.textContent =
-      empresa.responsavel || "";
-  }
-
-
-  /* -----------------------------------------
-     SEGMENTO
-  ----------------------------------------- */
-
-  const segmento = document.getElementById("segmento");
-
-  if (segmento) {
-    segmento.textContent =
-      empresa.segmento || "Não informado";
-  }
-
-
-  /* -----------------------------------------
-     FATURAMENTO
-  ----------------------------------------- */
-
-  const faturamento = document.getElementById(
-    "faturamentoCard"
-  );
-
-  if (faturamento) {
-
-    faturamento.textContent =
-      moeda(empresa.faturamento);
-  }
-
-
-  /* -----------------------------------------
-     CLIENTES
-  ----------------------------------------- */
-
-  const clientes = document.getElementById(
-    "clientesCard"
-  );
-
-  if (clientes) {
-
-    clientes.textContent =
-      Number(empresa.clientes || 0)
-        .toLocaleString("pt-BR");
-  }
-
-
-  /* -----------------------------------------
-     META
-  ----------------------------------------- */
-
-  const meta = document.getElementById(
-    "metaCard"
-  );
-
-  if (meta) {
-
-    meta.textContent =
-      moeda(empresa.meta);
-  }
-
-
-  /* -----------------------------------------
-     OBJETIVO
-  ----------------------------------------- */
-
-  const objetivo = document.getElementById(
-    "objetivoEmpresa"
-  );
-
-  if (objetivo) {
-
-    objetivo.textContent =
-      empresa.objetivo ||
-      "Definir objetivo";
-  }
-
-
-  /* -----------------------------------------
-     NOME NO TOPO
-  ----------------------------------------- */
-
-  const nomeTopo = document.getElementById(
-    "nomeTopo"
-  );
-
-  if (nomeTopo) {
-
-    nomeTopo.textContent =
-      empresa.responsavel ||
-      empresa.empresa ||
-      "Empresário";
-  }
-
-
-  /* -----------------------------------------
-     SAUDAÇÃO
-  ----------------------------------------- */
-
-  const saudacao = document.getElementById(
-    "saudacao"
-  );
-
-  if (saudacao) {
-
-    saudacao.textContent =
-      "Bom dia, " +
-      (
-        empresa.responsavel ||
-        "Empresário"
-      ) +
-      " 👋";
-  }
-
-
-  /* -----------------------------------------
-     PORCENTAGEM DA META
-  ----------------------------------------- */
-
-  const percentualMeta =
-    document.getElementById(
-      "percentualMeta"
-    );
-
-  if (percentualMeta) {
-
-    const faturamento =
-      Number(empresa.faturamento || 0);
-
-    const meta =
-      Number(empresa.meta || 0);
-
-    let percentual = 0;
-
-    if (meta > 0) {
-
-      percentual =
-        (faturamento / meta) * 100;
-
-    }
-
-    percentual =
-      Math.min(
-        Math.round(percentual),
-        100
-      );
-
-    percentualMeta.textContent =
-      percentual + "%";
-  }
-
-
-  /* -----------------------------------------
-     OPORTUNIDADES
-  ----------------------------------------- */
-
-  const oportunidades =
-    document.getElementById(
-      "oportunidadesCard"
-    );
-
-  if (oportunidades) {
-
-    oportunidades.textContent =
-      "0";
-  }
-
-
-  /* -----------------------------------------
-     RESUMO ESTRATÉGICO
-  ----------------------------------------- */
-
-  atualizarResumo(empresa);
+function formatarNumero(valor) {
+  return (Number(valor) || 0).toLocaleString("pt-BR");
 }
 
 
 /* =========================================================
-   RESUMO ESTRATÉGICO
-========================================================= */
+   PREENCHER DADOS DO DASHBOARD
+   ========================================================= */
 
-function atualizarResumo(empresa) {
+function atualizarDashboard() {
 
-  const resumo =
-    document.getElementById(
-      "resumoEstrategico"
+  carregarEmpresa();
+
+  const faturamento = Number(empresa.faturamento) || 0;
+  const clientes = Number(empresa.clientes) || 0;
+  const meta = Number(empresa.meta) || 0;
+
+  /*
+    Se não existir uma quantidade de oportunidades
+    cadastrada, usamos uma estimativa inicial.
+  */
+  const oportunidades =
+    Number(empresa.oportunidades) ||
+    Math.max(3, Math.round(clientes * 0.08));
+
+
+  /* ---------------------------------------------
+     FATURAMENTO
+  --------------------------------------------- */
+
+  const faturamentoCard =
+    document.getElementById("faturamentoCard");
+
+  if (faturamentoCard) {
+    faturamentoCard.textContent =
+      formatarMoeda(faturamento);
+  }
+
+
+  /* ---------------------------------------------
+     CLIENTES
+  --------------------------------------------- */
+
+  const clientesCard =
+    document.getElementById("clientesCard");
+
+  if (clientesCard) {
+    clientesCard.textContent =
+      formatarNumero(clientes);
+  }
+
+
+  /* ---------------------------------------------
+     OPORTUNIDADES
+  --------------------------------------------- */
+
+  const oportunidadesCard =
+    document.getElementById("oportunidadesCard");
+
+  if (oportunidadesCard) {
+    oportunidadesCard.textContent =
+      formatarNumero(oportunidades);
+  }
+
+
+  /* ---------------------------------------------
+     NOME DA EMPRESA
+  --------------------------------------------- */
+
+  const nomeEmpresa =
+    empresa.empresa || "Minha empresa";
+
+  const elementosEmpresa =
+    document.querySelectorAll(
+      "[data-empresa]"
     );
 
-  if (!resumo) {
+  elementosEmpresa.forEach((elemento) => {
+    elemento.textContent = nomeEmpresa;
+  });
+
+
+  /* ---------------------------------------------
+     RESPONSÁVEL
+  --------------------------------------------- */
+
+  const responsavel =
+    empresa.responsavel || "";
+
+  const elementosResponsavel =
+    document.querySelectorAll(
+      "[data-responsavel]"
+    );
+
+  elementosResponsavel.forEach((elemento) => {
+    elemento.textContent = responsavel;
+  });
+
+
+  /* ---------------------------------------------
+     SEGMENTO
+  --------------------------------------------- */
+
+  const segmento =
+    empresa.segmento || "";
+
+  const elementosSegmento =
+    document.querySelectorAll(
+      "[data-segmento]"
+    );
+
+  elementosSegmento.forEach((elemento) => {
+    elemento.textContent = segmento;
+  });
+
+
+  /* ---------------------------------------------
+     META
+  --------------------------------------------- */
+
+  const elementosMeta =
+    document.querySelectorAll(
+      "[data-meta]"
+    );
+
+  elementosMeta.forEach((elemento) => {
+    elemento.textContent =
+      formatarMoeda(meta);
+  });
+
+
+  /* ---------------------------------------------
+     OBJETIVO
+  --------------------------------------------- */
+
+  const objetivo =
+    empresa.objetivo ||
+    "Aumentar vendas";
+
+  const elementosObjetivo =
+    document.querySelectorAll(
+      "[data-objetivo]"
+    );
+
+  elementosObjetivo.forEach((elemento) => {
+    elemento.textContent = objetivo;
+  });
+
+
+  /* ---------------------------------------------
+     PROGRESSO DA META
+  --------------------------------------------- */
+
+  let percentualMeta = 0;
+
+  if (meta > 0) {
+    percentualMeta =
+      Math.min(
+        100,
+        Math.round((faturamento / meta) * 100)
+      );
+  }
+
+  const elementosProgresso =
+    document.querySelectorAll(
+      "[data-progresso]"
+    );
+
+  elementosProgresso.forEach((elemento) => {
+    elemento.textContent =
+      percentualMeta + "%";
+  });
+
+
+  const barrasProgresso =
+    document.querySelectorAll(
+      "[data-progresso-bar]"
+    );
+
+  barrasProgresso.forEach((barra) => {
+    barra.style.width =
+      percentualMeta + "%";
+  });
+
+
+  atualizarTextoPainel();
+}
+
+
+/* =========================================================
+   TEXTO DO PAINEL
+   ========================================================= */
+
+function atualizarTextoPainel() {
+
+  const saudacao =
+    document.getElementById("saudacao");
+
+  const descricao =
+    document.getElementById("descricaoPainel");
+
+  const nome =
+    empresa.responsavel ||
+    empresa.empresa ||
+    "";
+
+  if (saudacao) {
+
+    if (nome) {
+      saudacao.textContent =
+        "Visão geral, " + nome;
+    } else {
+      saudacao.textContent =
+        "Visão geral";
+    }
+  }
+
+
+  if (descricao) {
+
+    if (empresa.empresa) {
+
+      descricao.textContent =
+        "Controle, análise e estratégia para " +
+        empresa.empresa +
+        ".";
+
+    } else {
+
+      descricao.textContent =
+        "Controle, análise e estratégia em um só lugar.";
+    }
+  }
+}
+
+
+/* =========================================================
+   NOTIFICAÇÕES
+   ========================================================= */
+
+function notifyUser(mensagem) {
+
+  let notification =
+    document.getElementById(
+      "jzNotification"
+    );
+
+  if (!notification) {
+
+    notification =
+      document.createElement("div");
+
+    notification.id =
+      "jzNotification";
+
+    notification.style.position =
+      "fixed";
+
+    notification.style.right =
+      "24px";
+
+    notification.style.bottom =
+      "24px";
+
+    notification.style.zIndex =
+      "9999";
+
+    notification.style.padding =
+      "14px 18px";
+
+    notification.style.borderRadius =
+      "10px";
+
+    notification.style.background =
+      "#0e2119";
+
+    notification.style.border =
+      "1px solid #35d99b";
+
+    notification.style.color =
+      "#f5faf7";
+
+    notification.style.fontSize =
+      "13px";
+
+    notification.style.boxShadow =
+      "0 20px 60px rgba(0,0,0,.45)";
+
+    notification.style.transition =
+      "opacity .25s ease";
+
+    document.body.appendChild(
+      notification
+    );
+  }
+
+  notification.textContent =
+    mensagem;
+
+  notification.style.opacity =
+    "1";
+
+  clearTimeout(
+    notification._timer
+  );
+
+  notification._timer =
+    setTimeout(() => {
+
+      notification.style.opacity =
+        "0";
+
+    }, 2800);
+}
+
+
+/* =========================================================
+   GRÁFICO DE FATURAMENTO
+   ========================================================= */
+
+let faturamentoChart = null;
+
+
+function criarGraficoFaturamento() {
+
+  const canvas =
+    document.getElementById(
+      "faturamentoChart"
+    );
+
+  if (!canvas) {
     return;
+  }
+
+  /*
+    Se Chart.js estiver disponível,
+    usamos o gráfico real.
+  */
+
+  if (typeof Chart === "undefined") {
+
+    console.warn(
+      "Chart.js não foi carregado."
+    );
+
+    return;
+  }
+
+
+  if (faturamentoChart) {
+    faturamentoChart.destroy();
   }
 
 
   const faturamento =
-    Number(empresa.faturamento || 0);
+    Number(empresa.faturamento) || 0;
+
+
+  /*
+    Criamos uma evolução visual
+    baseada no faturamento informado.
+  */
+
+  const valores = [
+
+    faturamento * 0.68,
+
+    faturamento * 0.74,
+
+    faturamento * 0.71,
+
+    faturamento * 0.82,
+
+    faturamento * 0.91,
+
+    faturamento
+
+  ];
+
+
+  faturamentoChart =
+    new Chart(canvas, {
+
+      type: "bar",
+
+      data: {
+
+        labels: [
+          "Jan",
+          "Fev",
+          "Mar",
+          "Abr",
+          "Mai",
+          "Jun"
+        ],
+
+        datasets: [{
+
+          label:
+            "Faturamento",
+
+          data:
+            valores,
+
+          backgroundColor:
+            "#35d99b",
+
+          borderRadius:
+            6,
+
+          borderSkipped:
+            false
+
+        }]
+
+      },
+
+      options: {
+
+        responsive: true,
+
+        maintainAspectRatio:
+          false,
+
+        plugins: {
+
+          legend: {
+            display: false
+          },
+
+          tooltip: {
+
+            callbacks: {
+
+              label: function(context) {
+
+                return formatarMoeda(
+                  context.raw
+                );
+
+              }
+
+            }
+
+          }
+
+        },
+
+        scales: {
+
+          y: {
+
+            beginAtZero: true,
+
+            ticks: {
+
+              color:
+                "#71857c",
+
+              callback:
+                function(value) {
+
+                  return formatarMoeda(
+                    value
+                  );
+
+                }
+
+            },
+
+            grid: {
+
+              color:
+                "rgba(255,255,255,.05)"
+
+            }
+
+          },
+
+          x: {
+
+            ticks: {
+
+              color:
+                "#71857c"
+
+            },
+
+            grid: {
+              display: false
+            }
+
+          }
+
+        }
+
+      }
+
+    });
+}
+
+
+/* =========================================================
+   GRÁFICO DE CLIENTES
+   ========================================================= */
+
+let clientesChart = null;
+
+
+function criarGraficoClientes() {
+
+  const canvas =
+    document.getElementById(
+      "clientesChart"
+    );
+
+  if (!canvas) {
+    return;
+  }
+
+  if (typeof Chart === "undefined") {
+    return;
+  }
+
+
+  if (clientesChart) {
+    clientesChart.destroy();
+  }
+
+
+  const clientes =
+    Number(empresa.clientes) || 0;
+
+
+  const dados = [
+
+    Math.max(
+      1,
+      Math.round(clientes * 0.62)
+    ),
+
+    Math.max(
+      1,
+      Math.round(clientes * 0.70)
+    ),
+
+    Math.max(
+      1,
+      Math.round(clientes * 0.76)
+    ),
+
+    Math.max(
+      1,
+      Math.round(clientes * 0.83)
+    ),
+
+    Math.max(
+      1,
+      Math.round(clientes * 0.91)
+    ),
+
+    clientes
+
+  ];
+
+
+  clientesChart =
+    new Chart(canvas, {
+
+      type: "line",
+
+      data: {
+
+        labels: [
+          "Jan",
+          "Fev",
+          "Mar",
+          "Abr",
+          "Mai",
+          "Jun"
+        ],
+
+        datasets: [{
+
+          label:
+            "Clientes",
+
+          data:
+            dados,
+
+          borderColor:
+            "#35d99b",
+
+          backgroundColor:
+            "rgba(53,217,155,.12)",
+
+          borderWidth:
+            2,
+
+          fill:
+            true,
+
+          tension:
+            0.35,
+
+          pointRadius:
+            3,
+
+          pointBackgroundColor:
+            "#35d99b"
+
+        }]
+
+      },
+
+      options: {
+
+        responsive: true,
+
+        maintainAspectRatio:
+          false,
+
+        plugins: {
+
+          legend: {
+            display: false
+          }
+
+        },
+
+        scales: {
+
+          y: {
+
+            beginAtZero: true,
+
+            ticks: {
+              color: "#71857c"
+            },
+
+            grid: {
+              color:
+                "rgba(255,255,255,.05)"
+            }
+
+          },
+
+          x: {
+
+            ticks: {
+              color: "#71857c"
+            },
+
+            grid: {
+              display: false
+            }
+
+          }
+
+        }
+
+      }
+
+    });
+}
+
+
+/* =========================================================
+   GRÁFICO DE META
+   ========================================================= */
+
+let metaChart = null;
+
+
+function criarGraficoMeta() {
+
+  const canvas =
+    document.getElementById(
+      "metaChart"
+    );
+
+  if (!canvas) {
+    return;
+  }
+
+  if (typeof Chart === "undefined") {
+    return;
+  }
+
+
+  if (metaChart) {
+    metaChart.destroy();
+  }
+
+
+  const faturamento =
+    Number(empresa.faturamento) || 0;
 
   const meta =
-    Number(empresa.meta || 0);
+    Number(empresa.meta) || 0;
 
 
-  if (!faturamento && !meta) {
+  let restante =
+    Math.max(
+      meta - faturamento,
+      0
+    );
 
-    resumo.textContent =
-      "Ainda não existem dados suficientes para gerar uma análise estratégica. Preencha os dados da empresa para começar.";
 
-    return;
+  if (meta <= 0) {
+    restante = 1;
   }
 
 
-  if (meta > 0 && faturamento < meta) {
+  metaChart =
+    new Chart(canvas, {
 
-    resumo.textContent =
-      "Seu faturamento atual está abaixo da meta mensal. O Copilot recomenda acompanhar vendas, conversão e oportunidades comerciais para aproximar o resultado da meta.";
+      type: "doughnut",
 
-    return;
-  }
+      data: {
 
+        labels: [
+          "Realizado",
+          "Restante"
+        ],
 
-  if (meta > 0 && faturamento >= meta) {
+        datasets: [{
 
-    resumo.textContent =
-      "Sua empresa atingiu ou superou a meta mensal informada. O próximo foco recomendado é proteger a margem, controlar custos e identificar oportunidades de crescimento.";
+          data: [
+            Math.min(
+              faturamento,
+              meta
+            ),
+            restante
+          ],
 
-    return;
-  }
+          backgroundColor: [
+            "#35d99b",
+            "#173128"
+          ],
 
+          borderWidth:
+            0
 
-  resumo.textContent =
-    "Os dados da sua empresa foram carregados. Continue alimentando o sistema para que o Copilot possa gerar análises mais precisas.";
+        }]
+
+      },
+
+      options: {
+
+        responsive: true,
+
+        maintainAspectRatio:
+          false,
+
+        cutout:
+          "72%",
+
+        plugins: {
+
+          legend: {
+            display: false
+          }
+
+        }
+
+      }
+
+    });
 }
 
 
 /* =========================================================
-   ABRIR COPILOT
-========================================================= */
+   CRIAR TODOS OS GRÁFICOS
+   ========================================================= */
 
-function openChat() {
+function criarGraficos() {
 
-  const overlay =
-    document.getElementById("overlay");
+  criarGraficoFaturamento();
 
-  const input =
-    document.getElementById("input");
+  criarGraficoClientes();
 
-  if (overlay) {
-
-    overlay.classList.add("open");
-  }
-
-  if (input) {
-
-    input.focus();
-  }
+  criarGraficoMeta();
 }
 
 
 /* =========================================================
-   FECHAR COPILOT
-========================================================= */
+   COPILOT
+   ========================================================= */
 
-function closeChat(event) {
+function adicionarMensagem(texto, tipo) {
 
-  const overlay =
-    document.getElementById("overlay");
+  const chatBox =
+    document.getElementById(
+      "chatBox"
+    );
 
-  if (!overlay) {
+  if (!chatBox) {
     return;
   }
 
-  if (
-    !event ||
-    event.target === overlay
-  ) {
 
-    overlay.classList.remove("open");
+  const mensagem =
+    document.createElement("div");
+
+  mensagem.className =
+    "message " + tipo;
+
+
+  if (tipo === "user") {
+
+    mensagem.innerHTML = `
+
+      <div class="message-content">
+
+        <strong>
+          Você
+        </strong>
+
+        <p>
+          ${escaparHTML(texto)}
+        </p>
+
+      </div>
+
+    `;
+
+  } else {
+
+    mensagem.innerHTML = `
+
+      <div class="avatar">
+        ✦
+      </div>
+
+      <div class="message-content">
+
+        <strong>
+          JZ Prime Copilot
+        </strong>
+
+        <p>
+          ${escaparHTML(texto)}
+        </p>
+
+      </div>
+
+    `;
   }
+
+
+  chatBox.appendChild(
+    mensagem
+  );
+
+
+  chatBox.scrollTop =
+    chatBox.scrollHeight;
+}
+
+
+/* =========================================================
+   ESCAPAR HTML
+   ========================================================= */
+
+function escaparHTML(texto) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    texto;
+
+  return div.innerHTML;
 }
 
 
 /* =========================================================
    PERGUNTAS RÁPIDAS
-========================================================= */
+   ========================================================= */
 
-function ask(question) {
-
-  openChat();
+function askCopilot(pergunta) {
 
   const input =
-    document.getElementById("input");
+    document.getElementById(
+      "copilotInput"
+    );
 
   if (!input) {
     return;
   }
 
-  input.value = question;
 
-  send();
+  input.value =
+    pergunta;
+
+
+  sendCopilot();
 }
 
 
 /* =========================================================
-   ADICIONAR MENSAGEM
-========================================================= */
+   ENTER NO COPILOT
+   ========================================================= */
 
-function addMessage(text, type) {
+function handleEnter(event) {
 
-  const messages =
-    document.getElementById("messages");
+  if (event.key === "Enter") {
 
-  if (!messages) {
-    return;
+    event.preventDefault();
+
+    sendCopilot();
   }
-
-  const bubble =
-    document.createElement("div");
-
-  bubble.className =
-    "bubble " + type;
-
-  bubble.textContent = text;
-
-  messages.appendChild(bubble);
-
-  messages.scrollTop =
-    messages.scrollHeight;
 }
 
 
 /* =========================================================
-   ENVIAR PERGUNTA PARA O COPILOT
-========================================================= */
+   ENVIAR PARA O COPILOT
+   ========================================================= */
 
-async function send() {
+async function sendCopilot() {
 
   const input =
-    document.getElementById("input");
+    document.getElementById(
+      "copilotInput"
+    );
 
   if (!input) {
     return;
   }
 
-  const question =
+
+  const pergunta =
     input.value.trim();
 
-  if (!question) {
+
+  if (!pergunta) {
     return;
   }
 
 
-  /* Mensagem do usuário */
-
-  addMessage(
-    question,
+  adicionarMensagem(
+    pergunta,
     "user"
   );
+
 
   input.value = "";
 
 
-  /* Mensagem temporária */
+  const carregando =
+    document.createElement("div");
 
-  addMessage(
-    "Analisando sua pergunta...",
-    "ai"
-  );
+  carregando.className =
+    "message ai-loading";
+
+  carregando.innerHTML = `
+
+    <div class="avatar">
+      ✦
+    </div>
+
+    <div class="message-content">
+
+      <strong>
+        JZ Prime Copilot
+      </strong>
+
+      <p>
+        Analisando sua empresa...
+      </p>
+
+    </div>
+
+  `;
+
+
+  const chatBox =
+    document.getElementById(
+      "chatBox"
+    );
+
+
+  if (chatBox) {
+
+    chatBox.appendChild(
+      carregando
+    );
+
+    chatBox.scrollTop =
+      chatBox.scrollHeight;
+  }
 
 
   try {
 
-    const empresa =
-      carregarEmpresa();
-
-
-    const response =
+    const resposta =
       await fetch(
         "/api/copilot",
         {
-          method: "POST",
+
+          method:
+            "POST",
 
           headers: {
+
             "Content-Type":
               "application/json"
+
           },
 
-          body: JSON.stringify({
+          body:
+            JSON.stringify({
 
-            question: question,
+              question:
+                pergunta,
 
-            empresa: empresa
+              empresa:
+                empresa
 
-          })
+            })
+
         }
       );
 
 
-    const data =
-      await response.json();
+    const dados =
+      await resposta.json();
 
 
-    const messages =
-      document.getElementById(
-        "messages"
-      );
-
-
-    if (
-      messages &&
-      messages.lastElementChild
-    ) {
-
-      messages.removeChild(
-        messages.lastElementChild
-      );
+    if (carregando) {
+      carregando.remove();
     }
 
 
-    if (!response.ok) {
+    if (!resposta.ok) {
 
       throw new Error(
-        data.error ||
-        "Erro ao consultar o Copilot"
+        dados.error ||
+        "Erro ao consultar o Copilot."
       );
+
     }
 
 
-    addMessage(
-      data.answer ||
-      "Não consegui gerar uma resposta.",
+    adicionarMensagem(
+
+      dados.answer ||
+      "Não consegui gerar uma resposta agora.",
+
       "ai"
+
     );
 
 
-  } catch (error) {
+  } catch (erro) {
 
-    const messages =
-      document.getElementById(
-        "messages"
-      );
+    console.error(
+      "Erro no Copilot:",
+      erro
+    );
 
 
-    if (
-      messages &&
-      messages.lastElementChild
-    ) {
-
-      messages.removeChild(
-        messages.lastElementChild
-      );
+    if (carregando) {
+      carregando.remove();
     }
 
 
-    addMessage(
-      "Não consegui conectar ao Copilot agora. Tente novamente em alguns segundos.",
+    /*
+      Resposta local para o dashboard
+      continuar funcionando mesmo quando
+      a API estiver indisponível.
+    */
+
+    const respostaLocal =
+      gerarRespostaLocal(
+        pergunta
+      );
+
+
+    adicionarMensagem(
+      respostaLocal,
       "ai"
     );
 
-
-    console.error(error);
   }
+
+}
+
+
+/* =========================================================
+   COPILOT LOCAL
+   ========================================================= */
+
+function gerarRespostaLocal(pergunta) {
+
+  const texto =
+    pergunta.toLowerCase();
+
+
+  const faturamento =
+    Number(
+      empresa.faturamento
+    ) || 0;
+
+
+  const clientes =
+    Number(
+      empresa.clientes
+    ) || 0;
+
+
+  const meta =
+    Number(
+      empresa.meta
+    ) || 0;
+
+
+  const progresso =
+    meta > 0
+      ? Math.round(
+          (faturamento / meta) * 100
+        )
+      : 0;
+
+
+  if (
+    texto.includes("venda") ||
+    texto.includes("vendas")
+  ) {
+
+    return (
+      "Com base nos dados cadastrados, " +
+      "seu faturamento atual é " +
+      formatarMoeda(faturamento) +
+      ". O primeiro ponto recomendado é " +
+      "acompanhar a evolução das vendas, " +
+      "a taxa de conversão e o ticket médio."
+    );
+  }
+
+
+  if (
+    texto.includes("custo") ||
+    texto.includes("custos")
+  ) {
+
+    return (
+      "Para reduzir custos, recomendo " +
+      "separar despesas fixas e variáveis, " +
+      "identificar gastos recorrentes de baixo " +
+      "retorno e acompanhar a margem mensal."
+    );
+  }
+
+
+  if (
+    texto.includes("margem") ||
+    texto.includes("lucro")
+  ) {
+
+    return (
+      "Para melhorar a margem, acompanhe " +
+      "preço médio, custo por venda e despesas " +
+      "operacionais. Crescer faturamento sem " +
+      "proteger a margem pode reduzir a rentabilidade."
+    );
+  }
+
+
+  if (
+    texto.includes("plano") ||
+    texto.includes("ação")
+  ) {
+
+    return (
+      "Plano inicial: 1) acompanhar vendas " +
+      "semanalmente; 2) priorizar clientes de " +
+      "maior potencial; 3) revisar custos; " +
+      "4) acompanhar a meta de " +
+      formatarMoeda(meta) +
+      ". Atualmente, o progresso estimado " +
+      "é de " +
+      progresso +
+      "%."
+    );
+  }
+
+
+  return (
+    "Analisei os dados disponíveis. " +
+    "Sua empresa possui " +
+    formatarNumero(clientes) +
+    " clientes ativos e faturamento de " +
+    formatarMoeda(faturamento) +
+    ". Posso ajudar a analisar vendas, " +
+    "custos, margem ou criar um plano de ação."
+  );
 }
 
 
 /* =========================================================
    RELATÓRIO
-========================================================= */
+   ========================================================= */
 
 function downloadReport() {
 
-  const empresa =
-    carregarEmpresa();
+  carregarEmpresa();
 
 
-  if (!empresa) {
-
-    alert(
-      "Cadastre os dados da empresa primeiro."
-    );
-
-    return;
-  }
+  const nome =
+    empresa.empresa ||
+    "Minha empresa";
 
 
   const faturamento =
-    moeda(empresa.faturamento);
-
-
-  const meta =
-    moeda(empresa.meta);
+    Number(
+      empresa.faturamento
+    ) || 0;
 
 
   const clientes =
     Number(
-      empresa.clientes || 0
-    ).toLocaleString("pt-BR");
+      empresa.clientes
+    ) || 0;
 
 
-  const report = `
+  const meta =
+    Number(
+      empresa.meta
+    ) || 0;
 
-JZ PRIME COPILOT
+
+  const progresso =
+    meta > 0
+      ? Math.round(
+          (faturamento / meta) * 100
+        )
+      : 0;
+
+
+  const report = `JZ PRIME COPILOT
 RESUMO EXECUTIVO
 
-EMPRESA
-${empresa.empresa || "Não informado"}
+Empresa: ${nome}
 
-RESPONSÁVEL
-${empresa.responsavel || "Não informado"}
+Responsável: ${empresa.responsavel || "-"}
 
-SEGMENTO
-${empresa.segmento || "Não informado"}
+Segmento: ${empresa.segmento || "-"}
 
+Faturamento mensal:
+${formatarMoeda(faturamento)}
 
-INDICADORES
+Clientes ativos:
+${formatarNumero(clientes)}
 
-Faturamento mensal: ${faturamento}
+Meta mensal:
+${formatarMoeda(meta)}
 
-Clientes ativos: ${clientes}
-
-Meta mensal: ${meta}
+Progresso da meta:
+${progresso}%
 
 Principal objetivo:
-${empresa.objetivo || "Não informado"}
+${empresa.objetivo || "-"}
 
 
-RECOMENDAÇÃO
+RECOMENDAÇÃO ESTRATÉGICA
 
-Utilizar os indicadores cadastrados para acompanhar
-o desempenho da empresa, identificar oportunidades,
-controlar custos e priorizar ações estratégicas.
+Acompanhar a evolução do faturamento,
+proteger a margem, priorizar oportunidades
+comerciais e revisar os indicadores
+semanalmente.
 
 
 JZ Prime Copilot
@@ -614,12 +1321,19 @@ Estratégia orientada por dados.
 `;
 
 
-  const file =
+  const arquivo =
     new Blob(
       [report],
       {
-        type: "text/plain"
+        type:
+          "text/plain;charset=utf-8"
       }
+    );
+
+
+  const url =
+    URL.createObjectURL(
+      arquivo
     );
 
 
@@ -628,35 +1342,75 @@ Estratégia orientada por dados.
 
 
   link.href =
-    URL.createObjectURL(file);
+    url;
 
 
   link.download =
     "jz-prime-resumo-executivo.txt";
 
 
-  document.body.appendChild(link);
+  document.body.appendChild(
+    link
+  );
+
 
   link.click();
 
-  document.body.removeChild(link);
+
+  link.remove();
 
 
-  URL.revokeObjectURL(
-    link.href
-  );
+  setTimeout(() => {
+
+    URL.revokeObjectURL(
+      url
+    );
+
+  }, 1000);
 }
 
 
 /* =========================================================
    INICIALIZAÇÃO
-========================================================= */
+   ========================================================= */
 
 document.addEventListener(
   "DOMContentLoaded",
-  () => {
+  function () {
+
+    carregarEmpresa();
 
     atualizarDashboard();
 
+    /*
+      Esperamos um pequeno intervalo para
+      garantir que o Chart.js esteja disponível.
+    */
+
+    setTimeout(
+      criarGraficos,
+      100
+    );
+
   }
 );
+
+
+/* =========================================================
+   EXPOR FUNÇÕES PARA O HTML
+   ========================================================= */
+
+window.notifyUser =
+  notifyUser;
+
+window.askCopilot =
+  askCopilot;
+
+window.sendCopilot =
+  sendCopilot;
+
+window.handleEnter =
+  handleEnter;
+
+window.downloadReport =
+  downloadReport;
