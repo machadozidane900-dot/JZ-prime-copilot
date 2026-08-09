@@ -1,5 +1,5 @@
-
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 
 <head>
@@ -15,305 +15,297 @@
 
   <header class="header">
 
-    <div class="logo">JZ</div>
+```
+<div class="logo">JZ</div>
 
-    <h1>JZ Prime Copilot</h1>
+<h1>JZ Prime Copilot</h1>
 
-    <p>
-      Vamos conhecer sua empresa para que o Copilot
-      possa gerar análises e recomendações mais inteligentes.
-    </p>
+<p>
+  Vamos conhecer sua empresa para que o Copilot
+  possa gerar análises e recomendações mais inteligentes.
+</p>
+```
 
   </header>
 
-
   <section class="card">
 
-    <h2>Dados da empresa</h2>
+```
+<h2>Dados da empresa</h2>
 
-    <p class="card-description">
-      Preencha as informações abaixo. Elas serão usadas
-      para personalizar o seu painel estratégico.
-    </p>
-
-
-    <form id="empresaForm">
-
-      <div class="grid">
+<p class="card-description">
+  Preencha as informações abaixo. Elas serão usadas
+  para personalizar o seu painel estratégico.
+</p>
 
 
-        <div class="field full">
+<form id="empresaForm">
 
-          <label for="empresa">
-            Nome da empresa
-          </label>
-
-          <input
-            id="empresa"
-            type="text"
-            placeholder="Ex.: JZ Comércio e Serviços"
-            required
-          >
-
-        </div>
+  <div class="grid">
 
 
-        <div class="field">
+    <div class="field full">
 
-          <label for="responsavel">
-            Responsável
-          </label>
+      <label for="empresa">
+        Nome da empresa
+      </label>
 
-          <input
-            id="responsavel"
-            type="text"
-            placeholder="Nome do responsável"
-            required
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="segmento">
-            Segmento
-          </label>
-
-          <select id="segmento" required>
-
-            <option value="">
-              Selecione
-            </option>
-
-            <option>Comércio</option>
-            <option>Serviços</option>
-            <option>Indústria</option>
-            <option>Tecnologia</option>
-            <option>Construção</option>
-            <option>Saúde</option>
-            <option>Educação</option>
-            <option>Alimentação</option>
-            <option>Outro</option>
-
-          </select>
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="faturamento">
-            Faturamento mensal
-          </label>
-
-          <input
-            id="faturamento"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="Ex.: 50000"
-            required
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="clientes">
-            Clientes ativos
-          </label>
-
-          <input
-            id="clientes"
-            type="number"
-            min="0"
-            placeholder="Ex.: 120"
-            required
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="meta">
-            Meta mensal
-          </label>
-
-          <input
-            id="meta"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="Ex.: 70000"
-            required
-          >
-
-        </div>
-
-
-        <div class="field full">
-
-          <label for="objetivo">
-            Principal objetivo
-          </label>
-
-          <select id="objetivo" required>
-
-            <option value="">
-              Selecione
-            </option>
-
-            <option>
-              Aumentar vendas
-            </option>
-
-            <option>
-              Reduzir custos
-            </option>
-
-            <option>
-              Aumentar lucro
-            </option>
-
-            <option>
-              Organizar a empresa
-            </option>
-
-            <option>
-              Conquistar mais clientes
-            </option>
-
-            <option>
-              Melhorar a gestão financeira
-            </option>
-
-            <option>
-              Planejar crescimento
-            </option>
-
-          </select>
-
-        </div>
-
-
-      </div>
-
-
-      <button
-        class="button"
-        type="submit"
+      <input
+        id="empresa"
+        type="text"
+        placeholder="Ex.: JZ Comércio e Serviços"
+        required
       >
-        Continuar para o Dashboard →
-      </button>
+
+    </div>
 
 
-    </form>
+    <div class="field">
+
+      <label for="responsavel">
+        Responsável
+      </label>
+
+      <input
+        id="responsavel"
+        type="text"
+        placeholder="Nome do responsável"
+        required
+      >
+
+    </div>
 
 
-    <p class="note">
+    <div class="field">
 
-      Seus dados serão utilizados para personalizar
-      a experiência do JZ Prime Copilot.
+      <label for="segmento">
+        Segmento
+      </label>
 
-    </p>
-<script>
-document
-  .getElementById("empresaForm")
-  .addEventListener("submit", function(event) {
+      <select id="segmento" required>
 
-    event.preventDefault();
+        <option value="">
+          Selecione
+        </option>
 
-    const empresa = {
-      nome: document.getElementById("empresa").value,
-      responsavel: document.getElementById("responsavel").value,
-      segmento: document.getElementById("segmento").value,
-      faturamento: Number(
-        document.getElementById("faturamento").value
-      ),
-      clientes: Number(
-        document.getElementById("clientes").value
-      ),
-      meta: Number(
-        document.getElementById("meta").value
-      ),
-      objetivo: document.getElementById("objetivo").value,
-      oportunidades: 0
-    };
+        <option value="Comércio">
+          Comércio
+        </option>
 
-    localStorage.setItem(
-      "empresa",
-      JSON.stringify(empresa)
-    );
+        <option value="Serviços">
+          Serviços
+        </option>
 
-    window.location.href = "dashboard.html";
-});
-</script>
+        <option value="Indústria">
+          Indústria
+        </option>
+
+        <option value="Tecnologia">
+          Tecnologia
+        </option>
+
+        <option value="Construção">
+          Construção
+        </option>
+
+        <option value="Saúde">
+          Saúde
+        </option>
+
+        <option value="Educação">
+          Educação
+        </option>
+
+        <option value="Alimentação">
+          Alimentação
+        </option>
+
+        <option value="Outro">
+          Outro
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="field">
+
+      <label for="faturamento">
+        Faturamento mensal
+      </label>
+
+      <input
+        id="faturamento"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="Ex.: 50000"
+        required
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label for="clientes">
+        Clientes ativos
+      </label>
+
+      <input
+        id="clientes"
+        type="number"
+        min="0"
+        placeholder="Ex.: 120"
+        required
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label for="meta">
+        Meta mensal
+      </label>
+
+      <input
+        id="meta"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="Ex.: 70000"
+        required
+      >
+
+    </div>
+
+
+    <div class="field full">
+
+      <label for="objetivo">
+        Principal objetivo
+      </label>
+
+      <select id="objetivo" required>
+
+        <option value="">
+          Selecione
+        </option>
+
+        <option value="Aumentar vendas">
+          Aumentar vendas
+        </option>
+
+        <option value="Reduzir custos">
+          Reduzir custos
+        </option>
+
+        <option value="Aumentar lucro">
+          Aumentar lucro
+        </option>
+
+        <option value="Organizar a empresa">
+          Organizar a empresa
+        </option>
+
+        <option value="Conquistar mais clientes">
+          Conquistar mais clientes
+        </option>
+
+        <option value="Melhorar a gestão financeira">
+          Melhorar a gestão financeira
+        </option>
+
+        <option value="Planejar crescimento">
+          Planejar crescimento
+        </option>
+
+      </select>
+
+    </div>
+
+
+  </div>
+
+
+  <button
+    class="button"
+    type="submit"
+  >
+    Continuar para o Dashboard →
+  </button>
+
+
+</form>
+
+
+<p class="note">
+  Seus dados serão utilizados para personalizar
+  a experiência do JZ Prime Copilot.
+</p>
+```
 
   </section>
 
-
   <script>
 
-    document
-      .getElementById("empresaForm")
-      .addEventListener("submit", function(event) {
+    const form = document.getElementById("empresaForm");
 
-        event.preventDefault();
+    form.addEventListener("submit", function(event) {
 
-
-        const empresa = {
-
-          nome: document
-            .getElementById("empresa")
-            .value,
-
-          responsavel: document
-            .getElementById("responsavel")
-            .value,
-
-          segmento: document
-            .getElementById("segmento")
-            .value,
-
-          faturamento: Number(
-            document
-              .getElementById("faturamento")
-              .value
-          ),
-
-          clientes: Number(
-            document
-              .getElementById("clientes")
-              .value
-          ),
-
-          meta: Number(
-            document
-              .getElementById("meta")
-              .value
-          ),
-
-          objetivo: document
-            .getElementById("objetivo")
-            .value,
-
-          oportunidades: 0
-
-        };
+      event.preventDefault();
 
 
-        localStorage.setItem(
-          "empresa",
-          JSON.stringify(empresa)
-        );
+      const empresa = {
+
+        nome: document.getElementById("empresa").value.trim(),
+
+        responsavel: document
+          .getElementById("responsavel")
+          .value.trim(),
+
+        segmento: document
+          .getElementById("segmento")
+          .value,
+
+        faturamento: Number(
+          document
+            .getElementById("faturamento")
+            .value
+        ),
+
+        clientes: Number(
+          document
+            .getElementById("clientes")
+            .value
+        ),
+
+        meta: Number(
+          document
+            .getElementById("meta")
+            .value
+        ),
+
+        objetivo: document
+          .getElementById("objetivo")
+          .value,
+
+        oportunidades: 0
+
+      };
 
 
-        window.location.href = "dashboard.html";
+      localStorage.setItem(
+        "empresa",
+        JSON.stringify(empresa)
+      );
 
-      });
+
+      window.location.href = "dashboard.html";
+
+    });
 
   </script>
 
