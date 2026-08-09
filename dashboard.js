@@ -1,27 +1,46 @@
 /* =========================================================
    JZ PRIME COPILOT
    DASHBOARD.JS
-   ========================================================= */
+========================================================= */
 
 
 /* =========================================================
    DADOS DA EMPRESA
-   ========================================================= */
+========================================================= */
 
 let empresa = {};
 
+let faturamentoChart = null;
+let clientesChart = null;
+let metaChart = null;
+
+
 function carregarEmpresa() {
+
   try {
-    const dados = localStorage.getItem("empresa");
+
+    const dados =
+      localStorage.getItem("empresa");
 
     if (dados) {
+
       empresa = JSON.parse(dados);
+
     } else {
+
       empresa = {};
+
     }
+
   } catch (error) {
-    console.error("Erro ao carregar dados da empresa:", error);
+
+    console.error(
+      "Erro ao carregar dados da empresa:",
+      error
+    );
+
     empresa = {};
+
   }
 
   return empresa;
@@ -30,233 +49,299 @@ function carregarEmpresa() {
 
 /* =========================================================
    FORMATADORES
-   ========================================================= */
+========================================================= */
 
 function formatarMoeda(valor) {
-  const numero = Number(valor) || 0;
 
-  return numero.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-  });
+  const numero =
+    Number(valor) || 0;
+
+  return numero.toLocaleString(
+    "pt-BR",
+    {
+      style: "currency",
+      currency: "BRL"
+    }
+  );
 }
 
 
 function formatarNumero(valor) {
-  return (Number(valor) || 0).toLocaleString("pt-BR");
+
+  return (
+    Number(valor) || 0
+  ).toLocaleString("pt-BR");
+
 }
 
 
 /* =========================================================
-   PREENCHER DADOS DO DASHBOARD
-   ========================================================= */
+   ATUALIZAR DASHBOARD
+========================================================= */
 
 function atualizarDashboard() {
 
   carregarEmpresa();
 
-  const faturamento = Number(empresa.faturamento) || 0;
-  const clientes = Number(empresa.clientes) || 0;
-  const meta = Number(empresa.meta) || 0;
+  const faturamento =
+    Number(empresa.faturamento) || 0;
 
-  /*
-    Se não existir uma quantidade de oportunidades
-    cadastrada, usamos uma estimativa inicial.
-  */
+  const clientes =
+    Number(empresa.clientes) || 0;
+
+  const meta =
+    Number(empresa.meta) || 0;
+
+
   const oportunidades =
     Number(empresa.oportunidades) ||
-    Math.max(3, Math.round(clientes * 0.08));
+    Math.max(
+      3,
+      Math.round(clientes * 0.08)
+    );
 
 
-  /* ---------------------------------------------
-     FATURAMENTO
-  --------------------------------------------- */
+  /* FATURAMENTO */
 
   const faturamentoCard =
-    document.getElementById("faturamentoCard");
+    document.getElementById(
+      "faturamentoCard"
+    );
 
   if (faturamentoCard) {
+
     faturamentoCard.textContent =
       formatarMoeda(faturamento);
+
   }
 
 
-  /* ---------------------------------------------
-     CLIENTES
-  --------------------------------------------- */
+  /* CLIENTES */
 
   const clientesCard =
-    document.getElementById("clientesCard");
+    document.getElementById(
+      "clientesCard"
+    );
 
   if (clientesCard) {
+
     clientesCard.textContent =
       formatarNumero(clientes);
+
   }
 
 
-  /* ---------------------------------------------
-     OPORTUNIDADES
-  --------------------------------------------- */
+  /* OPORTUNIDADES */
 
   const oportunidadesCard =
-    document.getElementById("oportunidadesCard");
+    document.getElementById(
+      "oportunidadesCard"
+    );
 
   if (oportunidadesCard) {
+
     oportunidadesCard.textContent =
       formatarNumero(oportunidades);
+
   }
 
 
-  /* ---------------------------------------------
-     NOME DA EMPRESA
-  --------------------------------------------- */
+  /* FATURAMENTO PARA META */
+
+  const metaFaturamento =
+    document.getElementById(
+      "metaFaturamento"
+    );
+
+  if (metaFaturamento) {
+
+    metaFaturamento.textContent =
+      formatarMoeda(faturamento);
+
+  }
+
+
+  /* EMPRESA */
 
   const nomeEmpresa =
-    empresa.empresa || "Minha empresa";
+    empresa.empresa ||
+    "Minha empresa";
 
-  const elementosEmpresa =
-    document.querySelectorAll(
+  document
+    .querySelectorAll(
       "[data-empresa]"
+    )
+    .forEach(
+      elemento => {
+
+        elemento.textContent =
+          nomeEmpresa;
+
+      }
     );
 
-  elementosEmpresa.forEach((elemento) => {
-    elemento.textContent = nomeEmpresa;
-  });
 
+  /* RESPONSÁVEL */
 
-  /* ---------------------------------------------
-     RESPONSÁVEL
-  --------------------------------------------- */
-
-  const responsavel =
-    empresa.responsavel || "";
-
-  const elementosResponsavel =
-    document.querySelectorAll(
+  document
+    .querySelectorAll(
       "[data-responsavel]"
+    )
+    .forEach(
+      elemento => {
+
+        elemento.textContent =
+          empresa.responsavel || "";
+
+      }
     );
 
-  elementosResponsavel.forEach((elemento) => {
-    elemento.textContent = responsavel;
-  });
 
+  /* SEGMENTO */
 
-  /* ---------------------------------------------
-     SEGMENTO
-  --------------------------------------------- */
-
-  const segmento =
-    empresa.segmento || "";
-
-  const elementosSegmento =
-    document.querySelectorAll(
+  document
+    .querySelectorAll(
       "[data-segmento]"
+    )
+    .forEach(
+      elemento => {
+
+        elemento.textContent =
+          empresa.segmento || "";
+
+      }
     );
 
-  elementosSegmento.forEach((elemento) => {
-    elemento.textContent = segmento;
-  });
 
+  /* META */
 
-  /* ---------------------------------------------
-     META
-  --------------------------------------------- */
-
-  const elementosMeta =
-    document.querySelectorAll(
+  document
+    .querySelectorAll(
       "[data-meta]"
+    )
+    .forEach(
+      elemento => {
+
+        elemento.textContent =
+          formatarMoeda(meta);
+
+      }
     );
 
-  elementosMeta.forEach((elemento) => {
-    elemento.textContent =
-      formatarMoeda(meta);
-  });
 
-
-  /* ---------------------------------------------
-     OBJETIVO
-  --------------------------------------------- */
+  /* OBJETIVO */
 
   const objetivo =
     empresa.objetivo ||
     "Aumentar vendas";
 
-  const elementosObjetivo =
-    document.querySelectorAll(
+  document
+    .querySelectorAll(
       "[data-objetivo]"
+    )
+    .forEach(
+      elemento => {
+
+        elemento.textContent =
+          objetivo;
+
+      }
     );
 
-  elementosObjetivo.forEach((elemento) => {
-    elemento.textContent = objetivo;
-  });
 
-
-  /* ---------------------------------------------
-     PROGRESSO DA META
-  --------------------------------------------- */
+  /* PROGRESSO */
 
   let percentualMeta = 0;
 
   if (meta > 0) {
+
+    percentualMeta =
+      Math.round(
+        (faturamento / meta) * 100
+      );
+
     percentualMeta =
       Math.min(
         100,
-        Math.round((faturamento / meta) * 100)
+        Math.max(
+          0,
+          percentualMeta
+        )
       );
+
   }
 
-  const elementosProgresso =
-    document.querySelectorAll(
+
+  document
+    .querySelectorAll(
       "[data-progresso]"
+    )
+    .forEach(
+      elemento => {
+
+        elemento.textContent =
+          percentualMeta + "%";
+
+      }
     );
 
-  elementosProgresso.forEach((elemento) => {
-    elemento.textContent =
-      percentualMeta + "%";
-  });
 
-
-  const barrasProgresso =
-    document.querySelectorAll(
+  document
+    .querySelectorAll(
       "[data-progresso-bar]"
-    );
+    )
+    .forEach(
+      barra => {
 
-  barrasProgresso.forEach((barra) => {
-    barra.style.width =
-      percentualMeta + "%";
-  });
+        barra.style.width =
+          percentualMeta + "%";
+
+      }
+    );
 
 
   atualizarTextoPainel();
+
 }
 
 
 /* =========================================================
    TEXTO DO PAINEL
-   ========================================================= */
+========================================================= */
 
 function atualizarTextoPainel() {
 
   const saudacao =
-    document.getElementById("saudacao");
+    document.getElementById(
+      "saudacao"
+    );
 
   const descricao =
-    document.getElementById("descricaoPainel");
+    document.getElementById(
+      "descricaoPainel"
+    );
+
 
   const nome =
     empresa.responsavel ||
     empresa.empresa ||
     "";
 
+
   if (saudacao) {
 
     if (nome) {
+
       saudacao.textContent =
         "Visão geral, " + nome;
+
     } else {
+
       saudacao.textContent =
         "Visão geral";
+
     }
+
   }
 
 
@@ -273,14 +358,17 @@ function atualizarTextoPainel() {
 
       descricao.textContent =
         "Controle, análise e estratégia em um só lugar.";
+
     }
+
   }
+
 }
 
 
 /* =========================================================
-   NOTIFICAÇÕES
-   ========================================================= */
+   NOTIFICAÇÃO
+========================================================= */
 
 function notifyUser(mensagem) {
 
@@ -288,6 +376,7 @@ function notifyUser(mensagem) {
     document.getElementById(
       "jzNotification"
     );
+
 
   if (!notification) {
 
@@ -336,7 +425,9 @@ function notifyUser(mensagem) {
     document.body.appendChild(
       notification
     );
+
   }
+
 
   notification.textContent =
     mensagem;
@@ -344,26 +435,29 @@ function notifyUser(mensagem) {
   notification.style.opacity =
     "1";
 
+
   clearTimeout(
     notification._timer
   );
 
+
   notification._timer =
-    setTimeout(() => {
+    setTimeout(
+      () => {
 
-      notification.style.opacity =
-        "0";
+        notification.style.opacity =
+          "0";
 
-    }, 2800);
+      },
+      2800
+    );
+
 }
 
 
 /* =========================================================
    GRÁFICO DE FATURAMENTO
-   ========================================================= */
-
-let faturamentoChart = null;
-
+========================================================= */
 
 function criarGraficoFaturamento() {
 
@@ -372,27 +466,33 @@ function criarGraficoFaturamento() {
       "faturamentoChart"
     );
 
+
   if (!canvas) {
+
+    console.warn(
+      "Canvas faturamentoChart não encontrado."
+    );
+
     return;
+
   }
 
-  /*
-    Se Chart.js estiver disponível,
-    usamos o gráfico real.
-  */
 
   if (typeof Chart === "undefined") {
 
-    console.warn(
+    console.error(
       "Chart.js não foi carregado."
     );
 
     return;
+
   }
 
 
   if (faturamentoChart) {
+
     faturamentoChart.destroy();
+
   }
 
 
@@ -400,22 +500,17 @@ function criarGraficoFaturamento() {
     Number(empresa.faturamento) || 0;
 
 
-  /*
-    Criamos uma evolução visual
-    baseada no faturamento informado.
-  */
-
   const valores = [
 
-    faturamento * 0.68,
+    faturamento * 0.58,
 
-    faturamento * 0.74,
+    faturamento * 0.64,
 
     faturamento * 0.71,
 
-    faturamento * 0.82,
+    faturamento * 0.78,
 
-    faturamento * 0.91,
+    faturamento * 0.88,
 
     faturamento
 
@@ -423,115 +518,142 @@ function criarGraficoFaturamento() {
 
 
   faturamentoChart =
-    new Chart(canvas, {
+    new Chart(
+      canvas,
+      {
 
-      type: "bar",
+        type: "bar",
 
-      data: {
+        data: {
 
-        labels: [
-          "Jan",
-          "Fev",
-          "Mar",
-          "Abr",
-          "Mai",
-          "Jun"
-        ],
+          labels: [
+            "Jan",
+            "Fev",
+            "Mar",
+            "Abr",
+            "Mai",
+            "Jun"
+          ],
 
-        datasets: [{
+          datasets: [
 
-          label:
-            "Faturamento",
+            {
 
-          data:
-            valores,
+              label:
+                "Faturamento",
 
-          backgroundColor:
-            "#35d99b",
+              data:
+                valores,
 
-          borderRadius:
-            6,
+              backgroundColor:
+                "#35d99b",
 
-          borderSkipped:
-            false
+              hoverBackgroundColor:
+                "#4ae5ac",
 
-        }]
+              borderRadius:
+                7,
 
-      },
+              borderSkipped:
+                false
 
-      options: {
+            }
 
-        responsive: true,
+          ]
 
-        maintainAspectRatio:
-          false,
+        },
 
-        plugins: {
 
-          legend: {
-            display: false
-          },
+        options: {
 
-          tooltip: {
+          responsive: true,
 
-            callbacks: {
+          maintainAspectRatio: false,
 
-              label: function(context) {
 
-                return formatarMoeda(
-                  context.raw
-                );
+          plugins: {
+
+            legend: {
+              display: false
+            },
+
+
+            tooltip: {
+
+              callbacks: {
+
+                label:
+                  function(context) {
+
+                    return (
+                      " " +
+                      formatarMoeda(
+                        context.raw
+                      )
+                    );
+
+                  }
 
               }
 
             }
 
-          }
-
-        },
-
-        scales: {
-
-          y: {
-
-            beginAtZero: true,
-
-            ticks: {
-
-              color:
-                "#71857c",
-
-              callback:
-                function(value) {
-
-                  return formatarMoeda(
-                    value
-                  );
-
-                }
-
-            },
-
-            grid: {
-
-              color:
-                "rgba(255,255,255,.05)"
-
-            }
-
           },
 
-          x: {
 
-            ticks: {
+          scales: {
 
-              color:
-                "#71857c"
+            y: {
+
+              beginAtZero: true,
+
+              ticks: {
+
+                color:
+                  "#71857c",
+
+                font: {
+                  size: 10
+                },
+
+                callback:
+                  function(value) {
+
+                    return formatarMoeda(
+                      value
+                    );
+
+                  }
+
+              },
+
+              grid: {
+
+                color:
+                  "rgba(255,255,255,.05)"
+
+              }
 
             },
 
-            grid: {
-              display: false
+
+            x: {
+
+              ticks: {
+
+                color:
+                  "#71857c",
+
+                font: {
+                  size: 10
+                }
+
+              },
+
+              grid: {
+                display: false
+              }
+
             }
 
           }
@@ -539,17 +661,14 @@ function criarGraficoFaturamento() {
         }
 
       }
+    );
 
-    });
 }
 
 
 /* =========================================================
    GRÁFICO DE CLIENTES
-   ========================================================= */
-
-let clientesChart = null;
-
+========================================================= */
 
 function criarGraficoClientes() {
 
@@ -558,17 +677,33 @@ function criarGraficoClientes() {
       "clientesChart"
     );
 
+
   if (!canvas) {
+
+    console.warn(
+      "Canvas clientesChart não encontrado."
+    );
+
     return;
+
   }
 
+
   if (typeof Chart === "undefined") {
+
+    console.error(
+      "Chart.js não foi carregado."
+    );
+
     return;
+
   }
 
 
   if (clientesChart) {
+
     clientesChart.destroy();
+
   }
 
 
@@ -580,27 +715,37 @@ function criarGraficoClientes() {
 
     Math.max(
       1,
-      Math.round(clientes * 0.62)
+      Math.round(
+        clientes * 0.52
+      )
     ),
 
     Math.max(
       1,
-      Math.round(clientes * 0.70)
+      Math.round(
+        clientes * 0.61
+      )
     ),
 
     Math.max(
       1,
-      Math.round(clientes * 0.76)
+      Math.round(
+        clientes * 0.70
+      )
     ),
 
     Math.max(
       1,
-      Math.round(clientes * 0.83)
+      Math.round(
+        clientes * 0.79
+      )
     ),
 
     Math.max(
       1,
-      Math.round(clientes * 0.91)
+      Math.round(
+        clientes * 0.90
+      )
     ),
 
     clientes
@@ -609,94 +754,130 @@ function criarGraficoClientes() {
 
 
   clientesChart =
-    new Chart(canvas, {
+    new Chart(
+      canvas,
+      {
 
-      type: "line",
+        type: "line",
 
-      data: {
+        data: {
 
-        labels: [
-          "Jan",
-          "Fev",
-          "Mar",
-          "Abr",
-          "Mai",
-          "Jun"
-        ],
+          labels: [
+            "Jan",
+            "Fev",
+            "Mar",
+            "Abr",
+            "Mai",
+            "Jun"
+          ],
 
-        datasets: [{
+          datasets: [
 
-          label:
-            "Clientes",
+            {
 
-          data:
-            dados,
+              label:
+                "Clientes",
 
-          borderColor:
-            "#35d99b",
+              data:
+                dados,
 
-          backgroundColor:
-            "rgba(53,217,155,.12)",
+              borderColor:
+                "#35d99b",
 
-          borderWidth:
-            2,
+              backgroundColor:
+                "rgba(53,217,155,.12)",
 
-          fill:
-            true,
+              borderWidth:
+                3,
 
-          tension:
-            0.35,
+              fill:
+                true,
 
-          pointRadius:
-            3,
+              tension:
+                .35,
 
-          pointBackgroundColor:
-            "#35d99b"
+              pointRadius:
+                4,
 
-        }]
+              pointHoverRadius:
+                6,
 
-      },
+              pointBackgroundColor:
+                "#35d99b",
 
-      options: {
+              pointBorderColor:
+                "#06100c",
 
-        responsive: true,
+              pointBorderWidth:
+                2
 
-        maintainAspectRatio:
-          false,
+            }
 
-        plugins: {
-
-          legend: {
-            display: false
-          }
+          ]
 
         },
 
-        scales: {
 
-          y: {
+        options: {
 
-            beginAtZero: true,
+          responsive: true,
 
-            ticks: {
-              color: "#71857c"
-            },
+          maintainAspectRatio: false,
 
-            grid: {
-              color:
-                "rgba(255,255,255,.05)"
+
+          plugins: {
+
+            legend: {
+              display: false
             }
 
           },
 
-          x: {
 
-            ticks: {
-              color: "#71857c"
+          scales: {
+
+            y: {
+
+              beginAtZero: true,
+
+              ticks: {
+
+                color:
+                  "#71857c",
+
+                font: {
+                  size: 10
+                }
+
+              },
+
+              grid: {
+
+                color:
+                  "rgba(255,255,255,.05)"
+
+              }
+
             },
 
-            grid: {
-              display: false
+
+            x: {
+
+              ticks: {
+
+                color:
+                  "#71857c",
+
+                font: {
+                  size: 10
+                }
+
+              },
+
+              grid: {
+                display: false
+              }
+
             }
 
           }
@@ -704,17 +885,14 @@ function criarGraficoClientes() {
         }
 
       }
+    );
 
-    });
 }
 
 
 /* =========================================================
-   GRÁFICO DE META
-   ========================================================= */
-
-let metaChart = null;
-
+   GRÁFICO DA META
+========================================================= */
 
 function criarGraficoMeta() {
 
@@ -723,121 +901,239 @@ function criarGraficoMeta() {
       "metaChart"
     );
 
+
   if (!canvas) {
+
+    console.warn(
+      "Canvas metaChart não encontrado."
+    );
+
     return;
+
   }
 
+
   if (typeof Chart === "undefined") {
+
+    console.error(
+      "Chart.js não foi carregado."
+    );
+
     return;
+
   }
 
 
   if (metaChart) {
+
     metaChart.destroy();
+
   }
 
 
   const faturamento =
     Number(empresa.faturamento) || 0;
 
+
   const meta =
     Number(empresa.meta) || 0;
 
 
-  let restante =
+  if (meta <= 0) {
+
+    metaChart =
+      new Chart(
+        canvas,
+        {
+
+          type: "doughnut",
+
+          data: {
+
+            labels: [
+              "Sem meta",
+              "Restante"
+            ],
+
+            datasets: [
+
+              {
+
+                data: [
+                  0,
+                  1
+                ],
+
+                backgroundColor: [
+                  "#35d99b",
+                  "#173128"
+                ],
+
+                borderWidth: 0
+
+              }
+
+            ]
+
+          },
+
+
+          options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            cutout: "72%",
+
+            plugins: {
+
+              legend: {
+                display: false
+              }
+
+            }
+
+          }
+
+        }
+      );
+
+    return;
+
+  }
+
+
+  const realizado =
+    Math.min(
+      faturamento,
+      meta
+    );
+
+
+  const restante =
     Math.max(
       meta - faturamento,
       0
     );
 
 
-  if (meta <= 0) {
-    restante = 1;
-  }
-
-
   metaChart =
-    new Chart(canvas, {
+    new Chart(
+      canvas,
+      {
 
-      type: "doughnut",
+        type: "doughnut",
 
-      data: {
+        data: {
 
-        labels: [
-          "Realizado",
-          "Restante"
-        ],
-
-        datasets: [{
-
-          data: [
-            Math.min(
-              faturamento,
-              meta
-            ),
-            restante
+          labels: [
+            "Realizado",
+            "Restante"
           ],
 
-          backgroundColor: [
-            "#35d99b",
-            "#173128"
-          ],
+          datasets: [
 
-          borderWidth:
-            0
+            {
 
-        }]
+              data: [
+                realizado,
+                restante
+              ],
 
-      },
+              backgroundColor: [
+                "#35d99b",
+                "#173128"
+              ],
 
-      options: {
+              borderWidth: 0,
 
-        responsive: true,
+              hoverOffset: 5
 
-        maintainAspectRatio:
-          false,
+            }
 
-        cutout:
-          "72%",
+          ]
 
-        plugins: {
+        },
 
-          legend: {
-            display: false
+
+        options: {
+
+          responsive: true,
+
+          maintainAspectRatio: false,
+
+          cutout: "72%",
+
+
+          plugins: {
+
+            legend: {
+              display: false
+            },
+
+
+            tooltip: {
+
+              callbacks: {
+
+                label:
+                  function(context) {
+
+                    return (
+                      " " +
+                      formatarMoeda(
+                        context.raw
+                      )
+                    );
+
+                  }
+
+              }
+
+            }
+
           }
 
         }
 
       }
+    );
 
-    });
 }
 
 
 /* =========================================================
    CRIAR TODOS OS GRÁFICOS
-   ========================================================= */
+========================================================= */
 
 function criarGraficos() {
+
+  carregarEmpresa();
 
   criarGraficoFaturamento();
 
   criarGraficoClientes();
 
   criarGraficoMeta();
+
 }
 
 
 /* =========================================================
    COPILOT
-   ========================================================= */
+========================================================= */
 
-function adicionarMensagem(texto, tipo) {
+function adicionarMensagem(
+  texto,
+  tipo
+) {
 
   const chatBox =
     document.getElementById(
       "chatBox"
     );
+
 
   if (!chatBox) {
     return;
@@ -846,6 +1142,7 @@ function adicionarMensagem(texto, tipo) {
 
   const mensagem =
     document.createElement("div");
+
 
   mensagem.className =
     "message " + tipo;
@@ -890,6 +1187,7 @@ function adicionarMensagem(texto, tipo) {
       </div>
 
     `;
+
   }
 
 
@@ -900,12 +1198,13 @@ function adicionarMensagem(texto, tipo) {
 
   chatBox.scrollTop =
     chatBox.scrollHeight;
+
 }
 
 
 /* =========================================================
    ESCAPAR HTML
-   ========================================================= */
+========================================================= */
 
 function escaparHTML(texto) {
 
@@ -916,12 +1215,13 @@ function escaparHTML(texto) {
     texto;
 
   return div.innerHTML;
+
 }
 
 
 /* =========================================================
    PERGUNTAS RÁPIDAS
-   ========================================================= */
+========================================================= */
 
 function askCopilot(pergunta) {
 
@@ -929,6 +1229,7 @@ function askCopilot(pergunta) {
     document.getElementById(
       "copilotInput"
     );
+
 
   if (!input) {
     return;
@@ -940,27 +1241,32 @@ function askCopilot(pergunta) {
 
 
   sendCopilot();
+
 }
 
 
 /* =========================================================
-   ENTER NO COPILOT
-   ========================================================= */
+   ENTER
+========================================================= */
 
 function handleEnter(event) {
 
-  if (event.key === "Enter") {
+  if (
+    event.key === "Enter"
+  ) {
 
     event.preventDefault();
 
     sendCopilot();
+
   }
+
 }
 
 
 /* =========================================================
-   ENVIAR PARA O COPILOT
-   ========================================================= */
+   ENVIAR COPILOT
+========================================================= */
 
 async function sendCopilot() {
 
@@ -968,6 +1274,7 @@ async function sendCopilot() {
     document.getElementById(
       "copilotInput"
     );
+
 
   if (!input) {
     return;
@@ -995,8 +1302,10 @@ async function sendCopilot() {
   const carregando =
     document.createElement("div");
 
+
   carregando.className =
     "message ai-loading";
+
 
   carregando.innerHTML = `
 
@@ -1033,6 +1342,7 @@ async function sendCopilot() {
 
     chatBox.scrollTop =
       chatBox.scrollHeight;
+
   }
 
 
@@ -1110,21 +1420,14 @@ async function sendCopilot() {
     }
 
 
-    /*
-      Resposta local para o dashboard
-      continuar funcionando mesmo quando
-      a API estiver indisponível.
-    */
+    adicionarMensagem(
 
-    const respostaLocal =
       gerarRespostaLocal(
         pergunta
-      );
+      ),
 
-
-    adicionarMensagem(
-      respostaLocal,
       "ai"
+
     );
 
   }
@@ -1133,8 +1436,8 @@ async function sendCopilot() {
 
 
 /* =========================================================
-   COPILOT LOCAL
-   ========================================================= */
+   RESPOSTA LOCAL
+========================================================= */
 
 function gerarRespostaLocal(pergunta) {
 
@@ -1169,7 +1472,8 @@ function gerarRespostaLocal(pergunta) {
 
 
   if (
-    texto.includes("venda") ||
+    texto.includes("venda")
+    ||
     texto.includes("vendas")
   ) {
 
@@ -1177,57 +1481,62 @@ function gerarRespostaLocal(pergunta) {
       "Com base nos dados cadastrados, " +
       "seu faturamento atual é " +
       formatarMoeda(faturamento) +
-      ". O primeiro ponto recomendado é " +
-      "acompanhar a evolução das vendas, " +
-      "a taxa de conversão e o ticket médio."
+      ". Recomendo acompanhar " +
+      "conversão, ticket médio e evolução " +
+      "das vendas."
     );
+
   }
 
 
   if (
-    texto.includes("custo") ||
+    texto.includes("custo")
+    ||
     texto.includes("custos")
   ) {
 
     return (
       "Para reduzir custos, recomendo " +
       "separar despesas fixas e variáveis, " +
-      "identificar gastos recorrentes de baixo " +
-      "retorno e acompanhar a margem mensal."
+      "identificar gastos de baixo retorno " +
+      "e acompanhar a margem mensal."
     );
+
   }
 
 
   if (
-    texto.includes("margem") ||
+    texto.includes("margem")
+    ||
     texto.includes("lucro")
   ) {
 
     return (
       "Para melhorar a margem, acompanhe " +
-      "preço médio, custo por venda e despesas " +
-      "operacionais. Crescer faturamento sem " +
-      "proteger a margem pode reduzir a rentabilidade."
+      "preço médio, custo por venda e " +
+      "despesas operacionais."
     );
+
   }
 
 
   if (
-    texto.includes("plano") ||
+    texto.includes("plano")
+    ||
     texto.includes("ação")
   ) {
 
     return (
-      "Plano inicial: 1) acompanhar vendas " +
-      "semanalmente; 2) priorizar clientes de " +
-      "maior potencial; 3) revisar custos; " +
-      "4) acompanhar a meta de " +
+      "Plano inicial: acompanhar vendas " +
+      "semanalmente, priorizar clientes " +
+      "de maior potencial, revisar custos " +
+      "e acompanhar a meta de " +
       formatarMoeda(meta) +
-      ". Atualmente, o progresso estimado " +
-      "é de " +
+      ". O progresso atual é de " +
       progresso +
       "%."
     );
+
   }
 
 
@@ -1237,15 +1546,17 @@ function gerarRespostaLocal(pergunta) {
     formatarNumero(clientes) +
     " clientes ativos e faturamento de " +
     formatarMoeda(faturamento) +
-    ". Posso ajudar a analisar vendas, " +
-    "custos, margem ou criar um plano de ação."
+    ". Posso ajudar a analisar " +
+    "vendas, custos, margem ou criar " +
+    "um plano de ação."
   );
+
 }
 
 
 /* =========================================================
    RELATÓRIO
-   ========================================================= */
+========================================================= */
 
 function downloadReport() {
 
@@ -1288,9 +1599,13 @@ RESUMO EXECUTIVO
 
 Empresa: ${nome}
 
-Responsável: ${empresa.responsavel || "-"}
+Responsável: ${
+  empresa.responsavel || "-"
+}
 
-Segmento: ${empresa.segmento || "-"}
+Segmento: ${
+  empresa.segmento || "-"
+}
 
 Faturamento mensal:
 ${formatarMoeda(faturamento)}
@@ -1307,14 +1622,12 @@ ${progresso}%
 Principal objetivo:
 ${empresa.objetivo || "-"}
 
-
 RECOMENDAÇÃO ESTRATÉGICA
 
 Acompanhar a evolução do faturamento,
 proteger a margem, priorizar oportunidades
 comerciais e revisar os indicadores
 semanalmente.
-
 
 JZ Prime Copilot
 Estratégia orientada por dados.
@@ -1360,45 +1673,46 @@ Estratégia orientada por dados.
   link.remove();
 
 
-  setTimeout(() => {
+  setTimeout(
+    () => {
 
-    URL.revokeObjectURL(
-      url
-    );
+      URL.revokeObjectURL(
+        url
+      );
 
-  }, 1000);
+    },
+    1000
+  );
+
 }
 
 
 /* =========================================================
    INICIALIZAÇÃO
-   ========================================================= */
+========================================================= */
 
 document.addEventListener(
   "DOMContentLoaded",
-  function () {
+  function() {
 
     carregarEmpresa();
 
     atualizarDashboard();
 
     /*
-      Esperamos um pequeno intervalo para
-      garantir que o Chart.js esteja disponível.
+      O Chart.js está sendo carregado
+      antes deste arquivo no painel.html.
     */
 
-    setTimeout(
-      criarGraficos,
-      100
-    );
+    criarGraficos();
 
   }
 );
 
 
 /* =========================================================
-   EXPOR FUNÇÕES PARA O HTML
-   ========================================================= */
+   FUNÇÕES GLOBAIS
+========================================================= */
 
 window.notifyUser =
   notifyUser;
