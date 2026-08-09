@@ -1,308 +1,335 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>JZ Prime Copilot - Dados da empresa</title>
+  <meta charset="utf-8">
 
-  <link rel="stylesheet" href="styles.css">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Dados da empresa — JZ Prime Copilot</title>
+
+  <link rel="stylesheet" href="estilos.css">
+
 </head>
 
 <body>
 
   <header class="header">
 
-<div class="logo">JZ</div>
+    <div class="logo">
+      JZ
+    </div>
 
-<h1>JZ Prime Copilot</h1>
+    <h1>
+      JZ Prime Copilot
+    </h1>
 
-<p>
-  Vamos conhecer sua empresa para que o Copilot
-  possa gerar análises e recomendações mais inteligentes.
-</p>
-
+    <p>
+      Vamos conhecer sua empresa para que o Copilot
+      possa gerar análises e recomendações mais inteligentes.
+    </p>
 
   </header>
 
+
   <section class="card">
 
-<h2>Dados da empresa</h2>
+    <h2>
+      Dados da empresa
+    </h2>
 
-<p class="card-description">
-  Preencha as informações abaixo. Elas serão usadas
-  para personalizar o seu painel estratégico.
-</p>
-
-
-<form id="empresaForm">
-
-  <div class="grid">
+    <p class="card-description">
+      Preencha as informações abaixo. Elas serão usadas
+      para personalizar o seu painel estratégico.
+    </p>
 
 
-    <div class="field full">
+    <form id="empresaForm">
 
-      <label for="empresa">
-        Nome da empresa
-      </label>
+      <div class="grid">
 
-      <input
-        id="empresa"
-        type="text"
-        placeholder="Ex.: JZ Comércio e Serviços"
-        required
+
+        <!-- NOME DA EMPRESA -->
+
+        <div class="field full">
+
+          <label for="empresa">
+            Nome da empresa
+          </label>
+
+          <input
+            id="empresa"
+            type="text"
+            placeholder="Ex.: JZ Comércio e Serviços"
+            required
+          >
+
+        </div>
+
+
+        <!-- RESPONSÁVEL -->
+
+        <div class="field">
+
+          <label for="responsavel">
+            Responsável
+          </label>
+
+          <input
+            id="responsavel"
+            type="text"
+            placeholder="Nome do responsável"
+            required
+          >
+
+        </div>
+
+
+        <!-- SEGMENTO -->
+
+        <div class="field">
+
+          <label for="segmento">
+            Segmento
+          </label>
+
+          <select
+            id="segmento"
+            required
+          >
+
+            <option value="">
+              Selecione
+            </option>
+
+            <option value="Comércio">
+              Comércio
+            </option>
+
+            <option value="Serviços">
+              Serviços
+            </option>
+
+            <option value="Indústria">
+              Indústria
+            </option>
+
+            <option value="Tecnologia">
+              Tecnologia
+            </option>
+
+            <option value="Construção">
+              Construção
+            </option>
+
+            <option value="Saúde">
+              Saúde
+            </option>
+
+            <option value="Educação">
+              Educação
+            </option>
+
+            <option value="Alimentação">
+              Alimentação
+            </option>
+
+            <option value="Outro">
+              Outro
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- FATURAMENTO -->
+
+        <div class="field">
+
+          <label for="faturamento">
+            Faturamento mensal
+          </label>
+
+          <input
+            id="faturamento"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="Ex.: 50000"
+            required
+          >
+
+        </div>
+
+
+        <!-- CLIENTES -->
+
+        <div class="field">
+
+          <label for="clientes">
+            Clientes ativos
+          </label>
+
+          <input
+            id="clientes"
+            type="number"
+            min="0"
+            placeholder="Ex.: 120"
+            required
+          >
+
+        </div>
+
+
+        <!-- META -->
+
+        <div class="field">
+
+          <label for="meta">
+            Meta mensal
+          </label>
+
+          <input
+            id="meta"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="Ex.: 70000"
+            required
+          >
+
+        </div>
+
+
+        <!-- OBJETIVO -->
+
+        <div class="field full">
+
+          <label for="objetivo">
+            Principal objetivo
+          </label>
+
+          <select
+            id="objetivo"
+            required
+          >
+
+            <option value="">
+              Selecione
+            </option>
+
+            <option value="Aumentar vendas">
+              Aumentar vendas
+            </option>
+
+            <option value="Reduzir custos">
+              Reduzir custos
+            </option>
+
+            <option value="Aumentar lucro">
+              Aumentar lucro
+            </option>
+
+            <option value="Organizar a empresa">
+              Organizar a empresa
+            </option>
+
+            <option value="Conquistar mais clientes">
+              Conquistar mais clientes
+            </option>
+
+            <option value="Melhorar a gestão financeira">
+              Melhorar a gestão financeira
+            </option>
+
+            <option value="Planejar crescimento">
+              Planejar crescimento
+            </option>
+
+          </select>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- BOTÃO -->
+
+      <button
+        class="button"
+        type="submit"
       >
-
-    </div>
-
-
-    <div class="field">
-
-      <label for="responsavel">
-        Responsável
-      </label>
-
-      <input
-        id="responsavel"
-        type="text"
-        placeholder="Nome do responsável"
-        required
-      >
-
-    </div>
+        Continuar para o Dashboard →
+      </button>
 
 
-    <div class="field">
-
-      <label for="segmento">
-        Segmento
-      </label>
-
-      <select id="segmento" required>
-
-        <option value="">
-          Selecione
-        </option>
-
-        <option value="Comércio">
-          Comércio
-        </option>
-
-        <option value="Serviços">
-          Serviços
-        </option>
-
-        <option value="Indústria">
-          Indústria
-        </option>
-
-        <option value="Tecnologia">
-          Tecnologia
-        </option>
-
-        <option value="Construção">
-          Construção
-        </option>
-
-        <option value="Saúde">
-          Saúde
-        </option>
-
-        <option value="Educação">
-          Educação
-        </option>
-
-        <option value="Alimentação">
-          Alimentação
-        </option>
-
-        <option value="Outro">
-          Outro
-        </option>
-
-      </select>
-
-    </div>
+    </form>
 
 
-    <div class="field">
-
-      <label for="faturamento">
-        Faturamento mensal
-      </label>
-
-      <input
-        id="faturamento"
-        type="number"
-        min="0"
-        step="0.01"
-        placeholder="Ex.: 50000"
-        required
-      >
-
-    </div>
-
-
-    <div class="field">
-
-      <label for="clientes">
-        Clientes ativos
-      </label>
-
-      <input
-        id="clientes"
-        type="number"
-        min="0"
-        placeholder="Ex.: 120"
-        required
-      >
-
-    </div>
-
-
-    <div class="field">
-
-      <label for="meta">
-        Meta mensal
-      </label>
-
-      <input
-        id="meta"
-        type="number"
-        min="0"
-        step="0.01"
-        placeholder="Ex.: 70000"
-        required
-      >
-
-    </div>
-
-
-    <div class="field full">
-
-      <label for="objetivo">
-        Principal objetivo
-      </label>
-
-      <select id="objetivo" required>
-
-        <option value="">
-          Selecione
-        </option>
-
-        <option value="Aumentar vendas">
-          Aumentar vendas
-        </option>
-
-        <option value="Reduzir custos">
-          Reduzir custos
-        </option>
-
-        <option value="Aumentar lucro">
-          Aumentar lucro
-        </option>
-
-        <option value="Organizar a empresa">
-          Organizar a empresa
-        </option>
-
-        <option value="Conquistar mais clientes">
-          Conquistar mais clientes
-        </option>
-
-        <option value="Melhorar a gestão financeira">
-          Melhorar a gestão financeira
-        </option>
-
-        <option value="Planejar crescimento">
-          Planejar crescimento
-        </option>
-
-      </select>
-
-    </div>
-
-
-  </div>
-
-
-  <button
-    class="button"
-    type="submit"
-  >
-    Continuar para o Dashboard →
-  </button>
-
-
-</form>
-
-
-<p class="note">
-  Seus dados serão utilizados para personalizar
-  a experiência do JZ Prime Copilot.
-</p>
+    <p class="note">
+      Seus dados serão utilizados para personalizar
+      a experiência do JZ Prime Copilot.
+    </p>
 
   </section>
 
+
   <script>
 
-    const form = document.getElementById("empresaForm");
+    document
+      .getElementById("empresaForm")
+      .addEventListener("submit", function(event) {
 
-    form.addEventListener("submit", function(event) {
-
-      event.preventDefault();
-
-
-      const empresa = {
-
-        nome: document.getElementById("empresa").value.trim(),
-
-        responsavel: document
-          .getElementById("responsavel")
-          .value.trim(),
-
-        segmento: document
-          .getElementById("segmento")
-          .value,
-
-        faturamento: Number(
-          document
-            .getElementById("faturamento")
-            .value
-        ),
-
-        clientes: Number(
-          document
-            .getElementById("clientes")
-            .value
-        ),
-
-        meta: Number(
-          document
-            .getElementById("meta")
-            .value
-        ),
-
-        objetivo: document
-          .getElementById("objetivo")
-          .value,
-
-        oportunidades: 0
-
-      };
+        event.preventDefault();
 
 
-      localStorage.setItem(
-        "empresa",
-        JSON.stringify(empresa)
-      );
+        const empresa = {
+
+          nome:
+            document.getElementById("empresa").value.trim(),
+
+          responsavel:
+            document.getElementById("responsavel").value.trim(),
+
+          segmento:
+            document.getElementById("segmento").value,
+
+          faturamento:
+            Number(
+              document.getElementById("faturamento").value
+            ),
+
+          clientes:
+            Number(
+              document.getElementById("clientes").value
+            ),
+
+          meta:
+            Number(
+              document.getElementById("meta").value
+            ),
+
+          objetivo:
+            document.getElementById("objetivo").value
+
+        };
 
 
-      window.location.href = "dashboard.html";
+        localStorage.setItem(
+          "empresa",
+          JSON.stringify(empresa)
+        );
 
-    });
+
+        window.location.href = "dashboard.html";
+
+      });
 
   </script>
 
