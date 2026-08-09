@@ -969,7 +969,66 @@
     }
 
   </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const form = document.getElementById("empresaForm");
+  const button = document.getElementById("submitButton");
+
+  if (!form) {
+    console.error("Formulário empresaForm não encontrado.");
+    return;
+  }
+
+  form.addEventListener("submit", function (event) {
+
+    event.preventDefault();
+
+    const empresa = {
+      empresa: document.getElementById("empresa").value.trim(),
+      responsavel: document.getElementById("responsavel").value.trim(),
+      segmento: document.getElementById("segmento").value,
+      faturamento: Number(
+        document.getElementById("faturamento").value || 0
+      ),
+      clientes: Number(
+        document.getElementById("clientes").value || 0
+      ),
+      meta: Number(
+        document.getElementById("meta").value || 0
+      ),
+      objetivo: document.getElementById("objetivo").value
+    };
+
+    if (
+      !empresa.empresa ||
+      !empresa.responsavel ||
+      !empresa.segmento ||
+      !empresa.faturamento ||
+      !empresa.clientes ||
+      !empresa.meta ||
+      !empresa.objetivo
+    ) {
+      alert("Preencha todos os campos antes de continuar.");
+      return;
+    }
+
+    localStorage.setItem(
+      "empresa",
+      JSON.stringify(empresa)
+    );
+
+    if (button) {
+      button.textContent = "Salvando dados...";
+      button.disabled = true;
+    }
+
+    window.location.href = "dashboard.html";
+
+});
+});
+
+</script>
 
 </body>
-
 </html>
