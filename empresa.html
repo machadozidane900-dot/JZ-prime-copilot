@@ -1,50 +1,548 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-<head>
 
-  <meta charset="utf-8">
+<head>
+  <meta charset="UTF-8">
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1"
+    content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Dados da empresa — JZ Prime Copilot</title>
+  <title>JZ Prime Copilot — Sua empresa</title>
 
-  <link rel="stylesheet" href="estilos.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          #123d2b 0%,
+          #081710 35%,
+          #06100c 70%,
+          #040907 100%
+        );
+      color: #f5faf7;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    }
+
+    /* =========================
+       TOPO
+    ========================= */
+
+    .topbar {
+      width: 100%;
+      height: 76px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 6%;
+
+      border-bottom: 1px solid #183027;
+
+      background: rgba(6, 16, 12, 0.88);
+
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      text-decoration: none;
+      color: #f5faf7;
+
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid #35d99b;
+      border-radius: 10px;
+
+      color: #35d99b;
+
+      font-size: 13px;
+      font-weight: 900;
+
+      background: #0b1712;
+    }
+
+    .brand span {
+      color: #35d99b;
+    }
+
+    .back {
+      color: #8da098;
+      text-decoration: none;
+      font-size: 13px;
+
+      transition: 0.2s ease;
+    }
+
+    .back:hover {
+      color: #35d99b;
+    }
+
+    /* =========================
+       CABEÇALHO
+    ========================= */
+
+    .header {
+      width: min(900px, calc(100% - 40px));
+
+      margin: 0 auto;
+
+      padding: 70px 20px 35px;
+
+      text-align: center;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+
+      padding: 7px 12px;
+
+      border: 1px solid #214a39;
+      border-radius: 30px;
+
+      background: #0a1b14;
+
+      color: #43dca3;
+
+      font-size: 10px;
+      font-weight: 900;
+
+      letter-spacing: 1.5px;
+    }
+
+    .header h1 {
+      margin: 20px 0 14px;
+
+      color: #f5faf7;
+
+      font-size: clamp(36px, 5vw, 52px);
+
+      line-height: 1;
+
+      letter-spacing: -2.5px;
+    }
+
+    .header h1 span {
+      color: #35d99b;
+    }
+
+    .header p {
+      max-width: 650px;
+
+      margin: 0 auto;
+
+      color: #8fa39a;
+
+      font-size: 15px;
+
+      line-height: 1.7;
+    }
+
+    /* =========================
+       CARD
+    ========================= */
+
+    .card {
+      width: min(920px, calc(100% - 40px));
+
+      margin: 10px auto 80px;
+
+      padding: 40px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #0d1d16,
+          #09140f
+        );
+
+      border: 1px solid #1b382c;
+
+      border-radius: 22px;
+
+      box-shadow:
+        0 30px 90px rgba(0, 0, 0, 0.55),
+        0 0 60px rgba(53, 217, 155, 0.025);
+    }
+
+    .card-top {
+      margin-bottom: 32px;
+    }
+
+    .card-top h2 {
+      margin: 0 0 8px;
+
+      color: #f5faf7;
+
+      font-size: 24px;
+
+      letter-spacing: -0.5px;
+    }
+
+    .card-top p {
+      margin: 0;
+
+      color: #849a90;
+
+      font-size: 14px;
+
+      line-height: 1.6;
+    }
+
+    /* =========================
+       FORMULÁRIO
+    ========================= */
+
+    .grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 22px;
+    }
+
+    .field {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      color: #dce8e3;
+
+      font-size: 13px;
+
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+
+      height: 50px;
+
+      padding: 0 15px;
+
+      border: 1px solid #29463b;
+
+      border-radius: 11px;
+
+      outline: none;
+
+      background: #06100c;
+
+      color: #f5faf7;
+
+      font-family: inherit;
+
+      font-size: 14px;
+
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .field input::placeholder {
+      color: #5d746a;
+    }
+
+    .field input:hover,
+    .field select:hover {
+      border-color: #36594b;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: #35d99b;
+
+      background: #07140f;
+
+      box-shadow:
+        0 0 0 3px rgba(53, 217, 155, 0.08);
+    }
+
+    .field select {
+      cursor: pointer;
+    }
+
+    /* =========================
+       SEÇÃO DE INFORMAÇÃO
+    ========================= */
+
+    .info-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+
+      margin-top: 28px;
+
+      padding: 15px 16px;
+
+      border: 1px solid #1b3d2f;
+
+      border-radius: 12px;
+
+      background: #091a13;
+    }
+
+    .info-icon {
+      flex-shrink: 0;
+
+      width: 28px;
+      height: 28px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 8px;
+
+      background: #0d2a1d;
+
+      color: #35d99b;
+
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .info-box p {
+      margin: 0;
+
+      color: #82978e;
+
+      font-size: 12px;
+
+      line-height: 1.6;
+    }
+
+    /* =========================
+       BOTÃO
+    ========================= */
+
+    .button {
+      width: 100%;
+
+      height: 54px;
+
+      margin-top: 28px;
+
+      border: 0;
+
+      border-radius: 11px;
+
+      background: #35d99b;
+
+      color: #04100b;
+
+      font-family: inherit;
+
+      font-size: 14px;
+
+      font-weight: 900;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .button:hover {
+      background: #48e3aa;
+
+      transform: translateY(-1px);
+
+      box-shadow:
+        0 14px 35px rgba(53, 217, 155, 0.16);
+    }
+
+    .button:active {
+      transform: translateY(0);
+    }
+
+    .button.loading {
+      opacity: 0.7;
+
+      cursor: wait;
+    }
+
+    /* =========================
+       RODAPÉ
+    ========================= */
+
+    .note {
+      margin: 20px 0 0;
+
+      text-align: center;
+
+      color: #60756c;
+
+      font-size: 11px;
+
+      line-height: 1.6;
+    }
+
+    /* =========================
+       RESPONSIVO
+    ========================= */
+
+    @media (max-width: 650px) {
+
+      .topbar {
+        padding: 0 5%;
+      }
+
+      .back {
+        display: none;
+      }
+
+      .header {
+        width: calc(100% - 24px);
+
+        padding: 48px 12px 28px;
+      }
+
+      .header h1 {
+        font-size: 36px;
+
+        letter-spacing: -1.8px;
+      }
+
+      .header p {
+        font-size: 14px;
+      }
+
+      .card {
+        width: calc(100% - 24px);
+
+        padding: 25px;
+
+        border-radius: 18px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  <header class="header">
+  <!-- =========================
+       TOPO
+  ========================= -->
 
-    <div class="logo">
-      JZ
-    </div>
+  <header class="topbar">
 
-    <h1>
-      JZ Prime Copilot
-    </h1>
+    <a class="brand" href="index.html">
 
-    <p>
-      Vamos conhecer sua empresa para que o Copilot
-      possa gerar análises e recomendações mais inteligentes.
-    </p>
+      <div class="brand-icon">
+        JZ
+      </div>
+
+      <div>
+        JZ PRIME <span>Copilot</span>
+      </div>
+
+    </a>
+
+    <a class="back" href="index.html">
+      ← Voltar para o site
+    </a>
 
   </header>
 
 
-  <section class="card">
+  <!-- =========================
+       CABEÇALHO
+  ========================= -->
 
-    <h2>
-      Dados da empresa
-    </h2>
+  <section class="header">
 
-    <p class="card-description">
-      Preencha as informações abaixo. Elas serão usadas
-      para personalizar o seu painel estratégico.
+    <div class="header-badge">
+      ✦ CONFIGURAÇÃO INICIAL
+    </div>
+
+    <h1>
+      Vamos conhecer sua <span>empresa.</span>
+    </h1>
+
+    <p>
+      Preencha os dados abaixo para que o JZ Prime Copilot
+      possa personalizar seu dashboard e gerar análises
+      mais inteligentes para o seu negócio.
     </p>
+
+  </section>
+
+
+  <!-- =========================
+       FORMULÁRIO
+  ========================= -->
+
+  <main class="card">
+
+    <div class="card-top">
+
+      <h2>
+        Dados da empresa
+      </h2>
+
+      <p>
+        Essas informações serão usadas para montar
+        seus indicadores e personalizar as recomendações
+        do Copilot.
+      </p>
+
+    </div>
 
 
     <form id="empresaForm">
@@ -62,8 +560,10 @@
 
           <input
             id="empresa"
+            name="empresa"
             type="text"
             placeholder="Ex.: JZ Comércio e Serviços"
+            autocomplete="organization"
             required
           >
 
@@ -80,8 +580,10 @@
 
           <input
             id="responsavel"
+            name="responsavel"
             type="text"
             placeholder="Nome do responsável"
+            autocomplete="name"
             required
           >
 
@@ -98,6 +600,7 @@
 
           <select
             id="segmento"
+            name="segmento"
             required
           >
 
@@ -156,10 +659,12 @@
 
           <input
             id="faturamento"
+            name="faturamento"
             type="number"
             min="0"
             step="0.01"
             placeholder="Ex.: 50000"
+            inputmode="decimal"
             required
           >
 
@@ -176,9 +681,11 @@
 
           <input
             id="clientes"
+            name="clientes"
             type="number"
             min="0"
             placeholder="Ex.: 120"
+            inputmode="numeric"
             required
           >
 
@@ -195,10 +702,12 @@
 
           <input
             id="meta"
+            name="meta"
             type="number"
             min="0"
             step="0.01"
             placeholder="Ex.: 70000"
+            inputmode="decimal"
             required
           >
 
@@ -215,6 +724,7 @@
 
           <select
             id="objetivo"
+            name="objetivo"
             required
           >
 
@@ -254,6 +764,22 @@
 
         </div>
 
+      </div>
+
+
+      <!-- AVISO -->
+
+      <div class="info-box">
+
+        <div class="info-icon">
+          ✦
+        </div>
+
+        <p>
+          O JZ Prime Copilot usará esses dados para
+          personalizar os indicadores, metas e análises
+          exibidos no seu dashboard.
+        </p>
 
       </div>
 
@@ -263,6 +789,7 @@
       <button
         class="button"
         type="submit"
+        id="submitButton"
       >
         Continuar para o Dashboard →
       </button>
@@ -272,65 +799,177 @@
 
 
     <p class="note">
-      Seus dados serão utilizados para personalizar
-      a experiência do JZ Prime Copilot.
+      Seus dados ficam salvos neste dispositivo para
+      personalizar sua experiência no JZ Prime Copilot.
     </p>
 
-  </section>
+  </main>
 
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
 
   <script>
 
-    document
-      .getElementById("empresaForm")
-      .addEventListener("submit", function(event) {
+    const form = document.getElementById("empresaForm");
 
-        event.preventDefault();
+    const button = document.getElementById("submitButton");
 
 
-        const empresa = {
+    form.addEventListener("submit", function(event) {
 
-          nome:
-            document.getElementById("empresa").value.trim(),
-
-          responsavel:
-            document.getElementById("responsavel").value.trim(),
-
-          segmento:
-            document.getElementById("segmento").value,
-
-          faturamento:
-            Number(
-              document.getElementById("faturamento").value
-            ),
-
-          clientes:
-            Number(
-              document.getElementById("clientes").value
-            ),
-
-          meta:
-            Number(
-              document.getElementById("meta").value
-            ),
-
-          objetivo:
-            document.getElementById("objetivo").value
-
-        };
+      event.preventDefault();
 
 
-        localStorage.setItem(
-          "empresa",
-          JSON.stringify(empresa)
-        );
+      const empresa = document
+        .getElementById("empresa")
+        .value
+        .trim();
 
+      const responsavel = document
+        .getElementById("responsavel")
+        .value
+        .trim();
+
+      const segmento = document
+        .getElementById("segmento")
+        .value;
+
+      const faturamento = Number(
+        document
+          .getElementById("faturamento")
+          .value
+      );
+
+      const clientes = Number(
+        document
+          .getElementById("clientes")
+          .value
+      );
+
+      const meta = Number(
+        document
+          .getElementById("meta")
+          .value
+      );
+
+      const objetivo = document
+        .getElementById("objetivo")
+        .value;
+
+
+      const dadosEmpresa = {
+
+        empresa: empresa,
+
+        responsavel: responsavel,
+
+        segmento: segmento,
+
+        faturamento: faturamento,
+
+        clientes: clientes,
+
+        meta: meta,
+
+        objetivo: objetivo,
+
+        atualizadoEm: new Date().toISOString()
+
+      };
+
+
+      localStorage.setItem(
+        "jzPrimeEmpresa",
+        JSON.stringify(dadosEmpresa)
+      );
+
+
+      button.classList.add("loading");
+
+      button.textContent = "Salvando dados...";
+
+
+      setTimeout(function() {
 
         window.location.href = "dashboard.html";
 
-      });
+      }, 500);
+
+    });
+
+
+    /*
+      Se já existirem dados salvos,
+      preenche automaticamente o formulário.
+    */
+
+    const dadosSalvos =
+      localStorage.getItem("jzPrimeEmpresa");
+
+
+    if (dadosSalvos) {
+
+      try {
+
+        const dados =
+          JSON.parse(dadosSalvos);
+
+
+        if (dados.empresa) {
+          document.getElementById("empresa").value =
+            dados.empresa;
+        }
+
+
+        if (dados.responsavel) {
+          document.getElementById("responsavel").value =
+            dados.responsavel;
+        }
+
+
+        if (dados.segmento) {
+          document.getElementById("segmento").value =
+            dados.segmento;
+        }
+
+
+        if (dados.faturamento !== undefined) {
+          document.getElementById("faturamento").value =
+            dados.faturamento;
+        }
+
+
+        if (dados.clientes !== undefined) {
+          document.getElementById("clientes").value =
+            dados.clientes;
+        }
+
+
+        if (dados.meta !== undefined) {
+          document.getElementById("meta").value =
+            dados.meta;
+        }
+
+
+        if (dados.objetivo) {
+          document.getElementById("objetivo").value =
+            dados.objetivo;
+        }
+
+      } catch (erro) {
+
+        console.log(
+          "Não foi possível carregar os dados salvos."
+        );
+
+      }
+
+    }
 
   </script>
 
 </body>
+
 </html>
