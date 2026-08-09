@@ -1,129 +1,125 @@
+javascript
 function openChat() {
-const overlay = document.getElementById("overlay");
-const input = document.getElementById("input");
+  const overlay = document.getElementById("overlay");
+  const input = document.getElementById("input");
 
-if (overlay) {
-overlay.classList.add("open");
-}
+  if (overlay) {
+    overlay.classList.add("open");
+  }
 
-if (input) {
-input.focus();
-}
+  if (input) {
+    input.focus();
+  }
 }
 
 function closeChat(event) {
-const overlay = document.getElementById("overlay");
+  const overlay = document.getElementById("overlay");
 
-if (!overlay) {
-return;
-}
+  if (!overlay) {
+    return;
+  }
 
-if (!event || event.target === overlay) {
-overlay.classList.remove("open");
-}
+  if (!event || event.target === overlay) {
+    overlay.classList.remove("open");
+  }
 }
 
 function ask(question) {
-openChat();
+  openChat();
 
-const input = document.getElementById("input");
+  const input = document.getElementById("input");
 
-if (!input) {
-return;
-}
+  if (!input) {
+    return;
+  }
 
-input.value = question;
-send();
+  input.value = question;
+  send();
 }
 
 function addMessage(text, type) {
-const messages = document.getElementById("messages");
+  const messages = document.getElementById("messages");
 
-if (!messages) {
-return;
-}
+  if (!messages) {
+    return;
+  }
 
-const bubble = document.createElement("div");
+  const bubble = document.createElement("div");
 
-bubble.className = "bubble " + type;
-bubble.textContent = text;
+  bubble.className = "bubble " + type;
+  bubble.textContent = text;
 
-messages.appendChild(bubble);
-messages.scrollTop = messages.scrollHeight;
+  messages.appendChild(bubble);
+  messages.scrollTop = messages.scrollHeight;
 }
 
 async function send() {
-const input = document.getElementById("input");
+  const input = document.getElementById("input");
 
-if (!input) {
-return;
-}
+  if (!input) {
+    return;
+  }
 
-const question = input.value.trim();
+  const question = input.value.trim();
 
-if (!question) {
-return;
-}
+  if (!question) {
+    return;
+  }
 
-addMessage(question, "user");
+  addMessage(question, "user");
 
-input.value = "";
+  input.value = "";
 
-addMessage("Analisando sua pergunta...", "ai");
+  addMessage("Analisando sua pergunta...", "ai");
 
-try {
-const response = await fetch("/api/copilot", {
-method: "POST",
-headers: {
-"Content-Type": "application/json"
-},
-body: JSON.stringify({
-question: question
-})
-});
+  try {
+    const response = await fetch("/api/copilot", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        question: question
+      })
+    });
 
+    const data = await response.json();
 
-const data = await response.json();
+    const messages = document.getElementById("messages");
 
-const messages = document.getElementById("messages");
+    if (messages && messages.lastElementChild) {
+      messages.removeChild(messages.lastElementChild);
+    }
 
-if (messages && messages.lastElementChild) {
-  messages.removeChild(messages.lastElementChild);
-}
+    if (!response.ok) {
+      throw new Error(
+        data.error || "Erro ao consultar o Copilot"
+      );
+    }
 
-if (!response.ok) {
-  throw new Error(
-    data.error || "Erro ao consultar o Copilot"
-  );
-}
+    addMessage(
+      data.answer || "Não consegui gerar uma resposta.",
+      "ai"
+    );
 
-addMessage(
-  data.answer || "Não consegui gerar uma resposta.",
-  "ai"
-);
+  } catch (error) {
+    const messages = document.getElementById("messages");
 
+    if (messages && messages.lastElementChild) {
+      messages.removeChild(messages.lastElementChild);
+    }
 
-} catch (error) {
-const messages = document.getElementById("messages");
+    addMessage(
+      "Não consegui conectar ao Copilot agora. Tente novamente em alguns segundos.",
+      "ai"
+    );
 
-
-if (messages && messages.lastElementChild) {
-  messages.removeChild(messages.lastElementChild);
-}
-
-addMessage(
-  "Não consegui conectar ao Copilot agora. Tente novamente em alguns segundos.",
-  "ai"
-);
-
-console.error(error);
-
-
-}
+    console.error(error);
+  }
 }
 
 function downloadReport() {
-const report = `JZ PRIME COPILOT — RESUMO EXECUTIVO
+  const report = `JZ PRIME COPILOT — RESUMO EXECUTIVO
 
 Faturamento: R$ 284.620
 Lucro estimado: R$ 58.420
@@ -138,31 +134,62 @@ ações de maior impacto.
 JZ Prime Copilot
 Estratégia orientada por dados.`;
 
-const file = new Blob([report], {
-type: "text/plain"
-});
+  const file = new Blob([report], {
+    type: "text/plain"
+  });
 
-const link = document.createElement("a");
+  const link = document.createElement("a");
 
-link.href = URL.createObjectURL(file);
-link.download = "jz-prime-resumo-executivo.txt";
+  link.href = URL.createObjectURL(file);
+  link.download = "jz-prime-resumo-executivo.txt";
 
-link.click();
+  link.click();
+
+  URL.revokeObjectURL(link.href);
+}
+
+
+/* ================================
+   CARREGAR DADOS DA EMPRESA
+================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
-    const empresa = JSON.parse(localStorage.getItem("empresa"));
+  const empresa = JSON.parse(
+    localStorage.getItem("empresa")
+  );
 
-    if (!empresa) return;
+  if (!empresa) {
+    return;
+  }
 
-    const faturamento = document.getElementById("faturamentoCard");
-    const clientes = document.getElementById("clientesCard");
+  const faturamento = document.getElementById(
+    "faturamentoCard"
+  );
 
-    if (faturamento) {
-        faturamento.textContent =
-            "R$ " + Number(empresa.faturamento || 0).toLocaleString("pt-BR");
-    }
+  const clientes = document.getElementById(
+    "clientesCard"
+  );
 
-    if (clientes) {
-        clientes.textContent = empresa.clientes || 0;
-    }
+  const oportunidades = document.getElementById(
+    "oportunidadesCard"
+  );
+
+  if (faturamento) {
+    faturamento.textContent =
+      "R$ " +
+      Number(
+        empresa.faturamento || 0
+      ).toLocaleString("pt-BR");
+  }
+
+  if (clientes) {
+    clientes.textContent =
+      empresa.clientes || 0;
+  }
+
+  if (oportunidades) {
+    oportunidades.textContent =
+      empresa.oportunidades || 0;
+  }
 });
+```
