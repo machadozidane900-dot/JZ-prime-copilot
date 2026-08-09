@@ -1,8 +1,3 @@
-/* =========================================================
-   JZ PRIME COPILOT
-   DASHBOARD — dashboard.css
-========================================================= */
-
 * {
   box-sizing: border-box;
 }
@@ -14,7 +9,13 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: #06100c;
+  background:
+    radial-gradient(
+      circle at top right,
+      #0d291d 0%,
+      #06100c 38%,
+      #040907 100%
+    );
   color: #edf6f1;
   font-family:
     Inter,
@@ -24,7 +25,6 @@ body {
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  font-size: 14px;
 }
 
 button,
@@ -41,9 +41,9 @@ button {
 }
 
 
-/* =========================================================
+/* =====================================================
    SIDEBAR
-========================================================= */
+===================================================== */
 
 .sidebar {
   position: fixed;
@@ -53,9 +53,10 @@ button {
 
   width: 245px;
 
-  padding: 24px 15px;
+  padding: 25px 15px;
 
   background: #07110d;
+
   border-right: 1px solid #182a23;
 
   display: flex;
@@ -69,10 +70,11 @@ button {
   align-items: center;
   gap: 11px;
 
-  padding: 4px 8px;
+  padding: 0 8px;
 
   text-decoration: none;
-  color: #ffffff;
+
+  color: #fff;
 }
 
 .brand-icon {
@@ -82,52 +84,49 @@ button {
   display: grid;
   place-items: center;
 
-  border: 1px solid #30d997;
+  border: 1px solid #35d99b;
   border-radius: 10px;
 
-  color: #30d997;
+  color: #35d99b;
 
+  font-size: 12px;
   font-weight: 900;
-  font-size: 13px;
 
-  background: #0a1712;
-}
+  background: #0a1812;
 
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-
-  line-height: 1;
+  box-shadow:
+    0 0 25px rgba(53, 217, 155, .08);
 }
 
 .brand-text strong {
-  color: #ffffff;
+  display: block;
+
+  color: #fff;
+
   font-size: 13px;
-  letter-spacing: 0.5px;
+  letter-spacing: .5px;
 }
 
 .brand-text span {
+  display: block;
+
+  margin-top: 3px;
+
   color: #35d99b;
-  font-size: 11px;
+
+  font-size: 10px;
   font-weight: 700;
 }
 
-
-/* =========================================================
-   MENU
-========================================================= */
-
 .menu-title {
-  margin: 38px 8px 12px;
+  margin: 40px 8px 12px;
 
-  color: #4cdda5;
+  color: #52675e;
 
   font-size: 9px;
   font-weight: 900;
 
   letter-spacing: 1.7px;
-  text-transform: uppercase;
 }
 
 .menu {
@@ -140,39 +139,44 @@ button {
 
   display: flex;
   align-items: center;
-  gap: 11px;
 
-  padding: 11px 12px;
+  gap: 12px;
+
+  padding: 12px;
 
   border: 1px solid transparent;
   border-radius: 9px;
 
   background: transparent;
 
-  color: #82968d;
+  color: #81958c;
 
-  font-size: 12px;
   text-align: left;
 
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
+  transition: .2s ease;
 }
 
-.menu button:hover {
-  background: #0c1c15;
-  color: #ffffff;
+.menu button span {
+  width: 22px;
+
+  text-align: center;
 }
 
+.menu button b {
+  font-size: 12px;
+}
+
+.menu button:hover,
 .menu button.active {
-  background: #10221a;
-  border-color: #1c382c;
-  color: #ffffff;
+  background: #10231a;
+
+  border-color: #18372b;
+
+  color: #fff;
 }
 
-.menu button:first-letter {
-  color: #35d99b;
+.menu button.active span {
+  filter: saturate(1.5);
 }
 
 .sidebar-bottom {
@@ -180,9 +184,10 @@ button {
 }
 
 .user-box {
-  padding: 13px;
+  padding: 14px;
 
   border: 1px solid #1b3128;
+
   border-radius: 11px;
 
   background: #0a1712;
@@ -191,43 +196,59 @@ button {
 .user-box strong {
   display: block;
 
-  margin-bottom: 5px;
+  color: #dcebe4;
 
-  color: #dce9e3;
   font-size: 11px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .user-box span {
-  color: #71857c;
+  display: block;
+
+  margin-top: 5px;
+
+  color: #5e746a;
+
   font-size: 9px;
 }
 
 
-/* =========================================================
-   ÁREA PRINCIPAL
-========================================================= */
+/* =====================================================
+   MAIN
+===================================================== */
 
 .main {
-  min-height: 100vh;
-
   margin-left: 245px;
 
-  padding: 36px 45px;
+  max-width: 1550px;
 
-  max-width: 1600px;
+  padding: 38px 45px 60px;
 }
 
 
-/* =========================================================
-   TOPO
-========================================================= */
+/* =====================================================
+   TOPBAR
+===================================================== */
 
 .topbar {
   display: flex;
+
   align-items: center;
   justify-content: space-between;
 
   margin-bottom: 28px;
+}
+
+.top-label {
+  color: #35d99b;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: 1.8px;
 }
 
 .topbar h1 {
@@ -244,99 +265,90 @@ button {
 .topbar p {
   margin: 0;
 
-  color: #82968d;
+  color: #81958c;
 
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .top-actions {
   display: flex;
-  align-items: center;
   gap: 8px;
 }
 
-.icon-button {
+.icon-button,
+.profile-button {
   width: 40px;
   height: 40px;
 
   display: grid;
   place-items: center;
 
-  border: 1px solid #20382d;
+  border: 1px solid #20392e;
   border-radius: 10px;
 
   background: #0a1712;
 
-  color: #9bb0a7;
+  color: #b9cbc3;
 
-  transition: 0.2s ease;
+  transition: .2s ease;
 }
 
-.icon-button:hover {
+.icon-button:hover,
+.profile-button:hover {
   border-color: #35d99b;
+
   color: #35d99b;
-  transform: translateY(-1px);
+}
+
+.profile-button {
+  border-radius: 50%;
 }
 
 
-/* =========================================================
-   CARDS / INDICADORES
-========================================================= */
+/* =====================================================
+   CARDS
+===================================================== */
 
 .cards {
   display: grid;
 
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
 
   gap: 13px;
 
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .card {
-  min-height: 130px;
-
   padding: 20px;
 
-  background:
-    linear-gradient(
-      145deg,
-      #0b1913,
-      #09140f
-    );
+  background: #0a1712;
 
-  border: 1px solid #1a2e26;
+  border: 1px solid #1a3027;
+
   border-radius: 15px;
 
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  border-color: #285140;
+  box-shadow:
+    0 15px 45px rgba(0, 0, 0, .14);
 }
 
 .card-label {
-  color: #7d9188;
+  color: #71857c;
 
   font-size: 9px;
   font-weight: 800;
 
   letter-spacing: 1.2px;
-  text-transform: uppercase;
 }
 
 .card-value {
-  margin: 10px 0 8px;
+  margin: 9px 0;
 
   color: #f5faf7;
 
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 800;
-
-  letter-spacing: -1px;
 }
 
 .positive {
@@ -346,68 +358,38 @@ button {
 }
 
 
-/* =========================================================
-   GRID PRINCIPAL
-========================================================= */
-
-.content-grid {
-  display: grid;
-
-  grid-template-columns:
-    minmax(0, 1.25fr)
-    minmax(300px, 0.75fr);
-
-  gap: 15px;
-}
-
-.content-grid > div {
-  min-width: 0;
-
-  display: grid;
-
-  align-content: start;
-
-  gap: 15px;
-}
-
-
-/* =========================================================
+/* =====================================================
    PAINÉIS
-========================================================= */
+===================================================== */
 
 .panel {
-  min-width: 0;
-
   padding: 21px;
 
-  background:
-    linear-gradient(
-      145deg,
-      #0b1913,
-      #09140f
-    );
+  background: #0a1712;
 
-  border: 1px solid #1a2e26;
+  border: 1px solid #1a3027;
+
   border-radius: 15px;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, .12);
 }
 
 .panel-header {
   display: flex;
+
   align-items: flex-start;
   justify-content: space-between;
 
   gap: 15px;
-
-  margin-bottom: 18px;
 }
 
 .panel-header h2 {
-  margin: 0;
+  margin: 5px 0 4px;
 
-  color: #edf6f1;
+  color: #eef7f2;
 
   font-size: 15px;
-  font-weight: 800;
 }
 
 .panel-header span {
@@ -416,110 +398,287 @@ button {
   font-size: 10px;
 }
 
+.chart-badge {
+  padding: 6px 9px;
 
-/* =========================================================
+  border: 1px solid #1d4938;
+
+  border-radius: 7px;
+
+  color: #35d99b !important;
+
+  font-size: 8px !important;
+  font-weight: 900;
+
+  letter-spacing: .7px;
+}
+
+
+/* =====================================================
+   GRÁFICOS
+===================================================== */
+
+.charts-grid {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 14px;
+
+  margin-bottom: 14px;
+}
+
+.chart-panel {
+  min-height: 365px;
+}
+
+.chart-container {
+  position: relative;
+
+  width: 100%;
+
+  height: 275px;
+
+  margin-top: 20px;
+}
+
+.chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+/* =====================================================
+   META
+===================================================== */
+
+.meta-panel {
+  margin-bottom: 14px;
+}
+
+.meta-percent {
+  color: #35d99b;
+
+  font-size: 22px !important;
+  font-weight: 900;
+}
+
+.meta-percent span {
+  color: #35d99b;
+
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.meta-content {
+  display: grid;
+
+  grid-template-columns: 260px 1fr;
+
+  align-items: center;
+
+  gap: 35px;
+
+  margin-top: 15px;
+}
+
+.meta-chart-container {
+  position: relative;
+
+  width: 240px;
+  height: 240px;
+
+  margin: auto;
+}
+
+.meta-chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.meta-info {
+  max-width: 550px;
+}
+
+.meta-row {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 0;
+
+  border-bottom: 1px solid #172a22;
+}
+
+.meta-row span {
+  color: #71857c;
+
+  font-size: 11px;
+}
+
+.meta-row strong {
+  color: #dcebe4;
+
+  font-size: 13px;
+}
+
+.progress {
+  width: 100%;
+  height: 9px;
+
+  margin-top: 22px;
+
+  overflow: hidden;
+
+  background: #13251d;
+
+  border-radius: 99px;
+}
+
+.progress-bar {
+  width: 0;
+  height: 100%;
+
+  background: #35d99b;
+
+  border-radius: 99px;
+
+  transition: width .8s ease;
+}
+
+.meta-info > p {
+  color: #71857c;
+
+  font-size: 11px;
+}
+
+.meta-info > p strong {
+  color: #35d99b;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content-grid {
+  display: grid;
+
+  grid-template-columns:
+    1.25fr .75fr;
+
+  gap: 14px;
+
+  margin-bottom: 14px;
+}
+
+
+/* =====================================================
    COPILOT
-========================================================= */
+===================================================== */
 
 .copilot {
-  min-height: 360px;
+  min-height: 450px;
 }
 
 .copilot-title {
   display: flex;
-  align-items: center;
-  gap: 11px;
 
-  margin-bottom: 18px;
+  align-items: center;
+
+  gap: 11px;
 }
 
 .copilot-icon {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
 
   display: grid;
   place-items: center;
 
-  border-radius: 10px;
+  border-radius: 9px;
 
   background: #35d99b;
 
   color: #04100b;
 
-  font-size: 17px;
   font-weight: 900;
 }
 
 .copilot-title h2 {
-  margin: 0 0 3px;
+  margin: 0;
 
-  font-size: 14px;
+  font-size: 15px;
 }
 
-.copilot-title > div:nth-child(2) span {
+.copilot-title span {
+  display: block;
+
+  margin-top: 3px;
+
   color: #71857c;
 
   font-size: 10px;
 }
 
 .online {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-
   margin-left: auto;
 
-  color: #49dba3;
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  color: #45dba2;
 
   font-size: 9px;
   font-weight: 800;
 }
 
 .online-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 
   border-radius: 50%;
 
   background: #35d99b;
 
-  box-shadow: 0 0 8px #35d99b;
+  box-shadow:
+    0 0 10px #35d99b;
 }
 
-
-/* =========================================================
-   CHAT
-========================================================= */
-
 .chat-box {
-  min-height: 120px;
-  max-height: 220px;
+  height: 190px;
 
-  overflow-y: auto;
+  margin-top: 20px;
 
   padding: 15px;
 
-  border: 1px solid #182f25;
+  overflow-y: auto;
+
+  border: 1px solid #173328;
+
   border-radius: 11px;
 
-  background: #07120e;
+  background: #08140f;
 }
 
 .message {
   display: flex;
-  align-items: flex-start;
 
-  gap: 10px;
+  gap: 11px;
 }
 
 .avatar {
-  width: 30px;
-  height: 30px;
-
-  flex: 0 0 30px;
+  width: 29px;
+  height: 29px;
 
   display: grid;
   place-items: center;
+
+  flex: none;
 
   border-radius: 8px;
 
@@ -527,76 +686,86 @@ button {
 
   color: #04100b;
 
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 900;
 }
 
-.message-content {
-  min-width: 0;
-}
-
 .message-content strong {
-  display: block;
-
-  margin-bottom: 5px;
-
-  color: #e5f1eb;
+  color: #dcebe4;
 
   font-size: 11px;
 }
 
 .message-content p {
-  margin: 0;
+  margin: 6px 0 0;
 
-  color: #8fa39a;
+  color: #92a69d;
 
   font-size: 11px;
 
   line-height: 1.6;
 }
 
+.message.user {
+  justify-content: flex-end;
 
-/* =========================================================
-   SUGESTÕES
-========================================================= */
+  margin: 12px 0;
+}
+
+.message.user .message-content {
+  max-width: 80%;
+
+  padding: 10px 12px;
+
+  border-radius: 10px;
+
+  background: #145d45;
+}
+
+.message.user .message-content strong,
+.message.user .message-content p {
+  color: #fff;
+}
+
+.ai-loading {
+  opacity: .65;
+}
 
 .suggestions {
   display: flex;
+
   flex-wrap: wrap;
-  gap: 7px;
+
+  gap: 6px;
 
   margin-top: 12px;
 }
 
-.suggestion {
+.suggestions button {
   padding: 8px 10px;
 
-  border: 1px solid #1d352a;
+  border: 1px solid #1c352a;
   border-radius: 8px;
 
   background: #09140f;
 
-  color: #84978f;
+  color: #83978e;
 
   font-size: 9px;
 
-  transition: 0.2s ease;
+  transition: .2s ease;
 }
 
-.suggestion:hover {
-  border-color: #2b7658;
-  color: #d7e8e0;
+.suggestions button:hover {
+  border-color: #35d99b;
+
+  color: #35d99b;
 }
-
-
-/* =========================================================
-   INPUT COPILOT
-========================================================= */
 
 .copilot-input {
   display: flex;
 
-  gap: 8px;
+  gap: 7px;
 
   margin-top: 12px;
 }
@@ -606,39 +775,30 @@ button {
 
   min-width: 0;
 
-  height: 42px;
+  padding: 11px 12px;
 
-  padding: 0 13px;
+  border: 1px solid #233b30;
 
-  border: 1px solid #233c31;
   border-radius: 9px;
 
   outline: none;
 
-  background: #06100c;
+  background: #07100d;
 
-  color: #ffffff;
+  color: #fff;
 
   font-size: 11px;
 }
 
-.copilot-input input::placeholder {
-  color: #5f756b;
-}
-
 .copilot-input input:focus {
   border-color: #35d99b;
-
-  box-shadow:
-    0 0 0 3px rgba(53, 217, 155, 0.07);
 }
 
-.send-button {
-  height: 42px;
-
+.copilot-input button {
   padding: 0 17px;
 
   border: 0;
+
   border-radius: 9px;
 
   background: #35d99b;
@@ -647,137 +807,77 @@ button {
 
   font-size: 11px;
   font-weight: 900;
-
-  transition: 0.2s ease;
-}
-
-.send-button:hover {
-  background: #48e3aa;
-
-  transform: translateY(-1px);
 }
 
 
-/* =========================================================
-   ATIVIDADE
-========================================================= */
-
-.activity {
-  display: grid;
-
-  gap: 0;
-}
-
-.activity-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 15px;
-
-  padding: 14px 0;
-
-  border-bottom: 1px solid #172820;
-}
-
-.activity-item:last-child {
-  border-bottom: 0;
-}
-
-.activity-item strong {
-  display: block;
-
-  margin-bottom: 4px;
-
-  color: #dce9e3;
-
-  font-size: 11px;
-}
-
-.activity-item span {
-  display: block;
-
-  color: #71857c;
-
-  font-size: 10px;
-}
-
-.status {
-  flex: none;
-
-  padding: 5px 8px;
-
-  border-radius: 6px;
-
-  background: #0d2119;
-
-  color: #45dba2;
-
-  font-size: 8px;
-  font-weight: 800;
-}
-
-
-/* =========================================================
-   AÇÕES RÁPIDAS
-========================================================= */
+/* =====================================================
+   AÇÕES
+===================================================== */
 
 .actions {
   display: grid;
 
   gap: 8px;
+
+  margin-top: 18px;
 }
 
 .action {
-  width: 100%;
+  display: flex;
 
-  padding: 13px;
+  flex-direction: column;
 
-  border: 1px solid #1a3026;
+  align-items: flex-start;
+
+  gap: 5px;
+
+  padding: 14px;
+
+  border: 1px solid #1b3329;
+
   border-radius: 10px;
 
-  background: #09140f;
+  background: #09150f;
 
   text-align: left;
 
-  transition: 0.2s ease;
+  transition: .2s ease;
 }
 
 .action:hover {
-  border-color: #2a624a;
+  border-color: #2b7355;
 
-  background: #0c1b14;
-
-  transform: translateX(2px);
+  transform: translateY(-1px);
 }
 
 .action strong {
-  display: block;
-
-  margin-bottom: 5px;
-
-  color: #dce9e3;
+  color: #dcebe4;
 
   font-size: 11px;
 }
 
 .action span {
-  display: block;
-
   color: #71857c;
 
   font-size: 9px;
 }
 
 
-/* =========================================================
-   RESUMO ESTRATÉGICO
-========================================================= */
+/* =====================================================
+   PARTE INFERIOR
+===================================================== */
+
+.lower-grid {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 14px;
+}
 
 .strategy-text {
-  margin: 0 0 18px;
-
-  color: #8fa39a;
+  color: #8da199;
 
   font-size: 11px;
 
@@ -785,41 +885,35 @@ button {
 }
 
 .strategy-list {
-  display: grid;
-
-  gap: 9px;
+  margin-top: 18px;
 }
 
 .strategy-item {
   display: flex;
+
   align-items: center;
 
   gap: 10px;
 
-  padding: 10px;
+  padding: 11px 0;
 
-  border: 1px solid #172b22;
-  border-radius: 9px;
+  border-bottom: 1px solid #172820;
 
-  background: #09140f;
+  color: #a7b8b1;
 
-  color: #9aada5;
-
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .strategy-number {
   width: 24px;
   height: 24px;
 
-  flex: 0 0 24px;
-
   display: grid;
   place-items: center;
 
   border-radius: 7px;
 
-  background: #10251c;
+  background: #10251b;
 
   color: #35d99b;
 
@@ -827,188 +921,86 @@ button {
   font-weight: 900;
 }
 
-
-/* =========================================================
-   OVERLAY DO CHAT
-========================================================= */
-
-.overlay {
-  display: none;
-
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 100;
-
-  align-items: flex-end;
-  justify-content: flex-end;
-
-  padding: 24px;
-
-  background: rgba(0, 0, 0, 0.62);
+.activity {
+  margin-top: 17px;
 }
 
-.overlay.open {
+.activity-item {
   display: flex;
-}
 
-
-/* =========================================================
-   JANELA DO CHAT
-========================================================= */
-
-.chat {
-  width: min(450px, calc(100vw - 28px));
-
-  overflow: hidden;
-
-  border: 1px solid #285343;
-  border-radius: 16px;
-
-  background: #0a1712;
-
-  box-shadow:
-    0 25px 100px rgba(0, 0, 0, 0.7);
-}
-
-.chat header {
-  display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 15px;
+  gap: 15px;
 
-  border-bottom: 1px solid #1d3028;
+  padding: 13px 0;
+
+  border-bottom: 1px solid #172820;
 }
 
-.chat header strong {
+.activity-item strong {
   display: block;
 
-  color: #ffffff;
+  color: #cbdad4;
 
-  font-size: 12px;
+  font-size: 11px;
 }
 
-.chat header small {
+.activity-item span {
   display: block;
 
   margin-top: 4px;
 
-  color: #71857c;
+  color: #6f837a;
 
   font-size: 9px;
 }
 
-.chat header button {
-  border: 0;
+.status {
+  padding: 5px 8px;
 
-  background: transparent;
+  border-radius: 6px;
 
-  color: #9fb0a8;
+  background: #10271d;
 
-  font-size: 23px;
-}
+  color: #45dba2;
 
-.messages {
-  height: 310px;
+  font-size: 8px;
+  font-weight: 800;
 
-  overflow-y: auto;
-
-  padding: 15px;
-}
-
-.bubble {
-  max-width: 86%;
-
-  margin-bottom: 9px;
-
-  padding: 10px 12px;
-
-  border-radius: 11px;
-
-  font-size: 12px;
-
-  line-height: 1.5;
-}
-
-.bubble.ai {
-  background: #10221a;
-
-  color: #b8c9c1;
-}
-
-.bubble.user {
-  margin-left: auto;
-
-  background: #176b4e;
-
-  color: #ffffff;
-}
-
-.input {
-  display: flex;
-
-  gap: 7px;
-
-  padding: 11px;
-
-  border-top: 1px solid #1d3028;
-}
-
-.input input {
-  flex: 1;
-
-  min-width: 0;
-
-  padding: 10px;
-
-  border: 1px solid #233b30;
-  border-radius: 8px;
-
-  outline: none;
-
-  background: #07100d;
-
-  color: #ffffff;
-}
-
-.input input:focus {
-  border-color: #35d99b;
-}
-
-.input button {
-  padding: 0 14px;
-
-  border: 0;
-  border-radius: 8px;
-
-  background: #35d99b;
-
-  color: #04100b;
-
-  font-weight: 900;
+  white-space: nowrap;
 }
 
 
-/* =========================================================
-   RESPONSIVO — TABLET
-========================================================= */
+/* =====================================================
+   RESPONSIVO
+===================================================== */
 
 @media (max-width: 1100px) {
 
   .sidebar {
-    width: 215px;
+    width: 75px;
+  }
+
+  .brand-text,
+  .menu-title,
+  .menu button b,
+  .user-box {
+    display: none;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .menu button {
+    justify-content: center;
   }
 
   .main {
-    margin-left: 215px;
+    margin-left: 75px;
 
     padding: 30px;
-  }
-
-  .cards {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .content-grid {
@@ -1018,177 +1010,64 @@ button {
 }
 
 
-/* =========================================================
-   RESPONSIVO — TABLET PEQUENO
-========================================================= */
+@media (max-width: 850px) {
 
-@media (max-width: 800px) {
-
-  .sidebar {
-    width: 70px;
-
-    padding: 20px 9px;
+  .cards {
+    grid-template-columns:
+      repeat(2, 1fr);
   }
 
-  .brand {
-    justify-content: center;
-
-    padding: 0;
+  .charts-grid,
+  .lower-grid {
+    grid-template-columns: 1fr;
   }
 
-  .brand-text,
-  .menu-title,
-  .menu button span,
-  .user-box {
-    display: none;
-  }
-
-  .brand-icon {
-    width: 38px;
-    height: 38px;
-  }
-
-  .menu {
-    margin-top: 35px;
-  }
-
-  .menu button {
-    justify-content: center;
-
-    padding: 12px 8px;
-
-    font-size: 17px;
-  }
-
-  .main {
-    margin-left: 70px;
-
-    padding: 25px;
+  .meta-content {
+    grid-template-columns: 1fr;
   }
 
 }
 
 
-/* =========================================================
-   RESPONSIVO — CELULAR
-========================================================= */
+@media (max-width: 600px) {
 
-@media (max-width: 560px) {
+  .sidebar {
+    display: none;
+  }
 
   .main {
     margin-left: 0;
 
-    padding: 18px 14px 30px;
-  }
-
-  .sidebar {
-    position: relative;
-
-    width: 100%;
-    height: auto;
-
-    padding: 12px 14px;
-
-    flex-direction: row;
-    align-items: center;
-
-    border-right: 0;
-    border-bottom: 1px solid #182a23;
-  }
-
-  .brand {
-    justify-content: flex-start;
-  }
-
-  .menu-title,
-  .sidebar-bottom {
-    display: none;
-  }
-
-  .menu {
-    display: none;
+    padding: 20px 14px 40px;
   }
 
   .topbar {
     align-items: flex-start;
-
-    gap: 15px;
   }
 
   .topbar h1 {
     font-size: 24px;
   }
 
-  .top-actions {
-    flex: none;
-  }
-
   .cards {
     grid-template-columns: 1fr;
   }
 
-  .content-grid {
-    grid-template-columns: 1fr;
+  .chart-container {
+    height: 240px;
   }
 
-  .panel {
-    padding: 17px;
-  }
-
-  .suggestions {
-    display: grid;
-
-    grid-template-columns: 1fr;
-  }
-
-  .suggestion {
-    width: 100%;
-
-    text-align: left;
+  .meta-chart-container {
+    width: 210px;
+    height: 210px;
   }
 
   .copilot-input {
     flex-direction: column;
   }
 
-  .send-button {
-    width: 100%;
+  .copilot-input button {
+    height: 42px;
   }
 
-  .activity-item {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .status {
-    align-self: flex-start;
-  }
-
-  .overlay {
-    padding: 12px;
-  }
-
-}
-
-
-/* =========================================================
-   SCROLLBAR
-========================================================= */
-
-::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-}
-
-::-webkit-scrollbar-track {
-  background: #06100c;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #1c3a2d;
-  border-radius: 20px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #286247;
 }
