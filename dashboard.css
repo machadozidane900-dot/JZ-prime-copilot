@@ -1,732 +1,1194 @@
 /* =========================================================
-   JZ PRIME COPILOT — DASHBOARD
-   ========================================================= */
+   JZ PRIME COPILOT
+   DASHBOARD — dashboard.css
+========================================================= */
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
+  min-height: 100vh;
   background: #06100c;
   color: #edf6f1;
-  font: 14px Inter, ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-size: 14px;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 .app {
   min-height: 100vh;
 }
 
+
 /* =========================================================
    SIDEBAR
-   ========================================================= */
+========================================================= */
 
-aside {
+.sidebar {
   position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
+
   width: 245px;
+
+  padding: 24px 15px;
+
   background: #07110d;
   border-right: 1px solid #182a23;
-  padding: 24px 15px;
+
   display: flex;
   flex-direction: column;
+
+  z-index: 10;
 }
 
-.logo {
+.brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  color: #fff;
+  gap: 11px;
+
+  padding: 4px 8px;
+
   text-decoration: none;
-  font-weight: 800;
+  color: #ffffff;
+}
+
+.brand-icon {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid #30d997;
+  border-radius: 10px;
+
+  color: #30d997;
+
+  font-weight: 900;
+  font-size: 13px;
+
+  background: #0a1712;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
   line-height: 1;
 }
 
-.logo > span {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border: 1px solid #30d997;
-  border-radius: 9px;
-  color: #30d997;
+.brand-text strong {
+  color: #ffffff;
+  font-size: 13px;
+  letter-spacing: 0.5px;
 }
 
-.logo b {
+.brand-text span {
   color: #35d99b;
+  font-size: 11px;
+  font-weight: 700;
 }
 
-.company {
-  margin: 35px 6px 18px;
-  padding: 13px;
-  border: 1px solid #1b3128;
-  background: #0a1712;
-  border-radius: 11px;
-}
-
-.company small,
-header small,
-.head small {
-  display: block;
-  color: #4cdda5;
-  font-size: 9px;
-  letter-spacing: 1.7px;
-  font-weight: 900;
-}
-
-.company strong {
-  display: block;
-  margin: 5px 0;
-}
-
-.company i {
-  font-size: 9px;
-  color: #72867d;
-  font-style: normal;
-}
-
-.app nav {
-  display: grid;
-  gap: 4px;
-}
-
-.app nav a,
-.bottom a {
-  padding: 11px;
-  border-radius: 9px;
-  color: #82968d;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.app nav a.active,
-.app nav a:hover {
-  background: #10221a;
-  color: #fff;
-}
-
-.app nav a:first-letter {
-  color: #35d99b;
-}
-
-.bottom {
-  margin-top: auto;
-  display: grid;
-  gap: 3px;
-}
 
 /* =========================================================
-   CONTEÚDO
-   ========================================================= */
+   MENU
+========================================================= */
 
-.app main {
-  margin-left: 245px;
-  padding: 38px 45px;
-  max-width: 1500px;
+.menu-title {
+  margin: 38px 8px 12px;
+
+  color: #4cdda5;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
 }
 
-main > header {
+.menu {
+  display: grid;
+  gap: 5px;
+}
+
+.menu button {
+  width: 100%;
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 11px;
+
+  padding: 11px 12px;
+
+  border: 1px solid transparent;
+  border-radius: 9px;
+
+  background: transparent;
+
+  color: #82968d;
+
+  font-size: 12px;
+  text-align: left;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.menu button:hover {
+  background: #0c1c15;
+  color: #ffffff;
+}
+
+.menu button.active {
+  background: #10221a;
+  border-color: #1c382c;
+  color: #ffffff;
+}
+
+.menu button:first-letter {
+  color: #35d99b;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+}
+
+.user-box {
+  padding: 13px;
+
+  border: 1px solid #1b3128;
+  border-radius: 11px;
+
+  background: #0a1712;
+}
+
+.user-box strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #dce9e3;
+  font-size: 11px;
+}
+
+.user-box span {
+  color: #71857c;
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   ÁREA PRINCIPAL
+========================================================= */
+
+.main {
+  min-height: 100vh;
+
+  margin-left: 245px;
+
+  padding: 36px 45px;
+
+  max-width: 1600px;
+}
+
+
+/* =========================================================
+   TOPO
+========================================================= */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   margin-bottom: 28px;
 }
 
-header h1 {
+.topbar h1 {
+  margin: 7px 0 5px;
+
+  color: #f5faf7;
+
   font-size: 29px;
-  margin: 8px 0 4px;
+  font-weight: 800;
+
   letter-spacing: -1px;
 }
 
-header p {
+.topbar p {
   margin: 0;
+
   color: #82968d;
-}
 
-.user {
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: #10251c;
-  border: 1px solid #28684e;
-  color: #6be5b3;
-  font-weight: 900;
-}
-
-/* =========================================================
-   CARDS PRINCIPAIS
-   ========================================================= */
-
-.metrics {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 13px;
-  margin-bottom: 14px;
-}
-
-.metrics article,
-.panel {
-  border: 1px solid #1a2e26;
-  background: #0a1712;
-  border-radius: 15px;
-}
-
-.metrics article {
-  padding: 19px;
-}
-
-.metrics span {
-  display: block;
-  color: #7d9188;
-  font-size: 9px;
-  letter-spacing: 1.2px;
-}
-
-.metrics strong {
-  display: block;
-  font-size: 23px;
-  margin: 9px 0;
-}
-
-.metrics i {
-  color: #45dba2;
-  font-size: 10px;
-  font-style: normal;
-}
-
-.metrics .gold {
-  color: #c6aa5d;
-}
-
-/* =========================================================
-   GRIDS
-   ========================================================= */
-
-.grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 14px;
-  margin-bottom: 14px;
-}
-
-.lower {
-  grid-template-columns: 1fr 1fr;
-}
-
-.panel {
-  padding: 21px;
-}
-
-.head {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-}
-
-.head h2 {
-  font-size: 15px;
-  margin: 5px 0 0;
-}
-
-.head button,
-.report button {
-  background: #0b1712;
-  border: 1px solid #263d33;
-  color: #b8c8c1;
-  padding: 8px 11px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 11px;
-}
-
-/* =========================================================
-   ÁREA DOS GRÁFICOS
-   ========================================================= */
-
-.charts-area {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 14px;
-  margin-bottom: 14px;
-}
-
-.chart-panel {
-  min-height: 340px;
-}
-
-.chart {
-  width: 100%;
-}
-
-.chart .bars {
-  height: 240px;
-  display: flex;
-  align-items: end;
-  gap: 12px;
-  border-bottom: 1px solid #20342b;
-  margin-top: 28px;
-  padding: 0 7px;
-}
-
-.bars i {
-  flex: 1;
-  background: linear-gradient(
-    to top,
-    #126c4c,
-    #35d99b
-  );
-  border-radius: 5px 5px 0 0;
-  min-height: 30px;
-  position: relative;
-  transition: 0.25s ease;
-}
-
-.bars i:hover {
-  filter: brightness(1.2);
-  transform: translateY(-3px);
-}
-
-.bars i::after {
-  content: attr(data-value);
-  position: absolute;
-  top: -22px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #8fa39a;
-  font-size: 9px;
-  white-space: nowrap;
-}
-
-.bars i:nth-child(1) {
-  height: 42%;
-}
-
-.bars i:nth-child(2) {
-  height: 55%;
-}
-
-.bars i:nth-child(3) {
-  height: 48%;
-}
-
-.bars i:nth-child(4) {
-  height: 68%;
-}
-
-.bars i:nth-child(5) {
-  height: 61%;
-}
-
-.bars i:nth-child(6) {
-  height: 82%;
-}
-
-.axis {
-  display: flex;
-  justify-content: space-between;
-  color: #60746b;
-  font-size: 9px;
-  padding-top: 9px;
-}
-
-/* =========================================================
-   GRÁFICO DE META
-   ========================================================= */
-
-.goal-chart {
-  margin-top: 28px;
-}
-
-.goal-value {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  margin-bottom: 12px;
-}
-
-.goal-value strong {
-  font-size: 30px;
-  color: #35d99b;
-}
-
-.goal-value span {
-  color: #71857c;
-  font-size: 10px;
-}
-
-.progress {
-  width: 100%;
-  height: 12px;
-  background: #07110d;
-  border: 1px solid #1d352a;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.progress span {
-  display: block;
-  width: 82%;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(
-    90deg,
-    #126c4c,
-    #35d99b
-  );
-}
-
-.goal-info {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 22px;
-}
-
-.goal-info div {
-  padding: 13px;
-  background: #09140f;
-  border: 1px solid #172b23;
-  border-radius: 10px;
-}
-
-.goal-info small {
-  display: block;
-  color: #71857c;
-  font-size: 9px;
-}
-
-.goal-info strong {
-  display: block;
-  margin-top: 6px;
-  font-size: 14px;
-}
-
-/* =========================================================
-   COPILOT
-   ========================================================= */
-
-.copilot .head > b {
-  font-size: 8px;
-  color: #4cdda5;
-}
-
-.ai {
-  display: flex;
-  gap: 12px;
-  background: #0e2119;
-  border: 1px solid #20513c;
-  padding: 16px;
-  border-radius: 11px;
-  margin-top: 20px;
-}
-
-.aiIcon {
-  width: 30px;
-  height: 30px;
-  display: grid;
-  place-items: center;
-  border-radius: 8px;
-  background: #35d99b;
-  color: #04100b;
-  font-weight: 900;
-  flex: none;
-}
-
-.ai strong {
-  font-size: 12px;
-}
-
-.ai p {
-  color: #94a79f;
-  font-size: 11px;
-  line-height: 1.55;
-  margin: 7px 0;
-}
-
-.ai em {
-  color: #d8f0e6;
-  font-style: normal;
-}
-
-.ai button {
-  border: 0;
-  background: none;
-  color: #4ddda5;
-  font-weight: 800;
-  padding: 0;
-  cursor: pointer;
-}
-
-.chips {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-top: 12px;
-}
-
-.chips button {
-  border: 1px solid #1d352a;
-  background: #09140f;
-  color: #84978f;
-  border-radius: 8px;
-  padding: 8px;
-  font-size: 9px;
-  cursor: pointer;
-}
-
-/* =========================================================
-   FINANCEIRO
-   ========================================================= */
-
-.head label {
-  color: #49dba3;
-  font-size: 8px;
-  font-weight: 900;
-}
-
-.cash {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 9px;
-  margin-top: 23px;
-}
-
-.cash div {
-  background: #09130f;
-  border-radius: 9px;
-  padding: 13px;
-}
-
-.cash small {
-  color: #70847b;
-}
-
-.cash strong {
-  display: block;
-  margin-top: 6px;
   font-size: 13px;
 }
 
-/* =========================================================
-   LISTAS
-   ========================================================= */
-
-.list {
-  margin-top: 16px;
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.list div {
+.icon-button {
+  width: 40px;
+  height: 40px;
+
   display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 15px;
-  padding: 12px 0;
-  border-bottom: 1px solid #172820;
-  font-size: 11px;
+  place-items: center;
+
+  border: 1px solid #20382d;
+  border-radius: 10px;
+
+  background: #0a1712;
+
+  color: #9bb0a7;
+
+  transition: 0.2s ease;
 }
 
-.list span {
-  color: #8da098;
+.icon-button:hover {
+  border-color: #35d99b;
+  color: #35d99b;
+  transform: translateY(-1px);
 }
 
-.list i {
-  color: #45dba2;
-  font-style: normal;
-}
 
 /* =========================================================
-   RELATÓRIOS
-   ========================================================= */
+   CARDS / INDICADORES
+========================================================= */
 
-.report p {
-  color: #8fa29a;
-  line-height: 1.7;
-  font-size: 12px;
+.cards {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 13px;
+
+  margin-bottom: 16px;
 }
 
-.report strong {
-  color: #d7e9e1;
+.card {
+  min-height: 130px;
+
+  padding: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0b1913,
+      #09140f
+    );
+
+  border: 1px solid #1a2e26;
+  border-radius: 15px;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
 }
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: #285140;
+}
+
+.card-label {
+  color: #7d9188;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.card-value {
+  margin: 10px 0 8px;
+
+  color: #f5faf7;
+
+  font-size: 25px;
+  font-weight: 800;
+
+  letter-spacing: -1px;
+}
+
+.positive {
+  color: #45dba2;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   GRID PRINCIPAL
+========================================================= */
+
+.content-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.25fr)
+    minmax(300px, 0.75fr);
+
+  gap: 15px;
+}
+
+.content-grid > div {
+  min-width: 0;
+
+  display: grid;
+
+  align-content: start;
+
+  gap: 15px;
+}
+
+
+/* =========================================================
+   PAINÉIS
+========================================================= */
+
+.panel {
+  min-width: 0;
+
+  padding: 21px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0b1913,
+      #09140f
+    );
+
+  border: 1px solid #1a2e26;
+  border-radius: 15px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 18px;
+}
+
+.panel-header h2 {
+  margin: 0;
+
+  color: #edf6f1;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.panel-header span {
+  color: #71857c;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   COPILOT
+========================================================= */
+
+.copilot {
+  min-height: 360px;
+}
+
+.copilot-title {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  margin-bottom: 18px;
+}
+
+.copilot-icon {
+  width: 36px;
+  height: 36px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 10px;
+
+  background: #35d99b;
+
+  color: #04100b;
+
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.copilot-title h2 {
+  margin: 0 0 3px;
+
+  font-size: 14px;
+}
+
+.copilot-title > div:nth-child(2) span {
+  color: #71857c;
+
+  font-size: 10px;
+}
+
+.online {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  margin-left: auto;
+
+  color: #49dba3;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.online-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #35d99b;
+
+  box-shadow: 0 0 8px #35d99b;
+}
+
 
 /* =========================================================
    CHAT
-   ========================================================= */
+========================================================= */
+
+.chat-box {
+  min-height: 120px;
+  max-height: 220px;
+
+  overflow-y: auto;
+
+  padding: 15px;
+
+  border: 1px solid #182f25;
+  border-radius: 11px;
+
+  background: #07120e;
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+
+  flex: 0 0 30px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 8px;
+
+  background: #35d99b;
+
+  color: #04100b;
+
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.message-content {
+  min-width: 0;
+}
+
+.message-content strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #e5f1eb;
+
+  font-size: 11px;
+}
+
+.message-content p {
+  margin: 0;
+
+  color: #8fa39a;
+
+  font-size: 11px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   SUGESTÕES
+========================================================= */
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+
+  margin-top: 12px;
+}
+
+.suggestion {
+  padding: 8px 10px;
+
+  border: 1px solid #1d352a;
+  border-radius: 8px;
+
+  background: #09140f;
+
+  color: #84978f;
+
+  font-size: 9px;
+
+  transition: 0.2s ease;
+}
+
+.suggestion:hover {
+  border-color: #2b7658;
+  color: #d7e8e0;
+}
+
+
+/* =========================================================
+   INPUT COPILOT
+========================================================= */
+
+.copilot-input {
+  display: flex;
+
+  gap: 8px;
+
+  margin-top: 12px;
+}
+
+.copilot-input input {
+  flex: 1;
+
+  min-width: 0;
+
+  height: 42px;
+
+  padding: 0 13px;
+
+  border: 1px solid #233c31;
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #06100c;
+
+  color: #ffffff;
+
+  font-size: 11px;
+}
+
+.copilot-input input::placeholder {
+  color: #5f756b;
+}
+
+.copilot-input input:focus {
+  border-color: #35d99b;
+
+  box-shadow:
+    0 0 0 3px rgba(53, 217, 155, 0.07);
+}
+
+.send-button {
+  height: 42px;
+
+  padding: 0 17px;
+
+  border: 0;
+  border-radius: 9px;
+
+  background: #35d99b;
+
+  color: #04100b;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  transition: 0.2s ease;
+}
+
+.send-button:hover {
+  background: #48e3aa;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   ATIVIDADE
+========================================================= */
+
+.activity {
+  display: grid;
+
+  gap: 0;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 14px 0;
+
+  border-bottom: 1px solid #172820;
+}
+
+.activity-item:last-child {
+  border-bottom: 0;
+}
+
+.activity-item strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #dce9e3;
+
+  font-size: 11px;
+}
+
+.activity-item span {
+  display: block;
+
+  color: #71857c;
+
+  font-size: 10px;
+}
+
+.status {
+  flex: none;
+
+  padding: 5px 8px;
+
+  border-radius: 6px;
+
+  background: #0d2119;
+
+  color: #45dba2;
+
+  font-size: 8px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   AÇÕES RÁPIDAS
+========================================================= */
+
+.actions {
+  display: grid;
+
+  gap: 8px;
+}
+
+.action {
+  width: 100%;
+
+  padding: 13px;
+
+  border: 1px solid #1a3026;
+  border-radius: 10px;
+
+  background: #09140f;
+
+  text-align: left;
+
+  transition: 0.2s ease;
+}
+
+.action:hover {
+  border-color: #2a624a;
+
+  background: #0c1b14;
+
+  transform: translateX(2px);
+}
+
+.action strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #dce9e3;
+
+  font-size: 11px;
+}
+
+.action span {
+  display: block;
+
+  color: #71857c;
+
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   RESUMO ESTRATÉGICO
+========================================================= */
+
+.strategy-text {
+  margin: 0 0 18px;
+
+  color: #8fa39a;
+
+  font-size: 11px;
+
+  line-height: 1.7;
+}
+
+.strategy-list {
+  display: grid;
+
+  gap: 9px;
+}
+
+.strategy-item {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 10px;
+
+  border: 1px solid #172b22;
+  border-radius: 9px;
+
+  background: #09140f;
+
+  color: #9aada5;
+
+  font-size: 10px;
+}
+
+.strategy-number {
+  width: 24px;
+  height: 24px;
+
+  flex: 0 0 24px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 7px;
+
+  background: #10251c;
+
+  color: #35d99b;
+
+  font-size: 10px;
+  font-weight: 900;
+}
+
+
+/* =========================================================
+   OVERLAY DO CHAT
+========================================================= */
 
 .overlay {
   display: none;
+
   position: fixed;
+
   inset: 0;
-  background: #0009;
-  z-index: 20;
+
+  z-index: 100;
+
   align-items: flex-end;
   justify-content: flex-end;
+
   padding: 24px;
+
+  background: rgba(0, 0, 0, 0.62);
 }
 
 .overlay.open {
   display: flex;
 }
 
+
+/* =========================================================
+   JANELA DO CHAT
+========================================================= */
+
 .chat {
   width: min(450px, calc(100vw - 28px));
-  background: #0a1712;
+
+  overflow: hidden;
+
   border: 1px solid #285343;
   border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 25px 100px #000;
+
+  background: #0a1712;
+
+  box-shadow:
+    0 25px 100px rgba(0, 0, 0, 0.7);
 }
 
 .chat header {
-  padding: 15px;
-  border-bottom: 1px solid #1d3028;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+
+  padding: 15px;
+
+  border-bottom: 1px solid #1d3028;
 }
 
 .chat header strong {
   display: block;
+
+  color: #ffffff;
+
+  font-size: 12px;
 }
 
 .chat header small {
   display: block;
-  color: #71857c;
-  letter-spacing: 0;
+
   margin-top: 4px;
+
+  color: #71857c;
+
+  font-size: 9px;
 }
 
 .chat header button {
-  background: none;
   border: 0;
+
+  background: transparent;
+
   color: #9fb0a8;
+
   font-size: 23px;
-  cursor: pointer;
 }
 
 .messages {
   height: 310px;
+
+  overflow-y: auto;
+
   padding: 15px;
-  overflow: auto;
 }
 
 .bubble {
   max-width: 86%;
-  padding: 10px 12px;
-  border-radius: 11px;
-  font-size: 12px;
-  line-height: 1.5;
+
   margin-bottom: 9px;
+
+  padding: 10px 12px;
+
+  border-radius: 11px;
+
+  font-size: 12px;
+
+  line-height: 1.5;
 }
 
 .bubble.ai {
   background: #10221a;
+
   color: #b8c9c1;
 }
 
 .bubble.user {
   margin-left: auto;
+
   background: #176b4e;
-  color: #fff;
+
+  color: #ffffff;
 }
 
 .input {
   display: flex;
+
   gap: 7px;
-  border-top: 1px solid #1d3028;
+
   padding: 11px;
+
+  border-top: 1px solid #1d3028;
 }
 
 .input input {
   flex: 1;
-  background: #07100d;
-  border: 1px solid #233b30;
-  color: #fff;
-  border-radius: 8px;
+
+  min-width: 0;
+
   padding: 10px;
+
+  border: 1px solid #233b30;
+  border-radius: 8px;
+
   outline: none;
+
+  background: #07100d;
+
+  color: #ffffff;
+}
+
+.input input:focus {
+  border-color: #35d99b;
 }
 
 .input button {
-  background: #35d99b;
+  padding: 0 14px;
+
   border: 0;
   border-radius: 8px;
-  padding: 0 14px;
+
+  background: #35d99b;
+
+  color: #04100b;
+
   font-weight: 900;
 }
 
+
 /* =========================================================
-   RESPONSIVO
-   ========================================================= */
+   RESPONSIVO — TABLET
+========================================================= */
 
 @media (max-width: 1100px) {
 
-  .charts-area {
+  .sidebar {
+    width: 215px;
+  }
+
+  .main {
+    margin-left: 215px;
+
+    padding: 30px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .content-grid {
     grid-template-columns: 1fr;
   }
 
 }
 
-@media (max-width: 900px) {
 
-  aside {
-    width: 68px;
-    padding: 22px 10px;
+/* =========================================================
+   RESPONSIVO — TABLET PEQUENO
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .sidebar {
+    width: 70px;
+
+    padding: 20px 9px;
   }
 
-  .logo div,
-  .company,
-  .app nav span,
-  .bottom span {
+  .brand {
+    justify-content: center;
+
+    padding: 0;
+  }
+
+  .brand-text,
+  .menu-title,
+  .menu button span,
+  .user-box {
     display: none;
   }
 
-  .app nav a,
-  .bottom a {
-    text-align: center;
+  .brand-icon {
+    width: 38px;
+    height: 38px;
   }
 
-  .app main {
-    margin-left: 68px;
+  .menu {
+    margin-top: 35px;
+  }
+
+  .menu button {
+    justify-content: center;
+
+    padding: 12px 8px;
+
+    font-size: 17px;
+  }
+
+  .main {
+    margin-left: 70px;
+
     padding: 25px;
   }
 
-  .metrics {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .grid,
-  .lower {
-    grid-template-columns: 1fr;
-  }
-
 }
+
+
+/* =========================================================
+   RESPONSIVO — CELULAR
+========================================================= */
 
 @media (max-width: 560px) {
 
-  .metrics {
+  .main {
+    margin-left: 0;
+
+    padding: 18px 14px 30px;
+  }
+
+  .sidebar {
+    position: relative;
+
+    width: 100%;
+    height: auto;
+
+    padding: 12px 14px;
+
+    flex-direction: row;
+    align-items: center;
+
+    border-right: 0;
+    border-bottom: 1px solid #182a23;
+  }
+
+  .brand {
+    justify-content: flex-start;
+  }
+
+  .menu-title,
+  .sidebar-bottom {
+    display: none;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .topbar {
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .topbar h1 {
+    font-size: 24px;
+  }
+
+  .top-actions {
+    flex: none;
+  }
+
+  .cards {
     grid-template-columns: 1fr;
   }
 
-  .app main {
-    padding: 18px;
-  }
-
-  .cash {
+  .content-grid {
     grid-template-columns: 1fr;
   }
 
-  .chart .bars {
-    height: 190px;
-    gap: 7px;
+  .panel {
+    padding: 17px;
   }
 
-  .goal-info {
+  .suggestions {
+    display: grid;
+
     grid-template-columns: 1fr;
+  }
+
+  .suggestion {
+    width: 100%;
+
+    text-align: left;
+  }
+
+  .copilot-input {
+    flex-direction: column;
+  }
+
+  .send-button {
+    width: 100%;
+  }
+
+  .activity-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .status {
+    align-self: flex-start;
+  }
+
+  .overlay {
+    padding: 12px;
   }
 
 }
 
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #06100c;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1c3a2d;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #286247;
+}
