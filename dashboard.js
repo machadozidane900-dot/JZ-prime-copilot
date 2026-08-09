@@ -82,7 +82,7 @@ question: question
 })
 });
 
-```
+
 const data = await response.json();
 
 const messages = document.getElementById("messages");
@@ -101,12 +101,11 @@ addMessage(
   data.answer || "Não consegui gerar uma resposta.",
   "ai"
 );
-```
 
 } catch (error) {
 const messages = document.getElementById("messages");
 
-```
+
 if (messages && messages.lastElementChild) {
   messages.removeChild(messages.lastElementChild);
 }
@@ -117,7 +116,7 @@ addMessage(
 );
 
 console.error(error);
-```
+
 
 }
 }
