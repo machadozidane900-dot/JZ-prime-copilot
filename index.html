@@ -11,74 +11,52 @@
 
   <title>JZ Prime Copilot</title>
 
-  <meta
-    name="description"
-    content="JZ Prime Copilot — inteligência empresarial para transformar dados em decisões."
-  >
-
   <link rel="stylesheet" href="estilos.css">
 </head>
 
 <body>
 
-  <!-- =========================
-       FUNDO / EFEITOS
-  ========================== -->
-
-  <div class="background-glow glow-one"></div>
-  <div class="background-glow glow-two"></div>
-
-
-  <!-- =========================
-       NAVBAR
-  ========================== -->
+  <!-- =========================================
+       NAVEGAÇÃO
+  ========================================== -->
 
   <header class="navbar">
 
-    <a href="index.html" class="brand">
+    <a href="index.html" class="logo">
 
-      <div class="brand-icon">
+      <div class="logo-icon">
         JZ
       </div>
 
-      <div class="brand-name">
+      <div class="logo-text">
         <strong>JZ PRIME</strong>
         <span>Copilot</span>
       </div>
 
     </a>
 
-
-    <nav class="nav-links">
+    <nav>
 
       <a href="#recursos">
         Recursos
-      </a>
-
-      <a href="#como-funciona">
-        Como funciona
       </a>
 
       <a href="#planos">
         Planos
       </a>
 
+      <a href="empresa.html" class="nav-button">
+        Começar agora
+      </a>
+
     </nav>
-
-
-    <a
-      href="empresa.html"
-      class="nav-button"
-    >
-      Começar agora
-    </a>
 
   </header>
 
 
-  <!-- =========================
+  <!-- =========================================
        HERO
-  ========================== -->
+  ========================================== -->
 
   <main>
 
@@ -86,70 +64,55 @@
 
       <div class="hero-content">
 
-        <div class="eyebrow">
-          <span>✦</span>
-          INTELIGÊNCIA EMPRESARIAL
+        <div class="badge">
+          ✦ INTELIGÊNCIA EMPRESARIAL
         </div>
-
 
         <h1>
           Seu negócio,
           <span>mais inteligente.</span>
         </h1>
 
-
-        <p class="hero-description">
-          O JZ PRIME Copilot transforma os dados da sua
-          empresa em clareza, oportunidades e próximos
-          passos para você tomar decisões melhores.
+        <p>
+          O JZ PRIME Copilot transforma os dados
+          da sua empresa em clareza, oportunidades
+          e próximos passos.
         </p>
 
-
-        <div class="hero-actions">
+        <div class="hero-buttons">
 
           <a
             href="empresa.html"
-            class="primary-button"
+            class="button primary"
           >
-            Conhecer o Copilot
-            <span>→</span>
+            Conhecer o Copilot →
           </a>
 
           <a
             href="#recursos"
-            class="secondary-button"
+            class="button secondary"
           >
             Explorar recursos
           </a>
 
         </div>
 
-
         <div class="hero-points">
 
-          <span>
-            <b>●</b>
-            Dados organizados
-          </span>
+          <span>● Dados organizados</span>
 
-          <span>
-            <b>●</b>
-            Insights com IA
-          </span>
+          <span>● Insights com IA</span>
 
-          <span>
-            <b>●</b>
-            Decisões melhores
-          </span>
+          <span>● Decisões melhores</span>
 
         </div>
 
       </div>
 
 
-      <!-- =========================
-           DASHBOARD VISUAL
-      ========================== -->
+      <!-- =====================================
+           PAINEL VISUAL DO HERO
+      ====================================== -->
 
       <div class="hero-dashboard">
 
@@ -165,218 +128,164 @@
 
               <strong>
                 JZ PRIME
+                <span>Copilot</span>
               </strong>
-
-              <span>
-                Copilot
-              </span>
 
             </div>
 
             <div class="live">
-              <span></span>
+              <i></i>
               AO VIVO
             </div>
 
           </div>
 
 
-          <div class="dashboard-body">
+          <div class="window-content">
 
-            <div class="dashboard-menu">
+            <div class="window-menu">
 
-              <div class="menu-active">
-                <span>⌂</span>
+              <span class="selected">
                 Visão geral
+              </span>
+
+              <span>
+                ✦ Copilot
+              </span>
+
+              <span>
+                ◫ Financeiro
+              </span>
+
+              <span>
+                ♙ Clientes
+              </span>
+
+            </div>
+
+
+            <div class="dashboard-title">
+
+              <small>
+                VISÃO GERAL
+              </small>
+
+              <h2>
+                Desempenho da empresa
+              </h2>
+
+            </div>
+
+
+            <!-- CARDS -->
+
+            <div class="preview-cards">
+
+              <div class="preview-card">
+
+                <small>
+                  FATURAMENTO
+                </small>
+
+                <strong>
+                  R$ 284.620
+                </strong>
+
+                <span>
+                  ↗ 14,8%
+                </span>
+
               </div>
 
-              <div>
-                <span>✦</span>
-                Copilot
-              </div>
 
-              <div>
-                <span>◫</span>
-                Financeiro
-              </div>
+              <div class="preview-card">
 
-              <div>
-                <span>♙</span>
-                Clientes
+                <small>
+                  LUCRO ESTIMADO
+                </small>
+
+                <strong>
+                  R$ 58.420
+                </strong>
+
+                <span>
+                  ↗ 9,2%
+                </span>
+
               </div>
 
             </div>
 
 
-            <div class="dashboard-content">
+            <!-- GRÁFICO -->
 
-              <div class="dashboard-heading">
+            <div class="chart-card">
+
+              <div class="chart-header">
 
                 <div>
                   <small>
-                    VISÃO GERAL
+                    EVOLUÇÃO
                   </small>
-
-                  <h2>
-                    Desempenho da empresa
-                  </h2>
-                </div>
-
-                <div class="period">
-                  Este mês ▾
-                </div>
-
-              </div>
-
-
-              <!-- INDICADORES -->
-
-              <div class="mini-cards">
-
-                <div class="mini-card">
-
-                  <span>
-                    FATURAMENTO
-                  </span>
 
                   <strong>
-                    R$ 284.620
+                    Faturamento mensal
                   </strong>
-
-                  <small class="positive">
-                    ↗ 14,8%
-                  </small>
-
                 </div>
 
-
-                <div class="mini-card">
-
-                  <span>
-                    LUCRO ESTIMADO
-                  </span>
-
-                  <strong>
-                    R$ 58.420
-                  </strong>
-
-                  <small class="positive">
-                    ↗ 9,2%
-                  </small>
-
-                </div>
-
-              </div>
-
-
-              <!-- GRÁFICO -->
-
-              <div class="chart-card">
-
-                <div class="chart-header">
-
-                  <div>
-                    <span>
-                      EVOLUÇÃO
-                    </span>
-
-                    <strong>
-                      Faturamento
-                    </strong>
-                  </div>
-
-                  <small>
-                    Últimos 6 meses
-                  </small>
-
-                </div>
-
-
-                <div class="chart">
-
-                  <div class="chart-grid">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
-
-
-                  <div class="bars">
-
-                    <div
-                      class="bar"
-                      style="height:42%"
-                    ></div>
-
-                    <div
-                      class="bar"
-                      style="height:55%"
-                    ></div>
-
-                    <div
-                      class="bar"
-                      style="height:49%"
-                    ></div>
-
-                    <div
-                      class="bar"
-                      style="height:68%"
-                    ></div>
-
-                    <div
-                      class="bar"
-                      style="height:77%"
-                    ></div>
-
-                    <div
-                      class="bar active"
-                      style="height:92%"
-                    ></div>
-
-                  </div>
-
-
-                  <div class="chart-labels">
-
-                    <span>Jan</span>
-                    <span>Fev</span>
-                    <span>Mar</span>
-                    <span>Abr</span>
-                    <span>Mai</span>
-                    <span>Jun</span>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-
-              <!-- INSIGHT -->
-
-              <div class="insight">
-
-                <div class="insight-icon">
-                  ✦
-                </div>
-
-                <div>
-
-                  <strong>
-                    Insight do Copilot
-                  </strong>
-
-                  <p>
-                    Existe uma oportunidade de melhorar
-                    sua margem operacional.
-                  </p>
-
-                </div>
-
-                <span class="insight-arrow">
-                  →
+                <span>
+                  2026
                 </span>
+
+              </div>
+
+              <div class="chart">
+
+                <div class="bar b1"></div>
+                <div class="bar b2"></div>
+                <div class="bar b3"></div>
+                <div class="bar b4"></div>
+                <div class="bar b5"></div>
+                <div class="bar b6"></div>
+                <div class="bar b7"></div>
+                <div class="bar b8"></div>
+
+              </div>
+
+              <div class="chart-labels">
+
+                <span>Jan</span>
+                <span>Fev</span>
+                <span>Mar</span>
+                <span>Abr</span>
+                <span>Mai</span>
+                <span>Jun</span>
+                <span>Jul</span>
+                <span>Ago</span>
+
+              </div>
+
+            </div>
+
+
+            <!-- INSIGHT -->
+
+            <div class="insight">
+
+              <div class="insight-icon">
+                ✦
+              </div>
+
+              <div>
+
+                <strong>
+                  Insight do Copilot
+                </strong>
+
+                <p>
+                  Existe uma oportunidade de
+                  melhorar sua margem operacional.
+                </p>
 
               </div>
 
@@ -391,43 +300,34 @@
     </section>
 
 
-    <!-- =========================
-         COMO FUNCIONA
-    ========================== -->
+    <!-- =========================================
+         PROCESSO
+    ========================================== -->
 
-    <section
-      class="process-section"
-      id="como-funciona"
-    >
+    <section class="process">
 
-      <div class="section-title">
-
-        <span>
-          COMO FUNCIONA
-        </span>
-
-        <h2>
-          Da informação à decisão.
-        </h2>
-
-        <p>
-          O Copilot organiza seus dados e ajuda você
-          a entender o que realmente importa.
-        </p>
-
+      <div class="section-label">
+        COMO FUNCIONA
       </div>
 
+      <h2>
+        Da informação
+        <span>à decisão.</span>
+      </h2>
 
-      <div class="process-grid">
+      <p>
+        O JZ Prime Copilot organiza os dados,
+        interpreta o cenário e ajuda sua empresa
+        a agir com mais segurança.
+      </p>
 
-        <div class="process-card">
 
-          <div class="process-number">
+      <div class="steps">
+
+        <div class="step">
+
+          <div class="step-number">
             01
-          </div>
-
-          <div class="process-icon">
-            ◫
           </div>
 
           <h3>
@@ -435,21 +335,17 @@
           </h3>
 
           <p>
-            Reúna as principais informações da sua
-            empresa em um único ambiente.
+            Organize as principais informações
+            da sua empresa.
           </p>
 
         </div>
 
 
-        <div class="process-card">
+        <div class="step">
 
-          <div class="process-number">
+          <div class="step-number">
             02
-          </div>
-
-          <div class="process-icon">
-            ◉
           </div>
 
           <h3>
@@ -457,21 +353,17 @@
           </h3>
 
           <p>
-            Visualize indicadores e identifique
-            tendências do seu negócio.
+            Visualize seus principais indicadores
+            em um único painel.
           </p>
 
         </div>
 
 
-        <div class="process-card">
+        <div class="step">
 
-          <div class="process-number">
+          <div class="step-number">
             03
-          </div>
-
-          <div class="process-icon">
-            ✦
           </div>
 
           <h3>
@@ -479,21 +371,17 @@
           </h3>
 
           <p>
-            O Copilot transforma análise em
-            recomendações práticas.
+            O Copilot encontra oportunidades
+            e pontos de atenção.
           </p>
 
         </div>
 
 
-        <div class="process-card">
+        <div class="step">
 
-          <div class="process-number">
+          <div class="step-number">
             04
-          </div>
-
-          <div class="process-icon">
-            ↗
           </div>
 
           <h3>
@@ -501,8 +389,7 @@
           </h3>
 
           <p>
-            Saiba onde concentrar seus esforços
-            para buscar melhores resultados.
+            Transforme análise em ações práticas.
           </p>
 
         </div>
@@ -512,39 +399,35 @@
     </section>
 
 
-    <!-- =========================
+    <!-- =========================================
          RECURSOS
-    ========================== -->
+    ========================================== -->
 
     <section
-      class="resources-section"
+      class="features"
       id="recursos"
     >
 
-      <div class="section-title">
-
-        <span>
-          PLATAFORMA
-        </span>
-
-        <h2>
-          Inteligência que trabalha
-          junto com você.
-        </h2>
-
-        <p>
-          Uma visão central para acompanhar o negócio
-          e transformar informação em ação.
-        </p>
-
+      <div class="section-label">
+        PLATAFORMA
       </div>
 
+      <h2>
+        Inteligência que trabalha
+        <span>junto com você.</span>
+      </h2>
 
-      <div class="resources-grid">
+      <p class="section-description">
+        Uma visão central para acompanhar o negócio
+        e transformar informação em ação.
+      </p>
 
-        <article class="resource-card featured">
 
-          <div class="resource-icon">
+      <div class="feature-grid">
+
+        <article class="feature">
+
+          <div class="feature-icon">
             ✦
           </div>
 
@@ -553,21 +436,21 @@
           </h3>
 
           <p>
-            Pergunte sobre sua empresa, encontre sinais
-            e transforme análise em plano de ação.
+            Pergunte sobre sua empresa, encontre
+            sinais e transforme análise em plano
+            de ação.
           </p>
 
           <a href="painel.html">
-            Conhecer
-            →
+            Conhecer →
           </a>
 
         </article>
 
 
-        <article class="resource-card">
+        <article class="feature">
 
-          <div class="resource-icon">
+          <div class="feature-icon">
             ◫
           </div>
 
@@ -576,21 +459,20 @@
           </h3>
 
           <p>
-            Faturamento, lucro, metas, despesas e
-            desempenho em uma visão objetiva.
+            Faturamento, lucro, metas, despesas
+            e desempenho em uma visão objetiva.
           </p>
 
           <a href="painel.html">
-            Ver painel
-            →
+            Ver painel →
           </a>
 
         </article>
 
 
-        <article class="resource-card">
+        <article class="feature">
 
-          <div class="resource-icon">
+          <div class="feature-icon">
             ↗
           </div>
 
@@ -599,13 +481,12 @@
           </h3>
 
           <p>
-            Identifique tendências, gargalos e pontos
-            que merecem atenção.
+            Identifique tendências, gargalos e
+            pontos que merecem atenção.
           </p>
 
           <a href="painel.html">
-            Ver insights
-            →
+            Ver insights →
           </a>
 
         </article>
@@ -615,51 +496,49 @@
     </section>
 
 
-    <!-- =========================
+    <!-- =========================================
          PLANOS
-    ========================== -->
+    ========================================== -->
 
     <section
-      class="plans-section"
+      class="plans"
       id="planos"
     >
 
-      <div class="section-title">
-
-        <span>
-          PLANOS
-        </span>
-
-        <h2>
-          Comece pequeno.
-          Cresça com inteligência.
-        </h2>
-
+      <div class="section-label">
+        PLANOS
       </div>
+
+      <h2>
+        Comece pequeno.
+        <span>Cresça com inteligência.</span>
+      </h2>
 
 
       <div class="plans-grid">
 
         <article class="plan">
 
-          <span class="plan-name">
+          <small>
             START
-          </span>
+          </small>
 
           <h3>
             R$ 99
-            <small>/mês</small>
+            <span>/mês</span>
           </h3>
 
           <p>
-            Para começar a organizar a visão
-            do negócio.
+            Para começar a organizar
+            a visão do negócio.
           </p>
 
           <ul>
+
             <li>✓ Dashboard</li>
             <li>✓ Indicadores</li>
             <li>✓ Copilot básico</li>
+
           </ul>
 
           <a href="empresa.html">
@@ -669,19 +548,19 @@
         </article>
 
 
-        <article class="plan featured-plan">
+        <article class="plan featured">
 
-          <div class="recommended">
+          <div class="popular">
             MAIS ESCOLHIDO
           </div>
 
-          <span class="plan-name">
+          <small>
             PRO
-          </span>
+          </small>
 
           <h3>
             R$ 299
-            <small>/mês</small>
+            <span>/mês</span>
           </h3>
 
           <p>
@@ -690,14 +569,15 @@
           </p>
 
           <ul>
+
             <li>✓ Copilot avançado</li>
             <li>✓ Análises e insights</li>
             <li>✓ Automações</li>
+
           </ul>
 
           <a href="empresa.html">
-            Começar com PRO
-            →
+            Começar com PRO →
           </a>
 
         </article>
@@ -705,23 +585,25 @@
 
         <article class="plan">
 
-          <span class="plan-name">
+          <small>
             ENTERPRISE
-          </span>
+          </small>
 
-          <h3>
+          <h3 class="consult">
             Sob consulta
           </h3>
 
           <p>
-            Estrutura personalizada para
-            operações maiores.
+            Estrutura personalizada
+            para operações maiores.
           </p>
 
           <ul>
+
             <li>✓ Integrações</li>
             <li>✓ Recursos personalizados</li>
             <li>✓ Suporte dedicado</li>
+
           </ul>
 
           <a href="empresa.html">
@@ -737,32 +619,32 @@
   </main>
 
 
-  <!-- =========================
-       FOOTER
-  ========================== -->
+  <!-- =========================================
+       RODAPÉ
+  ========================================== -->
 
-  <footer class="footer">
+  <footer>
 
-    <div class="footer-brand">
+    <a href="index.html" class="footer-logo">
 
-      <div class="brand-icon">
-        JZ
-      </div>
+      <span>
+        ✦
+      </span>
 
       <strong>
         JZ PRIME
-        <span>Copilot</span>
       </strong>
 
-    </div>
+      <b>
+        Copilot
+      </b>
+
+    </a>
 
     <p>
-      Inteligência para empresas que querem crescer.
+      Inteligência para empresas
+      que querem crescer.
     </p>
-
-    <span class="footer-copy">
-      © 2026 JZ Prime Copilot
-    </span>
 
   </footer>
 
