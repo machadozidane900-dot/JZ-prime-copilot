@@ -32,9 +32,9 @@ a {
   color: inherit;
 }
 
-/* =========================================
+/* ================================
    NAVBAR
-========================================= */
+================================ */
 
 .navbar {
   width: min(1250px, calc(100% - 50px));
@@ -67,8 +67,7 @@ a {
 
   font-weight: 900;
 
-  box-shadow:
-    0 0 25px rgba(53, 217, 155, 0.08);
+  box-shadow: 0 0 25px rgba(53, 217, 155, .08);
 }
 
 .logo-text {
@@ -79,7 +78,7 @@ a {
 
 .logo-text strong {
   font-size: 14px;
-  letter-spacing: 0.5px;
+  letter-spacing: .5px;
 }
 
 .logo-text span {
@@ -114,13 +113,9 @@ a {
   background: #0b1c14;
 }
 
-.nav-button:hover {
-  background: #10261c;
-}
-
-/* =========================================
+/* ================================
    HERO
-========================================= */
+================================ */
 
 .hero {
   width: min(1250px, calc(100% - 50px));
@@ -128,9 +123,9 @@ a {
   margin: auto;
 
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-
+  grid-template-columns: .9fr 1.1fr;
   align-items: center;
+
   gap: 60px;
 
   padding: 65px 0 85px;
@@ -160,7 +155,7 @@ a {
   border: 1px solid #22533f;
   border-radius: 100px;
 
-  background: rgba(14, 37, 27, 0.7);
+  background: rgba(14, 37, 27, .7);
 }
 
 .hero h1 {
@@ -169,7 +164,7 @@ a {
   margin: 23px 0 20px;
 
   font-size: clamp(48px, 6vw, 76px);
-  line-height: 0.98;
+  line-height: .98;
 
   letter-spacing: -4px;
 }
@@ -201,33 +196,24 @@ a {
 
 .button {
   min-height: 47px;
-  padding: 0 19px;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
+  padding: 0 19px;
+
   border-radius: 9px;
 
   font-size: 12px;
   font-weight: 800;
-
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.button:hover {
-  transform: translateY(-2px);
 }
 
 .button.primary {
-  color: #04100b;
   background: #35d99b;
+  color: #04100b;
 
-  box-shadow:
-    0 15px 40px rgba(53, 217, 155, 0.12);
+  box-shadow: 0 15px 40px rgba(53, 217, 155, .12);
 }
 
 .button.primary:hover {
@@ -241,11 +227,6 @@ a {
   background: #09150f;
 }
 
-.button.secondary:hover {
-  border-color: #35d99b;
-  color: #fff;
-}
-
 .hero-points {
   display: flex;
   flex-wrap: wrap;
@@ -253,14 +234,14 @@ a {
 
   margin-top: 25px;
 
-  color: #71877d;
+  color: #6e8279;
 
   font-size: 10px;
 }
 
-/* =========================================
-   HERO DASHBOARD
-========================================= */
+/* ================================
+   DASHBOARD
+================================ */
 
 .hero-dashboard {
   position: relative;
@@ -279,7 +260,7 @@ a {
 
   transform: translate(-50%, -50%);
 
-  background: rgba(53, 217, 155, 0.08);
+  background: rgba(53, 217, 155, .08);
 
   filter: blur(80px);
 
@@ -303,12 +284,10 @@ a {
     );
 
   box-shadow:
-    0 40px 100px rgba(0, 0, 0, 0.65),
-    0 0 80px rgba(53, 217, 155, 0.06);
+    0 40px 100px rgba(0, 0, 0, .65),
+    0 0 80px rgba(53, 217, 155, .06);
 
-  transform:
-    perspective(1200px)
-    rotateY(-3deg);
+  transform: perspective(1200px) rotateY(-3deg);
 }
 
 .window-top {
@@ -340,7 +319,6 @@ a {
   margin-top: 3px;
 
   color: #35d99b;
-
   font-size: 8px;
 }
 
@@ -368,10 +346,10 @@ a {
 }
 
 .live i {
+  display: inline-block;
+
   width: 6px;
   height: 6px;
-
-  display: inline-block;
 
   margin-right: 5px;
 
@@ -404,8 +382,8 @@ a {
 }
 
 .window-menu .selected {
-  color: #dff8ec;
   background: #10261c;
+  color: #dff8ec;
 }
 
 .dashboard-title small,
@@ -424,18 +402,16 @@ a {
   margin: 5px 0 17px;
 
   font-size: 18px;
-
-  letter-spacing: -0.5px;
+  letter-spacing: -.5px;
 }
 
-/* =========================================
-   PREVIEW CARDS
-========================================= */
+/* ================================
+   CARDS
+================================ */
 
 .preview-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-
   gap: 10px;
 }
 
@@ -472,9 +448,9 @@ a {
   font-weight: 800;
 }
 
-/* =========================================
+/* ================================
    GRÁFICO
-========================================= */
+================================ */
 
 .chart-card {
   margin-top: 10px;
@@ -503,7 +479,6 @@ a {
 
 .chart-header > span {
   color: #63776e;
-
   font-size: 8px;
 }
 
@@ -514,12 +489,11 @@ a {
 
   display: flex;
   align-items: end;
-
   gap: 9px;
 
-  border-bottom: 1px solid #1b3026;
-
   padding: 0 4px;
+
+  border-bottom: 1px solid #1b3026;
 }
 
 .bar {
@@ -537,40 +511,17 @@ a {
     );
 
   box-shadow:
-    0 -5px 15px rgba(53, 217, 155, 0.08);
+    0 -5px 15px rgba(53, 217, 155, .08);
 }
 
-.b1 {
-  height: 38%;
-}
-
-.b2 {
-  height: 48%;
-}
-
-.b3 {
-  height: 43%;
-}
-
-.b4 {
-  height: 61%;
-}
-
-.b5 {
-  height: 55%;
-}
-
-.b6 {
-  height: 72%;
-}
-
-.b7 {
-  height: 68%;
-}
-
-.b8 {
-  height: 91%;
-}
+.b1 { height: 38%; }
+.b2 { height: 48%; }
+.b3 { height: 43%; }
+.b4 { height: 61%; }
+.b5 { height: 55%; }
+.b6 { height: 72%; }
+.b7 { height: 68%; }
+.b8 { height: 91%; }
 
 .chart-labels {
   display: flex;
@@ -583,16 +534,15 @@ a {
   font-size: 7px;
 }
 
-/* =========================================
+/* ================================
    INSIGHT
-========================================= */
+================================ */
 
 .insight {
   margin-top: 10px;
 
   display: flex;
   align-items: flex-start;
-
   gap: 10px;
 
   padding: 13px;
@@ -619,8 +569,8 @@ a {
 
   border-radius: 7px;
 
-  color: #04100b;
   background: #35d99b;
+  color: #04100b;
 
   font-size: 11px;
   font-weight: 900;
@@ -639,9 +589,9 @@ a {
   line-height: 1.5;
 }
 
-/* =========================================
+/* ================================
    PROCESSO
-========================================= */
+================================ */
 
 .process,
 .features,
@@ -665,7 +615,6 @@ a {
   margin: 15px 0;
 
   font-size: 43px;
-
   letter-spacing: -2px;
 }
 
@@ -694,16 +643,6 @@ a {
   border-radius: 13px;
 
   background: #07110d;
-
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.step:hover {
-  transform: translateY(-4px);
-
-  border-color: #2a654d;
 }
 
 .step-number {
@@ -728,9 +667,9 @@ a {
   line-height: 1.6;
 }
 
-/* =========================================
+/* ================================
    RECURSOS
-========================================= */
+================================ */
 
 .features {
   border-top: 1px solid #12251d;
@@ -757,16 +696,6 @@ a {
       #0b1913,
       #06100c
     );
-
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.feature:hover {
-  transform: translateY(-4px);
-
-  border-color: #2b6b50;
 }
 
 .feature-icon {
@@ -780,8 +709,8 @@ a {
 
   border-radius: 10px;
 
-  color: #35d99b;
   background: #10271c;
+  color: #35d99b;
 
   font-size: 17px;
 }
@@ -798,7 +727,6 @@ a {
   color: #788c83;
 
   font-size: 12px;
-
   line-height: 1.7;
 }
 
@@ -813,9 +741,9 @@ a {
   font-weight: 800;
 }
 
-/* =========================================
+/* ================================
    PLANOS
-========================================= */
+================================ */
 
 .plans {
   border-top: 1px solid #12251d;
@@ -845,7 +773,7 @@ a {
   border-color: #2b7758;
 
   box-shadow:
-    0 20px 70px rgba(53, 217, 155, 0.07);
+    0 20px 70px rgba(53, 217, 155, .07);
 }
 
 .popular {
@@ -896,32 +824,21 @@ a {
   color: #7d9188;
 
   font-size: 11px;
-
   line-height: 1.6;
 }
 
 .plan ul {
-  list-style: none;
+  display: grid;
+  gap: 10px;
 
   margin: 22px 0;
   padding: 0;
 
-  display: grid;
-  gap: 10px;
+  list-style: none;
 
   color: #a9bdb5;
 
   font-size: 11px;
-}
-
-.plan ul li::before {
-  content: "✓";
-
-  margin-right: 8px;
-
-  color: #35d99b;
-
-  font-weight: 900;
 }
 
 .plan a {
@@ -938,32 +855,19 @@ a {
 
   font-size: 10px;
   font-weight: 800;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.plan a:hover {
-  border-color: #35d99b;
-  color: #35d99b;
 }
 
 .plan.featured a {
   border-color: #35d99b;
 
-  color: #04100b;
   background: #35d99b;
+
+  color: #04100b;
 }
 
-.plan.featured a:hover {
-  background: #4ce5ad;
-}
-
-/* =========================================
+/* ================================
    FOOTER
-========================================= */
+================================ */
 
 footer {
   width: min(1150px, calc(100% - 50px));
@@ -978,7 +882,6 @@ footer {
 .footer-logo {
   display: flex;
   align-items: center;
-
   gap: 5px;
 
   font-size: 13px;
@@ -991,40 +894,17 @@ footer {
 
 footer p {
   color: #60756b;
-
   font-size: 10px;
 }
 
-/* =========================================
-   ANIMAÇÕES
-========================================= */
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(53, 217, 155, 0.35);
-  }
-
-  70% {
-    box-shadow: 0 0 0 8px rgba(53, 217, 155, 0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(53, 217, 155, 0);
-  }
-}
-
-.live i {
-  animation: pulse 2s infinite;
-}
-
-/* =========================================
+/* ================================
    RESPONSIVO
-========================================= */
+================================ */
 
 @media (max-width: 950px) {
+
   .hero {
     grid-template-columns: 1fr;
-
     padding-top: 50px;
   }
 
@@ -1048,14 +928,10 @@ footer p {
   .steps {
     grid-template-columns: 1fr 1fr;
   }
-
-  .feature-grid,
-  .plans-grid {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 @media (max-width: 700px) {
+
   .navbar {
     width: calc(100% - 30px);
   }
@@ -1109,48 +985,5 @@ footer p {
 
   .preview-cards {
     grid-template-columns: 1fr;
-  }
-
-  .dashboard-window {
-    border-radius: 14px;
-  }
-
-  .window-content {
-    padding: 14px;
-  }
-
-  .chart {
-    height: 110px;
-  }
-}
-
-@media (max-width: 420px) {
-  .navbar {
-    height: 70px;
-  }
-
-  .logo-text strong {
-    font-size: 12px;
-  }
-
-  .hero h1 {
-    font-size: 40px;
-  }
-
-  .hero-content > p {
-    font-size: 14px;
-  }
-
-  .window-menu {
-    gap: 3px;
-  }
-
-  .window-menu span {
-    padding: 6px 7px;
-    font-size: 7px;
-  }
-
-  .preview-card strong {
-    font-size: 16px;
   }
 }
