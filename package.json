@@ -1,0 +1,9 @@
+{
+  "name": "jz-prime-copilot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "openai": "^5.12.0"
+  }
+}
