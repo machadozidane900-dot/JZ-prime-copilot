@@ -23,6 +23,7 @@ html {
 
 body {
   margin: 0;
+
   background:
     radial-gradient(
       circle at 75% 10%,
@@ -129,7 +130,6 @@ a {
 .logo-text strong {
   font-size: 15px;
   letter-spacing: 0.04em;
-
   color: #ffffff;
 }
 
@@ -211,7 +211,9 @@ a {
   min-height: 760px;
 
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+
+  grid-template-columns:
+    0.9fr 1.1fr;
 
   align-items: center;
 
@@ -327,6 +329,7 @@ a {
 
 .button {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
 
@@ -391,16 +394,13 @@ a {
   font-size: 12px;
 }
 
-.hero-points span::first-letter {
-  color: var(--green);
-}
-
 /* =========================
    DASHBOARD VISUAL
 ========================= */
 
 .hero-dashboard {
   position: relative;
+
   z-index: 2;
 
   perspective: 1200px;
@@ -437,19 +437,24 @@ a {
   height: 64px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
 
   padding: 0 22px;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.06);
 
   background: rgba(0, 0, 0, 0.18);
 }
 
 .window-brand {
   display: flex;
+
   align-items: center;
+
   gap: 10px;
 }
 
@@ -458,7 +463,9 @@ a {
   height: 34px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   border-radius: 9px;
@@ -473,6 +480,7 @@ a {
   color: #00170d;
 
   font-size: 12px;
+
   font-weight: 900;
 
   box-shadow:
@@ -493,12 +501,15 @@ a {
 
 .live {
   display: flex;
+
   align-items: center;
+
   gap: 7px;
 
   color: #8ea99a;
 
   font-size: 9px;
+
   font-weight: 800;
 
   letter-spacing: 0.08em;
@@ -526,6 +537,7 @@ a {
 
 .window-menu {
   display: flex;
+
   gap: 22px;
 
   margin-bottom: 28px;
@@ -566,7 +578,8 @@ a {
 .preview-cards {
   display: grid;
 
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns:
+    1fr 1fr;
 
   gap: 12px;
 }
@@ -583,7 +596,8 @@ a {
       rgba(4, 17, 12, 0.95)
     );
 
-  border: 1px solid rgba(0, 255, 136, 0.13);
+  border:
+    1px solid rgba(0, 255, 136, 0.13);
 }
 
 .preview-card small {
@@ -610,6 +624,7 @@ a {
   color: var(--green);
 
   font-size: 10px;
+
   font-weight: 700;
 }
 
@@ -626,11 +641,13 @@ a {
 
   background: rgba(0, 255, 136, 0.025);
 
-  border: 1px solid rgba(0, 255, 136, 0.11);
+  border:
+    1px solid rgba(0, 255, 136, 0.11);
 }
 
 .chart-header {
   display: flex;
+
   justify-content: space-between;
 
   margin-bottom: 18px;
@@ -668,6 +685,7 @@ a {
   height: 115px;
 
   display: flex;
+
   align-items: end;
 
   gap: 9px;
@@ -689,7 +707,8 @@ a {
 
   min-width: 5px;
 
-  border-radius: 5px 5px 2px 2px;
+  border-radius:
+    5px 5px 2px 2px;
 
   background:
     linear-gradient(
@@ -736,6 +755,7 @@ a {
 
 .chart-labels {
   display: flex;
+
   justify-content: space-between;
 
   margin-top: 8px;
@@ -751,6 +771,7 @@ a {
 
 .insight {
   display: flex;
+
   align-items: center;
 
   gap: 12px;
@@ -768,7 +789,8 @@ a {
       rgba(0, 100, 70, 0.04)
     );
 
-  border: 1px solid rgba(0, 255, 136, 0.22);
+  border:
+    1px solid rgba(0, 255, 136, 0.22);
 }
 
 .insight-icon {
@@ -776,7 +798,9 @@ a {
   height: 34px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   flex-shrink: 0;
@@ -785,9 +809,11 @@ a {
 
   color: var(--green);
 
-  background: rgba(0, 255, 136, 0.09);
+  background:
+    rgba(0, 255, 136, 0.09);
 
-  border: 1px solid rgba(0, 255, 136, 0.22);
+  border:
+    1px solid rgba(0, 255, 136, 0.22);
 }
 
 .insight strong {
@@ -837,7 +863,8 @@ a {
 
   color: #ffffff;
 
-  font-size: clamp(34px, 4vw, 55px);
+  font-size:
+    clamp(34px, 4vw, 55px);
 
   line-height: 1;
 
@@ -876,7 +903,8 @@ a {
 .step {
   padding: 25px;
 
-  border-top: 1px solid rgba(0, 255, 136, 0.22);
+  border-top:
+    1px solid rgba(0, 255, 136, 0.22);
 
   background:
     linear-gradient(
@@ -890,6 +918,7 @@ a {
   color: var(--green);
 
   font-size: 11px;
+
   font-weight: 800;
 
   letter-spacing: 0.1em;
@@ -948,7 +977,8 @@ a {
       rgba(3, 13, 9, 0.95)
     );
 
-  border: 1px solid rgba(0, 255, 136, 0.16);
+  border:
+    1px solid rgba(0, 255, 136, 0.16);
 
   transition: 0.3s ease;
 }
@@ -956,7 +986,8 @@ a {
 .feature:hover {
   transform: translateY(-5px);
 
-  border-color: rgba(0, 255, 136, 0.40);
+  border-color:
+    rgba(0, 255, 136, 0.40);
 
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.35),
@@ -968,7 +999,9 @@ a {
   height: 45px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   margin-bottom: 30px;
@@ -977,9 +1010,11 @@ a {
 
   color: var(--green);
 
-  background: rgba(0, 255, 136, 0.08);
+  background:
+    rgba(0, 255, 136, 0.08);
 
-  border: 1px solid rgba(0, 255, 136, 0.22);
+  border:
+    1px solid rgba(0, 255, 136, 0.22);
 
   font-size: 18px;
 }
@@ -1006,6 +1041,7 @@ a {
   color: var(--green);
 
   font-size: 13px;
+
   font-weight: 700;
 }
 
@@ -1047,7 +1083,8 @@ a {
       rgba(3, 12, 8, 0.98)
     );
 
-  border: 1px solid rgba(0, 255, 136, 0.15);
+  border:
+    1px solid rgba(0, 255, 136, 0.15);
 
   transition: 0.3s ease;
 }
@@ -1055,7 +1092,8 @@ a {
 .plan:hover {
   transform: translateY(-4px);
 
-  border-color: rgba(0, 255, 136, 0.32);
+  border-color:
+    rgba(0, 255, 136, 0.32);
 }
 
 .plan > small {
@@ -1119,11 +1157,13 @@ a {
 
   border-radius: 10px;
 
-  border: 1px solid rgba(0, 255, 136, 0.25);
+  border:
+    1px solid rgba(0, 255, 136, 0.25);
 
   color: #ffffff;
 
   font-size: 13px;
+
   font-weight: 700;
 
   transition: 0.25s ease;
@@ -1140,7 +1180,8 @@ a {
 ========================= */
 
 .plan.featured {
-  border-color: rgba(0, 255, 136, 0.60);
+  border-color:
+    rgba(0, 255, 136, 0.60);
 
   box-shadow:
     0 0 45px rgba(0, 255, 136, 0.10);
@@ -1197,14 +1238,17 @@ a {
 footer {
   padding: 45px 7%;
 
-  border-top: 1px solid rgba(0, 255, 136, 0.12);
+  border-top:
+    1px solid rgba(0, 255, 136, 0.12);
 
   background: #010604;
 }
 
 .footer-logo {
   display: flex;
+
   align-items: center;
+
   gap: 7px;
 
   color: var(--green);
@@ -1253,14 +1297,14 @@ footer p {
   }
 
   .steps {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+      1fr 1fr;
   }
 
   .feature-grid,
   .plans-grid {
     grid-template-columns: 1fr;
   }
-
 }
 
 @media (max-width: 700px) {
@@ -1318,5 +1362,5 @@ footer p {
   .plans {
     padding: 80px 5%;
   }
-
 }
+```
