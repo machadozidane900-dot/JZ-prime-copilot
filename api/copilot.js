@@ -1,78 +1,166 @@
 export default async function handler(req, res) {
-if (req.method !== "POST") {
-return res.status(405).json({
-error: "Método não permitido"
-});
-}
+  if (req.method !== "POST") {
+    return res.status(405).json({
+      error: "Método não permitido"
+    });
+  }
 
-try {
-const { question } = req.body || {};
+  try {
+    const { question, empresa = {} } = req.body || {};
 
-```
-if (!question) {
-  return res.status(400).json({
-    error: "Pergunta não informada"
-  });
-}
+    if (!question) {
+      return res.status(400).json({
+        error: "Pergunta não informada"
+      });
+    }
 
-const q = question.toLowerCase();
+    const q = question.toLowerCase();
 
-let answer =
-  "Entendi sua pergunta. Posso ajudar a analisar vendas, custos, margem, clientes, financeiro e oportunidades da sua empresa.";
+    const nomeEmpresa =
+      empresa.empresa || "sua empresa";
 
-if (
-  q.includes("venda") ||
-  q.includes("vendas") ||
-  q.includes("faturamento")
-) {
-  answer =
-    "As vendas apresentam evolução positiva. Recomendo acompanhar conversão, ticket médio e frequência de compra. O próximo passo é identificar quais clientes possuem maior potencial de crescimento.";
-}
+    const faturamento =
+      Number(empresa.faturamento) || 0;
 
-if (
-  q.includes("custo") ||
-  q.includes("custos") ||
-  q.includes("despesa") ||
-  q.includes("despesas")
-) {
-  answer =
-    "Para reduzir custos sem prejudicar o crescimento, comece separando despesas fixas, variáveis e comerciais. Depois, identifique os gastos que não estão contribuindo diretamente para receita ou margem.";
-}
+    const clientes =
+      Number(empresa.clientes) || 0;
 
-if (
-  q.includes("margem") ||
-  q.includes("lucro") ||
-  q.includes("rentabilidade")
-) {
-  answer =
-    "A margem merece acompanhamento próximo. Identifique quais produtos ou serviços possuem maior margem e concentre esforços comerciais nessas oportunidades.";
-}
+    const meta =
+      Number(empresa.meta) || 0;
 
-if (
-  q.includes("cliente") ||
-  q.includes("clientes")
-) {
-  answer =
-    "Analise os clientes por faturamento, frequência de compra e potencial de crescimento. Isso ajuda a identificar clientes estratégicos e oportunidades de expansão.";
-}
+    const objetivo =
+      empresa.objetivo || "Aumentar vendas";
 
-if (
-  q.includes("plano") ||
-  q.includes("estratégia") ||
-  q.includes("estrategia")
-) {
-  answer =
-    "Plano recomendado: analisar os indicadores, identificar os principais gargalos, priorizar as oportunidades de maior impacto, definir responsáveis e acompanhar os resultados semanalmente.";
-}
+    const segmento =
+      empresa.segmento || "não informado";
 
-return res.status(200).json({
-  answer
-});
-```
+    const progresso =
+      meta > 0
+        ? Math.round((faturamento / meta) * 100)
+        : 0;
 
-} catch (error) {
-return res.status(500).json({
-error: "Erro interno do Copilot"
-});
-}
+    const restante =
+      Math.max(meta - faturamento, 0);
+
+    const ticketMedio =
+      clientes > 0
+        ? faturamento / clientes
+        : 0;
+
+    const formatarMoeda = (valor) =>
+      Number(valor || 0).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+      });
+
+    let answer = "";
+
+    if (
+      q.includes("venda") ||
+      q.includes("vendas") ||
+      q.includes("faturamento")
+    ) {
+      answer =
+        `Analisei os dados da ${nomeEmpresa}. ` +
+        `O faturamento atual é de ${formatarMoeda(faturamento)}, ` +
+        `com ${clientes} clientes ativos. ` +
+        `A meta mensal é ${formatarMoeda(meta)} e você já atingiu ` +
+        `${progresso}% dela. ` +
+        `Para chegar à meta, faltam ${formatarMoeda(restante)}. ` +
+        `Como o objetivo principal é "${objetivo}", ` +
+        `recomendo concentrar os esforços comerciais em novas vendas ` +
+        `e nos clientes com maior potencial de crescimento.`;
+    }
+
+    else if (
+      q.includes("meta") ||
+      q.includes("objetivo")
+    ) {
+      answer =
+        `Sua meta mensal é ${formatarMoeda(meta)}. ` +
+        `O faturamento atual está em ${formatarMoeda(faturamento)}, ` +
+        `representando ${progresso}% da meta. ` +
+        `Ainda faltam ${formatarMoeda(restante)} para atingir o objetivo. ` +
+        `Minha recomendação é acompanhar esse indicador semanalmente.`;
+    }
+
+    else if (
+      q.includes("cliente") ||
+      q.includes("clientes")
+    ) {
+      answer =
+        `Atualmente, a ${nomeEmpresa} possui ${clientes} clientes ativos. ` +
+        `Com faturamento de ${formatarMoeda(faturamento)}, ` +
+        `o faturamento médio por cliente está em aproximadamente ` +
+        `${formatarMoeda(ticketMedio)}. ` +
+        `Uma boa estratégia é identificar os clientes com maior potencial ` +
+        `e trabalhar aumento de frequência, ticket e novas oportunidades.`;
+    }
+
+    else if (
+      q.includes("custo") ||
+      q.includes("custos") ||
+      q.includes("despesa") ||
+      q.includes("despesas")
+    ) {
+      answer =
+        `Para controlar custos na ${nomeEmpresa}, recomendo separar ` +
+        `despesas fixas, variáveis e comerciais. ` +
+        `Depois, compare cada gasto com o retorno gerado. ` +
+        `O objetivo deve ser reduzir desperdícios sem comprometer ` +
+        `a capacidade de gerar os ${formatarMoeda(meta)} de faturamento desejados.`;
+    }
+
+    else if (
+      q.includes("margem") ||
+      q.includes("lucro") ||
+      q.includes("rentabilidade")
+    ) {
+      answer =
+        `Para melhorar a margem da ${nomeEmpresa}, acompanhe ` +
+        `receita, custos e despesas separadamente. ` +
+        `Também é importante identificar quais produtos ou serviços ` +
+        `possuem maior margem e direcionar as vendas para essas oportunidades. ` +
+        `O faturamento atual é de ${formatarMoeda(faturamento)}.`;
+    }
+
+    else if (
+      q.includes("plano") ||
+      q.includes("estratégia") ||
+      q.includes("estrategia") ||
+      q.includes("ação") ||
+      q.includes("acao")
+    ) {
+      answer =
+        `Plano de ação para ${nomeEmpresa}: ` +
+        `1) aumentar a prospecção comercial; ` +
+        `2) priorizar os clientes de maior potencial; ` +
+        `3) acompanhar o faturamento semanalmente; ` +
+        `4) controlar custos e margem; ` +
+        `5) trabalhar para alcançar os ${formatarMoeda(meta)} da meta mensal. ` +
+        `Atualmente, o progresso é de ${progresso}%.`;
+    }
+
+    else {
+      answer =
+        `Analisei os dados disponíveis da ${nomeEmpresa}. ` +
+        `Seu faturamento é de ${formatarMoeda(faturamento)}, ` +
+        `você possui ${clientes} clientes ativos e sua meta é ` +
+        `${formatarMoeda(meta)}. ` +
+        `O progresso atual é de ${progresso}%. ` +
+        `Seu segmento é ${segmento} e o principal objetivo é "${objetivo}". ` +
+        `Posso analisar suas vendas, clientes, meta, custos, margem ou criar um plano de ação.`;
+    }
+
+    return res.status(200).json({
+      answer
+    });
+
+  } catch (error) {
+    console.error("Erro no Copilot:", error);
+
+    return res.status(500).json({
+      error: "Erro interno do Copilot"
+    });
+  }
 }
