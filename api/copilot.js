@@ -98,3 +98,6 @@ REGRAS:
     });
   }
 }
+
+
+Atualizar configuração do Copilot
