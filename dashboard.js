@@ -3,7 +3,6 @@
    DASHBOARD.JS
 ========================================================= */
 
-
 /* =========================================================
    DADOS DA EMPRESA
 ========================================================= */
@@ -15,21 +14,20 @@ let clientesChart = null;
 let metaChart = null;
 
 
+/* =========================================================
+   CARREGAR DADOS DA EMPRESA
+========================================================= */
+
 function carregarEmpresa() {
 
   try {
 
-    const dados =
-      localStorage.getItem("empresa");
+    const dados = localStorage.getItem("empresa");
 
     if (dados) {
-
       empresa = JSON.parse(dados);
-
     } else {
-
       empresa = {};
-
     }
 
   } catch (error) {
@@ -40,7 +38,6 @@ function carregarEmpresa() {
     );
 
     empresa = {};
-
   }
 
   return empresa;
@@ -53,16 +50,12 @@ function carregarEmpresa() {
 
 function formatarMoeda(valor) {
 
-  const numero =
-    Number(valor) || 0;
+  const numero = Number(valor) || 0;
 
-  return numero.toLocaleString(
-    "pt-BR",
-    {
-      style: "currency",
-      currency: "BRL"
-    }
-  );
+  return numero.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  });
 }
 
 
@@ -91,7 +84,6 @@ function atualizarDashboard() {
 
   const meta =
     Number(empresa.meta) || 0;
-
 
   const oportunidades =
     Number(empresa.oportunidades) ||
@@ -321,7 +313,6 @@ function atualizarTextoPainel() {
       "descricaoPainel"
     );
 
-
   const nome =
     empresa.responsavel ||
     empresa.empresa ||
@@ -503,15 +494,10 @@ function criarGraficoFaturamento() {
   const valores = [
 
     faturamento * 0.58,
-
     faturamento * 0.64,
-
     faturamento * 0.71,
-
     faturamento * 0.78,
-
     faturamento * 0.88,
-
     faturamento
 
   ];
@@ -715,37 +701,27 @@ function criarGraficoClientes() {
 
     Math.max(
       1,
-      Math.round(
-        clientes * 0.52
-      )
+      Math.round(clientes * 0.52)
     ),
 
     Math.max(
       1,
-      Math.round(
-        clientes * 0.61
-      )
+      Math.round(clientes * 0.61)
     ),
 
     Math.max(
       1,
-      Math.round(
-        clientes * 0.70
-      )
+      Math.round(clientes * 0.70)
     ),
 
     Math.max(
       1,
-      Math.round(
-        clientes * 0.79
-      )
+      Math.round(clientes * 0.79)
     ),
 
     Math.max(
       1,
-      Math.round(
-        clientes * 0.90
-      )
+      Math.round(clientes * 0.90)
     ),
 
     clientes
@@ -934,7 +910,6 @@ function criarGraficoMeta() {
   const faturamento =
     Number(empresa.faturamento) || 0;
 
-
   const meta =
     Number(empresa.meta) || 0;
 
@@ -1121,7 +1096,7 @@ function criarGraficos() {
 
 
 /* =========================================================
-   COPILOT
+   ADICIONAR MENSAGEM
 ========================================================= */
 
 function adicionarMensagem(
@@ -1265,7 +1240,7 @@ function handleEnter(event) {
 
 
 /* =========================================================
-   ENVIAR COPILOT
+   ENVIAR PARA O COPILOT
 ========================================================= */
 
 async function sendCopilot() {
@@ -1290,6 +1265,13 @@ async function sendCopilot() {
   }
 
 
+  /* Garante dados atualizados */
+
+  carregarEmpresa();
+
+
+  /* Mostra pergunta */
+
   adicionarMensagem(
     pergunta,
     "user"
@@ -1298,6 +1280,8 @@ async function sendCopilot() {
 
   input.value = "";
 
+
+  /* Mensagem de carregamento */
 
   const carregando =
     document.createElement("div");
@@ -1378,8 +1362,27 @@ async function sendCopilot() {
       );
 
 
-    const dados =
-      await resposta.json();
+    const textoResposta =
+      await resposta.text();
+
+
+    let dados = {};
+
+    try {
+
+      dados =
+        JSON.parse(
+          textoResposta
+        );
+
+    } catch {
+
+      dados = {
+        error:
+          "A API retornou uma resposta inválida."
+      };
+
+    }
 
 
     if (carregando) {
@@ -1389,6 +1392,12 @@ async function sendCopilot() {
 
     if (!resposta.ok) {
 
+      console.error(
+        "Erro da API:",
+        dados
+      );
+
+
       throw new Error(
         dados.error ||
         "Erro ao consultar o Copilot."
@@ -1397,13 +1406,15 @@ async function sendCopilot() {
     }
 
 
-    adicionarMensagem(
-
+    const respostaIA =
       dados.answer ||
-      "Não consegui gerar uma resposta agora.",
+      dados.output ||
+      "A inteligência artificial não retornou uma resposta.";
 
+
+    adicionarMensagem(
+      respostaIA,
       "ai"
-
     );
 
 
@@ -1420,136 +1431,26 @@ async function sendCopilot() {
     }
 
 
+    /*
+      IMPORTANTE:
+      Não usamos mais gerarRespostaLocal()
+      automaticamente.
+
+      Assim, se a IA estiver com problema,
+      veremos o erro real em vez de receber
+      uma resposta genérica dizendo que há
+      0 clientes ou R$ 0.
+    */
+
     adicionarMensagem(
 
-      gerarRespostaLocal(
-        pergunta
-      ),
+      "Não consegui conectar à inteligência artificial agora. Verifique a configuração da API e tente novamente.",
 
       "ai"
 
     );
 
   }
-
-}
-
-
-/* =========================================================
-   RESPOSTA LOCAL
-========================================================= */
-
-function gerarRespostaLocal(pergunta) {
-
-  const texto =
-    pergunta.toLowerCase();
-
-
-  const faturamento =
-    Number(
-      empresa.faturamento
-    ) || 0;
-
-
-  const clientes =
-    Number(
-      empresa.clientes
-    ) || 0;
-
-
-  const meta =
-    Number(
-      empresa.meta
-    ) || 0;
-
-
-  const progresso =
-    meta > 0
-      ? Math.round(
-          (faturamento / meta) * 100
-        )
-      : 0;
-
-
-  if (
-    texto.includes("venda")
-    ||
-    texto.includes("vendas")
-  ) {
-
-    return (
-      "Com base nos dados cadastrados, " +
-      "seu faturamento atual é " +
-      formatarMoeda(faturamento) +
-      ". Recomendo acompanhar " +
-      "conversão, ticket médio e evolução " +
-      "das vendas."
-    );
-
-  }
-
-
-  if (
-    texto.includes("custo")
-    ||
-    texto.includes("custos")
-  ) {
-
-    return (
-      "Para reduzir custos, recomendo " +
-      "separar despesas fixas e variáveis, " +
-      "identificar gastos de baixo retorno " +
-      "e acompanhar a margem mensal."
-    );
-
-  }
-
-
-  if (
-    texto.includes("margem")
-    ||
-    texto.includes("lucro")
-  ) {
-
-    return (
-      "Para melhorar a margem, acompanhe " +
-      "preço médio, custo por venda e " +
-      "despesas operacionais."
-    );
-
-  }
-
-
-  if (
-    texto.includes("plano")
-    ||
-    texto.includes("ação")
-  ) {
-
-    return (
-      "Plano inicial: acompanhar vendas " +
-      "semanalmente, priorizar clientes " +
-      "de maior potencial, revisar custos " +
-      "e acompanhar a meta de " +
-      formatarMoeda(meta) +
-      ". O progresso atual é de " +
-      progresso +
-      "%."
-    );
-
-  }
-
-
-  return (
-    "Analisei os dados disponíveis. " +
-    "Sua empresa possui " +
-    formatarNumero(clientes) +
-    " clientes ativos e faturamento de " +
-    formatarMoeda(faturamento) +
-    ". Posso ajudar a analisar " +
-    "vendas, custos, margem ou criar " +
-    "um plano de ação."
-  );
 
 }
 
@@ -1599,13 +1500,11 @@ RESUMO EXECUTIVO
 
 Empresa: ${nome}
 
-Responsável: ${
-  empresa.responsavel || "-"
-}
+Responsável:
+${empresa.responsavel || "-"}
 
-Segmento: ${
-  empresa.segmento || "-"
-}
+Segmento:
+${empresa.segmento || "-"}
 
 Faturamento mensal:
 ${formatarMoeda(faturamento)}
@@ -1698,11 +1597,6 @@ document.addEventListener(
     carregarEmpresa();
 
     atualizarDashboard();
-
-    /*
-      O Chart.js está sendo carregado
-      antes deste arquivo no painel.html.
-    */
 
     criarGraficos();
 
