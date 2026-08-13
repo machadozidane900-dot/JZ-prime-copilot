@@ -32,26 +32,14 @@ export default async function handler(req, res) {
       });
     }
 
-    const nomeEmpresa =
-      empresa.empresa || "sua empresa";
+    const nomeEmpresa = empresa.empresa || "sua empresa";
+    const responsavel = empresa.responsavel || "não informado";
+    const segmento = empresa.segmento || "não informado";
 
-    const responsavel =
-      empresa.responsavel || "não informado";
-
-    const segmento =
-      empresa.segmento || "não informado";
-
-    const faturamento =
-      Number(empresa.faturamento) || 0;
-
-    const clientes =
-      Number(empresa.clientes) || 0;
-
-    const meta =
-      Number(empresa.meta) || 0;
-
-    const oportunidades =
-      Number(empresa.oportunidades) || 0;
+    const faturamento = Number(empresa.faturamento) || 0;
+    const clientes = Number(empresa.clientes) || 0;
+    const meta = Number(empresa.meta) || 0;
+    const oportunidades = Number(empresa.oportunidades) || 0;
 
     const objetivo =
       empresa.objetivo || "Aumentar vendas";
@@ -63,19 +51,14 @@ export default async function handler(req, res) {
 
     const progresso =
       meta > 0
-        ? Math.round(
-            (faturamento / meta) * 100
-          )
+        ? Math.round((faturamento / meta) * 100)
         : 0;
 
     const formatarMoeda = (valor) => {
-      return Number(valor || 0).toLocaleString(
-        "pt-BR",
-        {
-          style: "currency",
-          currency: "BRL",
-        }
-      );
+      return Number(valor || 0).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      });
     };
 
     const contexto = `
@@ -126,8 +109,7 @@ REGRAS DO COPILOT
 
 7. Não fique limitado à meta cadastrada no dashboard.
 
-8. Exemplo:
-Se a empresa possui faturamento de R$ 50.000 e o usuário perguntar:
+8. Se a empresa possui faturamento de R$ 50.000 e o usuário perguntar:
 "Como faço para chegar a R$ 130.000?"
 
 Considere R$ 130.000 como a meta da pergunta.
@@ -138,12 +120,12 @@ Considere R$ 130.000 como a meta da pergunta.
 
 11. Transforme a análise em ações práticas.
 
-12. Evite respostas genéricas como:
-"Posso ajudar a analisar vendas, custos e margem."
+12. Evite respostas genéricas.
 
 13. Responda efetivamente à pergunta feita pelo usuário.
 
 14. Você pode analisar:
+
 - faturamento
 - vendas
 - clientes
@@ -164,7 +146,8 @@ Considere R$ 130.000 como a meta da pergunta.
 
 16. Pense como um consultor empresarial.
 
-17. Se o usuário perguntar sobre crescimento de faturamento, apresente caminhos concretos, como:
+17. Quando fizer sentido, apresente caminhos concretos para crescimento, como:
+
 - aumentar número de clientes
 - aumentar ticket médio
 - aumentar frequência de compra
@@ -184,12 +167,11 @@ PERGUNTA DO USUÁRIO:
 ${question}
 `;
 
-    const response =
-      await client.responses.create({
-        model: "gpt-5-mini",
-        instructions: contexto,
-        input: question,
-      });
+    const response = await client.responses.create({
+      model: "gpt-5-mini",
+      instructions: contexto,
+      input: question,
+    });
 
     const answer =
       response.output_text ||
@@ -200,14 +182,10 @@ ${question}
     });
 
   } catch (error) {
-    console.error(
-      "Erro no Copilot:",
-      error
-    );
+    console.error("Erro no Copilot:", error);
 
     return res.status(500).json({
-      error:
-        "Erro ao consultar a inteligência artificial.",
+      error: "Erro ao consultar a inteligência artificial.",
     });
   }
 }
