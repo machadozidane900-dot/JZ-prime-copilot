@@ -1,8 +1,12 @@
 import OpenAI from "openai";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const apiKey = process.env.OPENAI_API_KEY;
+
+const client = apiKey
+  ? new OpenAI({
+      apiKey: apiKey,
+    })
+  : null;
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -12,11 +16,19 @@ export default async function handler(req, res) {
   }
 
   try {
+    if (!client) {
+      console.error("OPENAI_API_KEY não configurada.");
+
+      return res.status(500).json({
+        error: "OPENAI_API_KEY não configurada no Vercel.",
+      });
+    }
+
     const { question, empresa = {} } = req.body || {};
 
-    if (!question) {
+    if (!question || !question.trim()) {
       return res.status(400).json({
-        error: "Pergunta não informada",
+        error: "Pergunta não informada.",
       });
     }
 
@@ -44,24 +56,34 @@ export default async function handler(req, res) {
     const objetivo =
       empresa.objetivo || "Aumentar vendas";
 
-    const formatarMoeda = (valor) => {
-      return Number(valor || 0).toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      });
-    };
+    const ticketMedio =
+      clientes > 0
+        ? faturamento / clientes
+        : 0;
 
     const progresso =
       meta > 0
-        ? Math.round((faturamento / meta) * 100)
+        ? Math.round(
+            (faturamento / meta) * 100
+          )
         : 0;
+
+    const formatarMoeda = (valor) => {
+      return Number(valor || 0).toLocaleString(
+        "pt-BR",
+        {
+          style: "currency",
+          currency: "BRL",
+        }
+      );
+    };
 
     const contexto = `
 Você é o JZ Prime Copilot, um consultor estratégico empresarial.
 
-Você deve analisar a pergunta do usuário usando os dados atuais da empresa.
+Sua função é analisar a pergunta do usuário usando os dados atuais da empresa e fornecer uma resposta prática, inteligente e personalizada.
 
-DADOS DA EMPRESA:
+DADOS ATUAIS DA EMPRESA
 
 Empresa: ${nomeEmpresa}
 Responsável: ${responsavel}
@@ -73,7 +95,7 @@ ${formatarMoeda(faturamento)}
 Clientes ativos:
 ${clientes}
 
-Meta mensal cadastrada:
+Meta mensal cadastrada no sistema:
 ${formatarMoeda(meta)}
 
 Progresso da meta cadastrada:
@@ -85,51 +107,89 @@ ${oportunidades}
 Objetivo principal:
 ${objetivo}
 
-REGRAS:
+Ticket médio aproximado:
+${formatarMoeda(ticketMedio)}
 
-- Responda sempre em português do Brasil.
-- Seja profissional, claro e objetivo.
-- Use os dados da empresa.
-- Não invente dados.
-- Faça cálculos quando houver números suficientes.
-- Se o usuário informar uma nova meta na pergunta, use essa nova meta.
-- Não fique limitado à meta cadastrada no dashboard.
-- Se o usuário perguntar sobre uma meta diferente da cadastrada, analise a meta informada.
-- Explique os cálculos de forma simples.
-- Dê recomendações práticas.
-- Evite respostas genéricas.
-- Pense como um consultor empresarial.
-- Considere faturamento, vendas, clientes, ticket médio, margem, custos, lucro e crescimento.
-- Quando fizer uma estimativa, diga claramente que é uma estimativa.
+REGRAS DO COPILOT
 
-EXEMPLO:
+1. Responda sempre em português do Brasil.
 
-Se o usuário perguntar:
+2. Seja profissional, claro e objetivo.
 
-"Como faço para aumentar meu faturamento de R$ 70 mil para R$ 130 mil?"
+3. Use os dados reais fornecidos acima.
 
-Você deve perceber que a meta da pergunta é R$ 130.000,00,
-mesmo que a meta cadastrada no sistema seja diferente.
+4. Nunca invente dados da empresa.
 
-Calcule:
+5. Quando houver números suficientes, faça os cálculos necessários.
 
-Faturamento atual: ${formatarMoeda(faturamento)}
+6. Se o usuário informar uma nova meta na própria pergunta, essa nova meta tem prioridade sobre a meta cadastrada no sistema.
 
-Meta solicitada pelo usuário:
-R$ 130.000,00
+7. Não fique limitado à meta cadastrada no dashboard.
 
-Depois calcule quanto falta e explique caminhos possíveis para alcançar esse valor.
+8. Exemplo:
+Se a empresa possui faturamento de R$ 50.000 e o usuário perguntar:
+"Como faço para chegar a R$ 130.000?"
+
+Considere R$ 130.000 como a meta da pergunta.
+
+9. Sempre calcule quanto falta para atingir a meta solicitada quando isso fizer sentido.
+
+10. Mostre cálculos de forma simples.
+
+11. Transforme a análise em ações práticas.
+
+12. Evite respostas genéricas como:
+"Posso ajudar a analisar vendas, custos e margem."
+
+13. Responda efetivamente à pergunta feita pelo usuário.
+
+14. Você pode analisar:
+- faturamento
+- vendas
+- clientes
+- ticket médio
+- metas
+- custos
+- despesas
+- margem
+- lucro
+- marketing
+- aquisição de clientes
+- retenção
+- crescimento
+- planejamento comercial
+- oportunidades
+
+15. Quando fizer uma estimativa, deixe claro que é uma estimativa.
+
+16. Pense como um consultor empresarial.
+
+17. Se o usuário perguntar sobre crescimento de faturamento, apresente caminhos concretos, como:
+- aumentar número de clientes
+- aumentar ticket médio
+- aumentar frequência de compra
+- melhorar conversão
+- recuperar clientes antigos
+- criar novas ofertas
+- melhorar processo comercial
+
+18. Sempre que possível, transforme o objetivo em números.
+
+19. Não diga que não possui os dados quando os dados estiverem disponíveis acima.
+
+20. A resposta deve ser útil para tomada de decisão.
 
 PERGUNTA DO USUÁRIO:
 
 ${question}
 `;
 
-    const response = await client.responses.create({
-      model: "gpt-5-mini",
-      instructions: contexto,
-      input: question,
-    });
+    const response =
+      await client.responses.create({
+        model: "gpt-5-mini",
+        instructions: contexto,
+        input: question,
+      });
 
     const answer =
       response.output_text ||
@@ -140,10 +200,14 @@ ${question}
     });
 
   } catch (error) {
-    console.error("Erro no Copilot:", error);
+    console.error(
+      "Erro no Copilot:",
+      error
+    );
 
     return res.status(500).json({
-      error: "Erro ao consultar a inteligência artificial.",
+      error:
+        "Erro ao consultar a inteligência artificial.",
     });
   }
 }
