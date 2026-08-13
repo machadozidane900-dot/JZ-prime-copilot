@@ -1,626 +1,492 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>JZ PRIME Copilot</title>
+  <title>JZ Prime Copilot</title>
 
-<link rel="stylesheet" href="/styles.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(
+          circle at 80% 10%,
+          rgba(53, 217, 155, 0.16),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 10% 80%,
+          rgba(53, 217, 155, 0.08),
+          transparent 30%
+        ),
+        #040907;
+
+      color: #f5faf7;
+
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* TOPO */
+
+    .topbar {
+      height: 76px;
+      padding: 0 6%;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      border-bottom: 1px solid #172a22;
+
+      background: rgba(4, 12, 8, 0.88);
+
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid #35d99b;
+      border-radius: 10px;
+
+      color: #35d99b;
+
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-text strong {
+      font-size: 14px;
+      letter-spacing: .5px;
+    }
+
+    .brand-text span {
+      color: #35d99b;
+      font-size: 11px;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      color: #8fa39a;
+      font-size: 12px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: #35d99b;
+
+      box-shadow:
+        0 0 12px rgba(53, 217, 155, .7);
+    }
+
+    /* HERO */
+
+    .hero {
+      width: min(1100px, calc(100% - 32px));
+
+      margin: 0 auto;
+
+      padding: 100px 0 80px;
+
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+
+      padding: 8px 14px;
+
+      border: 1px solid #20533f;
+      border-radius: 999px;
+
+      background: #091c14;
+
+      color: #42dca2;
+
+      font-size: 10px;
+      font-weight: 900;
+
+      letter-spacing: 1.5px;
+    }
+
+    h1 {
+      margin: 24px 0 20px;
+
+      font-size: clamp(48px, 8vw, 88px);
+
+      line-height: .95;
+
+      letter-spacing: -5px;
+    }
+
+    h1 span {
+      color: #35d99b;
+    }
+
+    .hero p {
+      max-width: 700px;
+
+      margin: 0 auto;
+
+      color: #8fa39a;
+
+      font-size: 17px;
+
+      line-height: 1.7;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+
+      margin-top: 38px;
+    }
+
+    .button {
+      min-width: 190px;
+      height: 52px;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 0 24px;
+
+      border-radius: 11px;
+
+      font-weight: 800;
+
+      transition: .2s ease;
+    }
+
+    .button-primary {
+      background: #35d99b;
+      color: #04100b;
+    }
+
+    .button-primary:hover {
+      background: #4ae5ac;
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 14px 35px rgba(53, 217, 155, .18);
+    }
+
+    .button-secondary {
+      border: 1px solid #294439;
+      background: #08130e;
+      color: #dce8e3;
+    }
+
+    .button-secondary:hover {
+      border-color: #35d99b;
+      transform: translateY(-2px);
+    }
+
+    /* CARDS */
+
+    .features {
+      width: min(1100px, calc(100% - 32px));
+
+      margin: 0 auto;
+
+      padding-bottom: 90px;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 18px;
+    }
+
+    .feature {
+      padding: 28px;
+
+      border: 1px solid #1c372c;
+      border-radius: 18px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #0d1c15,
+          #08130e
+        );
+    }
+
+    .feature-icon {
+      width: 42px;
+      height: 42px;
+
+      display: grid;
+      place-items: center;
+
+      margin-bottom: 20px;
+
+      border-radius: 10px;
+
+      background: #123d2c;
+
+      color: #35d99b;
+
+      font-size: 18px;
+    }
+
+    .feature h2 {
+      margin: 0 0 10px;
+
+      font-size: 18px;
+    }
+
+    .feature p {
+      margin: 0;
+
+      color: #8fa39a;
+
+      font-size: 13px;
+
+      line-height: 1.7;
+    }
+
+    /* RODAPÉ */
+
+    footer {
+      margin-top: auto;
+
+      padding: 24px 6%;
+
+      border-top: 1px solid #172a22;
+
+      color: #60756c;
+
+      text-align: center;
+
+      font-size: 11px;
+    }
+
+    /* RESPONSIVO */
+
+    @media (max-width: 700px) {
+
+      .topbar {
+        padding: 0 18px;
+      }
+
+      .status {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 70px;
+      }
+
+      h1 {
+        letter-spacing: -3px;
+      }
+
+      .actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .button {
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
-  <header class="navbar">
+  <div class="page">
 
-    <a href="#" class="logo">
+    <header class="topbar">
 
-      <div class="logo-icon">
-        JZ
-      </div>
+      <a href="index.html" class="brand">
 
-      <div class="logo-text">
-        <strong>JZ PRIME</strong>
-        <span>Copilot</span>
-      </div>
+        <div class="brand-icon">
+          JZ
+        </div>
 
-    </a>
+        <div class="brand-text">
+          <strong>JZ PRIME</strong>
+          <span>Copilot</span>
+        </div>
 
-    <nav>
-
-      <a href="#recursos">Recursos</a>
-      <a href="#processo">Como funciona</a>
-      <a href="#planos">Planos</a>
-
-      <a
-        href="dashboard.html"
-        class="nav-button"
-      >
-        Entrar no Copilot →
       </a>
 
-    </nav>
-
-  </header>
-
-
-  <!-- HERO -->
-  <section class="hero">
-
-    <div class="hero-content">
-
-      <div class="badge">
-        ✦ INTELIGÊNCIA EMPRESARIAL
+      <div class="status">
+        <span class="status-dot"></span>
+        Plataforma online
       </div>
 
-      <h1>
-        Seu negócio,
-        <span>mais inteligente.</span>
-      </h1>
-
-      <p>
-        O JZ PRIME Copilot transforma dados da sua empresa
-        em clareza, oportunidades e próximos passos.
-      </p>
-
-      <div class="hero-buttons">
-
-        <a
-          href="dashboard.html"
-          class="button primary"
-        >
-          Conhecer o Copilot →
-        </a>
-
-        <a
-          href="#recursos"
-          class="button secondary"
-        >
-          Explorar recursos
-        </a>
-
-      </div>
-
-      <div class="hero-points">
-
-        <span>● Dados organizados</span>
-        <span>● Insights com IA</span>
-        <span>● Decisões melhores</span>
-
-      </div>
-
-    </div>
+    </header>
 
 
-    <!-- DASHBOARD VISUAL -->
-    <div class="hero-dashboard">
+    <main>
 
-      <div class="dashboard-window">
+      <section class="hero">
 
-        <div class="window-top">
+        <div class="badge">
+          ✦ JZ PRIME COPILOT
+        </div>
 
-          <div class="window-brand">
+        <h1>
+          Seu negócio.<br>
+          <span>Sua estratégia.</span>
+        </h1>
 
-            <div class="mini-logo">
-              JZ
-            </div>
+        <p>
+          Um assistente estratégico para acompanhar
+          indicadores, analisar resultados e transformar
+          seus objetivos empresariais em ações práticas.
+        </p>
 
-            <strong>
-              JZ PRIME
-              <span>Copilot</span>
-            </strong>
+        <div class="actions">
 
+          <a
+            href="empresa.html"
+            class="button button-primary"
+          >
+            Começar agora →
+          </a>
+
+          <a
+            href="empresa.html"
+            class="button button-secondary"
+          >
+            Configurar empresa
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <section class="features">
+
+        <article class="feature">
+
+          <div class="feature-icon">
+            📊
           </div>
 
-          <div class="live">
-            <i></i>
-            AO VIVO
+          <h2>
+            Indicadores
+          </h2>
+
+          <p>
+            Acompanhe faturamento, clientes,
+            metas e oportunidades em um único painel.
+          </p>
+
+        </article>
+
+
+        <article class="feature">
+
+          <div class="feature-icon">
+            ✦
           </div>
 
-        </div>
+          <h2>
+            Copilot estratégico
+          </h2>
+
+          <p>
+            Faça perguntas sobre sua empresa e
+            receba análises práticas baseadas nos
+            seus próprios dados.
+          </p>
+
+        </article>
 
 
-        <div class="window-content">
+        <article class="feature">
 
-          <div class="window-menu">
-
-            <span class="selected">
-              Visão geral
-            </span>
-
-            <span>
-              ✦ Copilot
-            </span>
-
-            <span>
-              ◫ Financeiro
-            </span>
-
-            <span>
-              ♙ Clientes
-            </span>
-
+          <div class="feature-icon">
+            ⚡
           </div>
 
+          <h2>
+            Ações práticas
+          </h2>
 
-          <div class="dashboard-title">
+          <p>
+            Transforme metas de crescimento em
+            números, prioridades e próximos passos.
+          </p>
 
-            <small>
-              VISÃO GERAL
-            </small>
+        </article>
 
-            <h2>
-              Desempenho da empresa
-            </h2>
+      </section>
 
-          </div>
+    </main>
 
 
-          <!-- CARDS -->
+    <footer>
+      JZ Prime Copilot · Estratégia orientada por dados.
+    </footer>
 
-          <div class="preview-cards">
-
-            <div class="preview-card">
-
-              <small>
-                FATURAMENTO
-              </small>
-
-              <strong>
-                R$ 284.620
-              </strong>
-
-              <span>
-                ↗ 14,8%
-              </span>
-
-            </div>
-
-
-            <div class="preview-card">
-
-              <small>
-                LUCRO ESTIMADO
-              </small>
-
-              <strong>
-                R$ 58.420
-              </strong>
-
-              <span>
-                ↗ 9,2%
-              </span>
-
-            </div>
-
-          </div>
-
-
-          <!-- GRÁFICO -->
-
-          <div class="chart-card">
-
-            <div class="chart-header">
-
-              <div>
-
-                <small>
-                  DESEMPENHO
-                </small>
-
-                <strong>
-                  Evolução do faturamento
-                </strong>
-
-              </div>
-
-              <span>
-                2026
-              </span>
-
-            </div>
-
-
-            <div class="chart">
-
-              <div class="bar b1"></div>
-              <div class="bar b2"></div>
-              <div class="bar b3"></div>
-              <div class="bar b4"></div>
-              <div class="bar b5"></div>
-              <div class="bar b6"></div>
-              <div class="bar b7"></div>
-              <div class="bar b8"></div>
-
-            </div>
-
-
-            <div class="chart-labels">
-
-              <span>JAN</span>
-              <span>FEV</span>
-              <span>MAR</span>
-              <span>ABR</span>
-              <span>MAI</span>
-              <span>JUN</span>
-              <span>JUL</span>
-              <span>AGO</span>
-
-            </div>
-
-          </div>
-
-
-          <!-- INSIGHT -->
-
-          <div class="insight">
-
-            <div class="insight-icon">
-              ✦
-            </div>
-
-            <div>
-
-              <strong>
-                Insight do Copilot
-              </strong>
-
-              <p>
-                Existe uma oportunidade de melhorar
-                sua margem operacional.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- PROCESSO -->
-
-  <section
-    class="process"
-    id="processo"
-  >
-
-    <div class="section-label">
-      FLUXO DE DECISÃO
-    </div>
-
-    <h2>
-      Menos planilhas.
-      <span>Mais clareza.</span>
-    </h2>
-
-    <p>
-      Organize os dados da empresa, entenda o cenário
-      e transforme informação em decisões melhores.
-    </p>
-
-
-    <div class="steps">
-
-      <div class="step">
-
-        <div class="step-number">
-          01
-        </div>
-
-        <h3>
-          Organizar
-        </h3>
-
-        <p>
-          Dados importantes em um só lugar.
-        </p>
-
-      </div>
-
-
-      <div class="step">
-
-        <div class="step-number">
-          02
-        </div>
-
-        <h3>
-          Interpretar
-        </h3>
-
-        <p>
-          O Copilot encontra padrões e sinais.
-        </p>
-
-      </div>
-
-
-      <div class="step">
-
-        <div class="step-number">
-          03
-        </div>
-
-        <h3>
-          Priorizar
-        </h3>
-
-        <p>
-          Veja o que merece atenção primeiro.
-        </p>
-
-      </div>
-
-
-      <div class="step">
-
-        <div class="step-number">
-          04
-        </div>
-
-        <h3>
-          Executar
-        </h3>
-
-        <p>
-          Acompanhe o impacto das decisões.
-        </p>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- RECURSOS -->
-
-  <section
-    class="features"
-    id="recursos"
-  >
-
-    <div class="section-label">
-      PLATAFORMA
-    </div>
-
-    <h2>
-      Inteligência que trabalha
-      <span>junto com você.</span>
-    </h2>
-
-    <p class="section-description">
-      Uma visão central para acompanhar o negócio
-      e transformar informação em ação.
-    </p>
-
-
-    <div class="feature-grid">
-
-
-      <div class="feature">
-
-        <div class="feature-icon">
-          ✦
-        </div>
-
-        <h3>
-          Copilot IA
-        </h3>
-
-        <p>
-          Pergunte sobre sua empresa, encontre sinais
-          e transforme análise em plano de ação.
-        </p>
-
-        <a href="dashboard.html#copilot">
-          Conhecer →
-        </a>
-
-      </div>
-
-
-      <div class="feature">
-
-        <div class="feature-icon">
-          ◫
-        </div>
-
-        <h3>
-          Dashboard executivo
-        </h3>
-
-        <p>
-          Faturamento, lucro, metas, despesas
-          e desempenho em uma visão objetiva.
-        </p>
-
-        <a href="dashboard.html">
-          Ver painel →
-        </a>
-
-      </div>
-
-
-      <div class="feature">
-
-        <div class="feature-icon">
-          ↗
-        </div>
-
-        <h3>
-          Oportunidades
-        </h3>
-
-        <p>
-          Identifique tendências, gargalos e pontos
-          que merecem atenção.
-        </p>
-
-        <a href="dashboard.html#insights">
-          Ver insights →
-        </a>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- PLANOS -->
-
-  <section
-    class="plans"
-    id="planos"
-  >
-
-    <div class="section-label">
-      PLANOS
-    </div>
-
-    <h2>
-      Comece pequeno.
-      <span>Cresça com inteligência.</span>
-    </h2>
-
-
-    <div class="plans-grid">
-
-
-      <div class="plan">
-
-        <small>
-          START
-        </small>
-
-        <h3>
-          R$ 99
-          <span>/mês</span>
-        </h3>
-
-        <p>
-          Para começar a organizar
-          a visão do negócio.
-        </p>
-
-        <ul>
-
-          <li>✓ Dashboard</li>
-          <li>✓ Indicadores</li>
-          <li>✓ Copilot básico</li>
-
-        </ul>
-
-        <a href="dashboard.html">
-          Conhecer
-        </a>
-
-      </div>
-
-
-      <div class="plan featured">
-
-        <div class="popular">
-          MAIS ESCOLHIDO
-        </div>
-
-        <small>
-          PRO
-        </small>
-
-        <h3>
-          R$ 299
-          <span>/mês</span>
-        </h3>
-
-        <p>
-          Para empresas que querem usar
-          inteligência no dia a dia.
-        </p>
-
-        <ul>
-
-          <li>✓ Copilot avançado</li>
-          <li>✓ Análises e insights</li>
-          <li>✓ Automações</li>
-
-        </ul>
-
-        <a href="dashboard.html">
-          Começar com PRO →
-        </a>
-
-      </div>
-
-
-      <div class="plan">
-
-        <small>
-          ENTERPRISE
-        </small>
-
-        <h3 class="consult">
-          Sob consulta
-        </h3>
-
-        <p>
-          Estrutura personalizada
-          para operações maiores.
-        </p>
-
-        <ul>
-
-          <li>✓ Integrações</li>
-          <li>✓ Recursos personalizados</li>
-          <li>✓ Suporte dedicado</li>
-
-        </ul>
-
-        <a href="empresa.html">
-          Falar conosco
-        </a>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- FOOTER -->
-
-  <footer>
-
-    <div class="footer-logo">
-
-      ✦
-
-      <strong>
-        JZ PRIME
-      </strong>
-
-      <span>
-        Copilot
-      </span>
-
-    </div>
-
-    <p>
-      Inteligência para empresas que querem crescer.
-    </p>
-
-  </footer>
-
+  </div>
 
 </body>
-
 </html>
