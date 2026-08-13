@@ -1334,7 +1334,7 @@ async function sendCopilot() {
 
     const resposta =
       await fetch(
-        "/api/copilot",
+        /api/copiloto
         {
 
           method:
