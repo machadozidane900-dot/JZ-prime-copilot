@@ -32,29 +32,16 @@ export default async function handler(req, res) {
       });
     }
 
-    const nomeEmpresa =
-      empresa.empresa || "sua empresa";
+    const nomeEmpresa = empresa.empresa || "sua empresa";
+    const responsavel = empresa.responsavel || "não informado";
+    const segmento = empresa.segmento || "não informado";
 
-    const responsavel =
-      empresa.responsavel || "não informado";
+    const faturamento = Number(empresa.faturamento) || 0;
+    const clientes = Number(empresa.clientes) || 0;
+    const meta = Number(empresa.meta) || 0;
+    const oportunidades = Number(empresa.oportunidades) || 0;
 
-    const segmento =
-      empresa.segmento || "não informado";
-
-    const faturamento =
-      Number(empresa.faturamento) || 0;
-
-    const clientes =
-      Number(empresa.clientes) || 0;
-
-    const meta =
-      Number(empresa.meta) || 0;
-
-    const oportunidades =
-      Number(empresa.oportunidades) || 0;
-
-    const objetivo =
-      empresa.objetivo || "Aumentar vendas";
+    const objetivo = empresa.objetivo || "Aumentar vendas";
 
     const ticketMedio =
       clientes > 0
@@ -63,44 +50,34 @@ export default async function handler(req, res) {
 
     const progresso =
       meta > 0
-        ? Math.round(
-            (faturamento / meta) * 100
-          )
+        ? Math.round((faturamento / meta) * 100)
         : 0;
 
     function formatarMoeda(valor) {
-      return Number(valor || 0).toLocaleString(
-        "pt-BR",
-        {
-          style: "currency",
-          currency: "BRL",
-        }
-      );
+      return Number(valor || 0).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      });
     }
 
     const contexto = `
 Você é o JZ Prime Copilot, um consultor estratégico empresarial.
 
-Sua função é analisar a pergunta do usuário usando os dados atuais da empresa e fornecer uma resposta prática, inteligente e personalizada.
+Responda sempre em português do Brasil.
 
-DADOS ATUAIS DA EMPRESA
+DADOS DA EMPRESA
 
-Empresa:
-${nomeEmpresa}
+Empresa: ${nomeEmpresa}
+Responsável: ${responsavel}
+Segmento: ${segmento}
 
-Responsável:
-${responsavel}
-
-Segmento:
-${segmento}
-
-Faturamento mensal atual:
+Faturamento mensal:
 ${formatarMoeda(faturamento)}
 
 Clientes ativos:
 ${clientes}
 
-Meta mensal cadastrada:
+Meta mensal:
 ${formatarMoeda(meta)}
 
 Progresso da meta:
@@ -112,96 +89,35 @@ ${oportunidades}
 Objetivo principal:
 ${objetivo}
 
-Ticket médio aproximado:
+Ticket médio:
 ${formatarMoeda(ticketMedio)}
 
-REGRAS DO COPILOT
+REGRAS
 
-1. Responda sempre em português do Brasil.
+- Seja profissional, claro e objetivo.
+- Use os dados reais fornecidos.
+- Nunca invente dados.
+- Faça cálculos quando houver dados suficientes.
+- Se o usuário informar uma nova meta na pergunta, use essa nova meta.
+- Calcule quanto falta para atingir a meta quando fizer sentido.
+- Mostre os cálculos de forma simples.
+- Transforme a análise em ações práticas.
+- Evite respostas genéricas.
+- Pense como um consultor empresarial.
+- Quando fizer estimativas, informe que são estimativas.
+- Analise vendas, faturamento, clientes, ticket médio, metas, custos, despesas, margem, lucro, marketing, aquisição, retenção, crescimento e oportunidades.
+- Sempre que possível, transforme objetivos em números.
 
-2. Seja profissional, claro e objetivo.
-
-3. Use os dados reais fornecidos acima.
-
-4. Nunca invente dados da empresa.
-
-5. Quando houver números suficientes, faça os cálculos necessários.
-
-6. Se o usuário informar uma nova meta na própria pergunta, essa nova meta tem prioridade sobre a meta cadastrada.
-
-7. Sempre calcule quanto falta para atingir uma meta quando isso fizer sentido.
-
-8. Mostre cálculos de forma simples e fácil de entender.
-
-9. Transforme a análise em ações práticas.
-
-10. Evite respostas genéricas.
-
-11. Responda diretamente à pergunta do usuário.
-
-12. Você pode analisar:
-
-- faturamento
-- vendas
-- clientes
-- ticket médio
-- metas
-- custos
-- despesas
-- margem
-- lucro
-- marketing
-- aquisição de clientes
-- retenção
-- crescimento
-- planejamento comercial
-- oportunidades
-
-13. Quando fizer uma estimativa, deixe claro que é uma estimativa.
-
-14. Pense como um consultor empresarial.
-
-15. Quando o usuário perguntar como aumentar o faturamento, considere estratégias como:
-
-- aumentar o número de clientes
-- aumentar o ticket médio
-- aumentar a frequência de compra
-- melhorar a conversão
-- recuperar clientes antigos
-- criar novas ofertas
-- melhorar o processo comercial
-
-16. Sempre que possível, transforme objetivos em números.
-
-17. A resposta deve ser útil para tomada de decisão.
-
-EXEMPLO:
-
-Se o faturamento atual for R$ 50.000 e o usuário perguntar:
-
-"Como faço para chegar a R$ 130.000?"
-
-Considere R$ 130.000 como a nova meta da pergunta.
-
-Calcule:
-
-- faturamento atual
-- nova meta
-- diferença em reais
-- crescimento necessário
-- possíveis estratégias para alcançar a meta
-
-PERGUNTA DO USUÁRIO:
+PERGUNTA DO USUÁRIO
 
 ${question}
 `;
 
-    const response =
-      await client.responses.create({
-        model: "gpt-5-mini",
-        instructions: contexto,
-        input: question,
-      });
+    const response = await client.responses.create({
+      model: "gpt-5-mini",
+      instructions: contexto,
+      input: question,
+    });
 
     const answer =
       response.output_text ||
@@ -212,14 +128,10 @@ ${question}
     });
 
   } catch (error) {
-    console.error(
-      "Erro no Copilot:",
-      error
-    );
+    console.error("Erro no Copilot:", error);
 
     return res.status(500).json({
-      error:
-        "Erro ao consultar a inteligência artificial.",
+      error: "Erro ao consultar a inteligência artificial.",
     });
   }
 }
