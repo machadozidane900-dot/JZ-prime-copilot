@@ -983,7 +983,7 @@ async function sendCopilot() {
   try {
     const resposta =
       await fetch(
-        "/api/copiloto",
+       /api/copilot
         {
           method: "POST",
 
