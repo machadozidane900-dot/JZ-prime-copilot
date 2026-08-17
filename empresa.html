@@ -679,10 +679,6 @@
             placeholder="Ex.: 25000"
           >
 
-          <small>
-            Custos e despesas aproximados por mês.
-          </small>
-
         </div>
 
 
@@ -789,7 +785,6 @@
 
       <div class="grid">
 
-
         <div class="field full">
 
           <label for="objetivo">
@@ -884,121 +879,97 @@
 
 <script>
 
-(function () {
-
-  "use strict";
-
-
-  /* =====================================================
-     FORMULÁRIO
-  ===================================================== */
-
-  const form =
-    document.getElementById(
-      "empresaForm"
-    );
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
 
 
-  const button =
-    document.getElementById(
-      "submitButton"
-    );
-
-
-  if (!form) {
-
-    console.error(
-      "Formulário empresaForm não encontrado."
-    );
-
-    return;
-
-  }
-
-
-  /* =====================================================
-     FUNÇÃO PARA PEGAR VALOR
-  ===================================================== */
-
-  function valor(id) {
-
-    const elemento =
-      document.getElementById(id);
-
-    if (!elemento) {
-      return "";
-    }
-
-    return elemento.value.trim();
-
-  }
-
-
-  /* =====================================================
-     CARREGAR DADOS SALVOS
-  ===================================================== */
-
-  function carregarDados() {
-
-    const salvo =
-      localStorage.getItem(
-        "empresa"
+    const form =
+      document.getElementById(
+        "empresaForm"
       );
 
 
-    if (!salvo) {
+    const button =
+      document.getElementById(
+        "submitButton"
+      );
+
+
+    if (!form) {
+
+      console.error(
+        "ERRO: empresaForm não encontrado."
+      );
+
       return;
+
     }
 
+
+    /* =====================================================
+       CARREGAR DADOS EXISTENTES
+    ===================================================== */
 
     try {
 
-      const dados =
-        JSON.parse(salvo);
+      const dadosSalvos =
+        localStorage.getItem(
+          "empresa"
+        );
 
 
-      const campos = [
+      if (dadosSalvos) {
 
-        "empresa",
-        "responsavel",
-        "segmento",
-        "cnpj",
-        "telefone",
-        "email",
-        "faturamento",
-        "despesas",
-        "clientes",
-        "ticket",
-        "meta",
-        "metaAnual",
-        "funcionarios",
-        "objetivo"
-
-      ];
+        const dados =
+          JSON.parse(
+            dadosSalvos
+          );
 
 
-      campos.forEach(
-        function (campo) {
+        const campos = [
 
-          const elemento =
-            document.getElementById(
-              campo
-            );
+          "empresa",
+          "responsavel",
+          "segmento",
+          "cnpj",
+          "telefone",
+          "email",
+          "faturamento",
+          "despesas",
+          "clientes",
+          "ticket",
+          "meta",
+          "metaAnual",
+          "funcionarios",
+          "objetivo"
+
+        ];
 
 
-          if (
-            elemento &&
-            dados[campo] !== undefined
-          ) {
+        campos.forEach(
+          function (campo) {
 
-            elemento.value =
-              dados[campo];
+            const elemento =
+              document.getElementById(
+                campo
+              );
+
+
+            if (
+              elemento &&
+              dados[campo] !== undefined
+            ) {
+
+              elemento.value =
+                dados[campo];
+
+            }
 
           }
+        );
 
-        }
-      );
-
+      }
 
     } catch (erro) {
 
@@ -1009,414 +980,413 @@
 
     }
 
-  }
+
+    /* =====================================================
+       SALVAR FORMULÁRIO
+    ===================================================== */
+
+    form.addEventListener(
+      "submit",
+      function (event) {
+
+        event.preventDefault();
 
 
-  /* =====================================================
-     SALVAR
-  ===================================================== */
-
-  form.addEventListener(
-    "submit",
-    function (event) {
-
-      event.preventDefault();
+        try {
 
 
-      try {
-
-        /* =================================================
-           DADOS
-        ================================================= */
-
-        const nomeEmpresa =
-          valor("empresa");
+          const nomeEmpresa =
+            document
+              .getElementById("empresa")
+              .value
+              .trim();
 
 
-        const responsavel =
-          valor("responsavel");
+          const responsavel =
+            document
+              .getElementById("responsavel")
+              .value
+              .trim();
 
 
-        const segmento =
-          valor("segmento");
+          const segmento =
+            document
+              .getElementById("segmento")
+              .value;
 
 
-        const cnpj =
-          valor("cnpj");
+          const cnpj =
+            document
+              .getElementById("cnpj")
+              .value
+              .trim();
 
 
-        const telefone =
-          valor("telefone");
+          const telefone =
+            document
+              .getElementById("telefone")
+              .value
+              .trim();
 
 
-        const email =
-          valor("email");
+          const email =
+            document
+              .getElementById("email")
+              .value
+              .trim();
 
 
-        const faturamento =
-          Number(
-            valor("faturamento")
-          ) || 0;
+          const faturamento =
+            Number(
+              document
+                .getElementById("faturamento")
+                .value
+            ) || 0;
 
 
-        const despesas =
-          Number(
-            valor("despesas")
-          ) || 0;
+          const despesas =
+            Number(
+              document
+                .getElementById("despesas")
+                .value
+            ) || 0;
 
 
-        const clientes =
-          Number(
-            valor("clientes")
-          ) || 0;
+          const clientes =
+            Number(
+              document
+                .getElementById("clientes")
+                .value
+            ) || 0;
 
 
-        let ticket =
-          Number(
-            valor("ticket")
-          ) || 0;
+          let ticket =
+            Number(
+              document
+                .getElementById("ticket")
+                .value
+            ) || 0;
 
 
-        const meta =
-          Number(
-            valor("meta")
-          ) || 0;
+          const meta =
+            Number(
+              document
+                .getElementById("meta")
+                .value
+            ) || 0;
 
 
-        let metaAnual =
-          Number(
-            valor("metaAnual")
-          ) || 0;
+          let metaAnual =
+            Number(
+              document
+                .getElementById("metaAnual")
+                .value
+            ) || 0;
 
 
-        const funcionarios =
-          Number(
-            valor("funcionarios")
-          ) || 0;
+          const funcionarios =
+            Number(
+              document
+                .getElementById("funcionarios")
+                .value
+            ) || 0;
 
 
-        const objetivo =
-          valor("objetivo");
+          const objetivo =
+            document
+              .getElementById("objetivo")
+              .value;
 
 
-        /* =================================================
-           VALIDAÇÃO
-        ================================================= */
+          /* =================================================
+             VALIDAÇÃO
+          ================================================= */
 
-        if (!nomeEmpresa) {
+          if (!nomeEmpresa) {
+
+            alert(
+              "Digite o nome da empresa."
+            );
+
+            return;
+
+          }
+
+
+          if (!responsavel) {
+
+            alert(
+              "Digite o nome do responsável."
+            );
+
+            return;
+
+          }
+
+
+          if (!segmento) {
+
+            alert(
+              "Selecione o segmento."
+            );
+
+            return;
+
+          }
+
+
+          if (faturamento <= 0) {
+
+            alert(
+              "Digite o faturamento mensal."
+            );
+
+            return;
+
+          }
+
+
+          if (clientes < 0) {
+
+            alert(
+              "Digite um número válido de clientes."
+            );
+
+            return;
+
+          }
+
+
+          if (meta <= 0) {
+
+            alert(
+              "Digite uma meta mensal maior que zero."
+            );
+
+            return;
+
+          }
+
+
+          if (!objetivo) {
+
+            alert(
+              "Selecione o principal objetivo."
+            );
+
+            return;
+
+          }
+
+
+          /* =================================================
+             CÁLCULOS
+          ================================================= */
+
+          if (
+            ticket <= 0 &&
+            clientes > 0
+          ) {
+
+            ticket =
+              faturamento /
+              clientes;
+
+          }
+
+
+          if (
+            metaAnual <= 0
+          ) {
+
+            metaAnual =
+              meta * 12;
+
+          }
+
+
+          const lucro =
+            faturamento -
+            despesas;
+
+
+          const margem =
+            faturamento > 0
+              ? (
+                  lucro /
+                  faturamento
+                ) * 100
+              : 0;
+
+
+          const progresso =
+            meta > 0
+              ? (
+                  faturamento /
+                  meta
+                ) * 100
+              : 0;
+
+
+          /* =================================================
+             OBJETO
+          ================================================= */
+
+          const dadosEmpresa = {
+
+            empresa:
+              nomeEmpresa,
+
+            responsavel:
+              responsavel,
+
+            segmento:
+              segmento,
+
+            cnpj:
+              cnpj,
+
+            telefone:
+              telefone,
+
+            email:
+              email,
+
+            faturamento:
+              faturamento,
+
+            despesas:
+              despesas,
+
+            clientes:
+              clientes,
+
+            ticket:
+              ticket,
+
+            meta:
+              meta,
+
+            metaAnual:
+              metaAnual,
+
+            funcionarios:
+              funcionarios,
+
+            objetivo:
+              objetivo,
+
+            lucro:
+              lucro,
+
+            margem:
+              margem,
+
+            progresso:
+              progresso,
+
+            atualizadoEm:
+              new Date().toISOString()
+
+          };
+
+
+          /* =================================================
+             SALVAR
+          ================================================= */
+
+          localStorage.setItem(
+            "empresa",
+            JSON.stringify(
+              dadosEmpresa
+            )
+          );
+
+
+          localStorage.setItem(
+            "empresaConfigurada",
+            "true"
+          );
+
+
+          /* =================================================
+             VERIFICAR
+          ================================================= */
+
+          const teste =
+            localStorage.getItem(
+              "empresa"
+            );
+
+
+          if (!teste) {
+
+            alert(
+              "ERRO: os dados não foram salvos."
+            );
+
+            return;
+
+          }
+
+
+          console.log(
+            "JZ PRIME — DADOS SALVOS:",
+            JSON.parse(teste)
+          );
+
+
+          /* =================================================
+             BOTÃO
+          ================================================= */
+
+          button.disabled =
+            true;
+
+
+          button.textContent =
+            "✓ Dados salvos! Abrindo Dashboard...";
+
+
+          /* =================================================
+             REDIRECIONAR
+          ================================================= */
+
+          setTimeout(
+            function () {
+
+              window.location.href =
+                "dashboard.html";
+
+            },
+            700
+          );
+
+
+        } catch (erro) {
+
+          console.error(
+            "ERRO AO SALVAR:",
+            erro
+          );
+
 
           alert(
-            "Informe o nome da empresa."
+            "Erro ao salvar os dados. Verifique o console do navegador."
           );
-
-          document
-            .getElementById("empresa")
-            .focus();
-
-          return;
 
         }
-
-
-        if (!responsavel) {
-
-          alert(
-            "Informe o responsável."
-          );
-
-          document
-            .getElementById("responsavel")
-            .focus();
-
-          return;
-
-        }
-
-
-        if (!segmento) {
-
-          alert(
-            "Selecione o segmento da empresa."
-          );
-
-          return;
-
-        }
-
-
-        if (faturamento <= 0) {
-
-          alert(
-            "Informe o faturamento mensal."
-          );
-
-          document
-            .getElementById("faturamento")
-            .focus();
-
-          return;
-
-        }
-
-
-        if (clientes < 0) {
-
-          alert(
-            "O número de clientes não pode ser negativo."
-          );
-
-          return;
-
-        }
-
-
-        if (meta <= 0) {
-
-          alert(
-            "Informe uma meta mensal maior que zero."
-          );
-
-          document
-            .getElementById("meta")
-            .focus();
-
-          return;
-
-        }
-
-
-        if (!objetivo) {
-
-          alert(
-            "Selecione o principal objetivo."
-          );
-
-          return;
-
-        }
-
-
-        /* =================================================
-           CÁLCULOS
-        ================================================= */
-
-        if (
-          ticket <= 0 &&
-          clientes > 0
-        ) {
-
-          ticket =
-            faturamento / clientes;
-
-        }
-
-
-        if (
-          metaAnual <= 0
-        ) {
-
-          metaAnual =
-            meta * 12;
-
-        }
-
-
-        const lucro =
-          faturamento -
-          despesas;
-
-
-        const margem =
-          faturamento > 0
-            ? (
-                lucro /
-                faturamento
-              ) * 100
-            : 0;
-
-
-        const progresso =
-          meta > 0
-            ? (
-                faturamento /
-                meta
-              ) * 100
-            : 0;
-
-
-        /* =================================================
-           OBJETO FINAL
-        ================================================= */
-
-        const dadosEmpresa = {
-
-          empresa:
-            nomeEmpresa,
-
-          responsavel:
-            responsavel,
-
-          segmento:
-            segmento,
-
-          cnpj:
-            cnpj,
-
-          telefone:
-            telefone,
-
-          email:
-            email,
-
-          faturamento:
-            faturamento,
-
-          despesas:
-            despesas,
-
-          clientes:
-            clientes,
-
-          ticket:
-            ticket,
-
-          meta:
-            meta,
-
-          metaAnual:
-            metaAnual,
-
-          funcionarios:
-            funcionarios,
-
-          objetivo:
-            objetivo,
-
-          lucro:
-            lucro,
-
-          margem:
-            margem,
-
-          progresso:
-            progresso,
-
-          atualizadoEm:
-            new Date().toISOString()
-
-        };
-
-
-        /* =================================================
-           SALVAR LOCALSTORAGE
-        ================================================= */
-
-        const json =
-          JSON.stringify(
-            dadosEmpresa
-          );
-
-
-        localStorage.setItem(
-          "empresa",
-          json
-        );
-
-
-        localStorage.setItem(
-          "empresaConfigurada",
-          "true"
-        );
-
-
-        /* =================================================
-           VERIFICAR SALVAMENTO
-        ================================================= */
-
-        const verificacao =
-          localStorage.getItem(
-            "empresa"
-          );
-
-
-        if (!verificacao) {
-
-          alert(
-            "Erro: o navegador não permitiu salvar os dados."
-          );
-
-          return;
-
-        }
-
-
-        const dadosVerificados =
-          JSON.parse(
-            verificacao
-          );
-
-
-        console.log(
-          "JZ PRIME — DADOS SALVOS:",
-          dadosVerificados
-        );
-
-
-        /* =================================================
-           CONFIRMAÇÃO
-        ================================================= */
-
-        button.disabled =
-          true;
-
-
-        button.textContent =
-          "✓ Dados salvos! Abrindo Dashboard...";
-
-
-        /* =================================================
-           IR PARA DASHBOARD
-        ================================================= */
-
-        setTimeout(
-          function () {
-
-            window.location.href =
-              "dashboard.html";
-
-          },
-          700
-        );
-
-      } catch (erro) {
-
-        console.error(
-          "ERRO AO SALVAR EMPRESA:",
-          erro
-        );
-
-
-        alert(
-          "Ocorreu um erro ao salvar os dados. Veja o console do navegador."
-        );
 
       }
-
-    }
-  );
+    );
 
 
-  /* =====================================================
-     INICIAR
-  ===================================================== */
-
-  carregarDados();
-
-
-})();
+  }
+);
 
 </script>
 
 
 </body>
+
 </html>
