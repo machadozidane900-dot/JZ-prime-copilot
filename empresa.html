@@ -415,7 +415,9 @@
 
 </head>
 
+
 <body>
+
 
 <header class="topbar">
 
@@ -440,6 +442,7 @@
 
 <main class="container">
 
+
   <section class="intro">
 
     <div class="badge">
@@ -460,6 +463,7 @@
 
 
   <section class="card">
+
 
     <div class="card-top">
 
@@ -485,6 +489,7 @@
 
 
       <div class="grid">
+
 
         <div class="field full">
 
@@ -528,21 +533,51 @@
             Segmento
           </label>
 
-          <select id="segmento" required>
+          <select
+            id="segmento"
+            name="segmento"
+            required
+          >
 
             <option value="">
               Selecione
             </option>
 
-            <option>Comércio</option>
-            <option>Serviços</option>
-            <option>Indústria</option>
-            <option>Tecnologia</option>
-            <option>Construção</option>
-            <option>Saúde</option>
-            <option>Educação</option>
-            <option>Alimentação</option>
-            <option>Outro</option>
+            <option value="Comércio">
+              Comércio
+            </option>
+
+            <option value="Serviços">
+              Serviços
+            </option>
+
+            <option value="Indústria">
+              Indústria
+            </option>
+
+            <option value="Tecnologia">
+              Tecnologia
+            </option>
+
+            <option value="Construção">
+              Construção
+            </option>
+
+            <option value="Saúde">
+              Saúde
+            </option>
+
+            <option value="Educação">
+              Educação
+            </option>
+
+            <option value="Alimentação">
+              Alimentação
+            </option>
+
+            <option value="Outro">
+              Outro
+            </option>
 
           </select>
 
@@ -557,6 +592,7 @@
 
           <input
             id="cnpj"
+            name="cnpj"
             type="text"
             placeholder="00.000.000/0000-00"
             inputmode="numeric"
@@ -573,6 +609,7 @@
 
           <input
             id="telefone"
+            name="telefone"
             type="tel"
             placeholder="(51) 99999-9999"
             autocomplete="tel"
@@ -589,6 +626,7 @@
 
           <input
             id="email"
+            name="email"
             type="email"
             placeholder="contato@empresa.com"
             autocomplete="email"
@@ -606,6 +644,7 @@
 
       <div class="grid">
 
+
         <div class="field">
 
           <label for="faturamento">
@@ -614,6 +653,7 @@
 
           <input
             id="faturamento"
+            name="faturamento"
             type="number"
             min="0"
             step="0.01"
@@ -632,6 +672,7 @@
 
           <input
             id="despesas"
+            name="despesas"
             type="number"
             min="0"
             step="0.01"
@@ -653,6 +694,7 @@
 
           <input
             id="clientes"
+            name="clientes"
             type="number"
             min="0"
             placeholder="Ex.: 25"
@@ -670,6 +712,7 @@
 
           <input
             id="ticket"
+            name="ticket"
             type="number"
             min="0"
             step="0.01"
@@ -677,7 +720,7 @@
           >
 
           <small>
-            Se deixar vazio, o sistema calculará automaticamente.
+            Se deixar vazio, será calculado automaticamente.
           </small>
 
         </div>
@@ -691,6 +734,7 @@
 
           <input
             id="meta"
+            name="meta"
             type="number"
             min="0"
             step="0.01"
@@ -709,6 +753,7 @@
 
           <input
             id="metaAnual"
+            name="metaAnual"
             type="number"
             min="0"
             step="0.01"
@@ -726,6 +771,7 @@
 
           <input
             id="funcionarios"
+            name="funcionarios"
             type="number"
             min="0"
             placeholder="Ex.: 5"
@@ -743,25 +789,50 @@
 
       <div class="grid">
 
+
         <div class="field full">
 
           <label for="objetivo">
             Principal objetivo
           </label>
 
-          <select id="objetivo" required>
+          <select
+            id="objetivo"
+            name="objetivo"
+            required
+          >
 
             <option value="">
               Selecione
             </option>
 
-            <option>Aumentar vendas</option>
-            <option>Reduzir custos</option>
-            <option>Aumentar lucro</option>
-            <option>Organizar a empresa</option>
-            <option>Conquistar mais clientes</option>
-            <option>Melhorar a gestão financeira</option>
-            <option>Planejar crescimento</option>
+            <option value="Aumentar vendas">
+              Aumentar vendas
+            </option>
+
+            <option value="Reduzir custos">
+              Reduzir custos
+            </option>
+
+            <option value="Aumentar lucro">
+              Aumentar lucro
+            </option>
+
+            <option value="Organizar a empresa">
+              Organizar a empresa
+            </option>
+
+            <option value="Conquistar mais clientes">
+              Conquistar mais clientes
+            </option>
+
+            <option value="Melhorar a gestão financeira">
+              Melhorar a gestão financeira
+            </option>
+
+            <option value="Planejar crescimento">
+              Planejar crescimento
+            </option>
 
           </select>
 
@@ -778,10 +849,9 @@
 
         <p>
           O Copilot utilizará esses dados para
-          calcular indicadores como ticket médio,
-          lucro estimado, margem, crescimento,
-          distância da meta e oportunidades
-          comerciais.
+          calcular ticket médio, lucro estimado,
+          margem, crescimento, distância da meta
+          e oportunidades comerciais.
         </p>
 
       </div>
@@ -805,213 +875,548 @@
       JZ Prime Copilot.
     </p>
 
+
   </section>
+
 
 </main>
 
 
 <script>
 
-document
-  .getElementById("empresaForm")
-  .addEventListener("submit", function(event) {
+(function () {
 
-    event.preventDefault();
+  "use strict";
 
 
-    const faturamento =
-      Number(document.getElementById("faturamento").value || 0);
+  /* =====================================================
+     FORMULÁRIO
+  ===================================================== */
 
-    const clientes =
-      Number(document.getElementById("clientes").value || 0);
-
-    const despesas =
-      Number(document.getElementById("despesas").value || 0);
-
-    let ticket =
-      Number(document.getElementById("ticket").value || 0);
+  const form =
+    document.getElementById(
+      "empresaForm"
+    );
 
 
-    /* CALCULA TICKET AUTOMATICAMENTE */
+  const button =
+    document.getElementById(
+      "submitButton"
+    );
 
-    if (!ticket && clientes > 0) {
-      ticket = faturamento / clientes;
+
+  if (!form) {
+
+    console.error(
+      "Formulário empresaForm não encontrado."
+    );
+
+    return;
+
+  }
+
+
+  /* =====================================================
+     FUNÇÃO PARA PEGAR VALOR
+  ===================================================== */
+
+  function valor(id) {
+
+    const elemento =
+      document.getElementById(id);
+
+    if (!elemento) {
+      return "";
     }
 
+    return elemento.value.trim();
 
-    /* CALCULA META ANUAL */
-
-    let metaAnual =
-      Number(document.getElementById("metaAnual").value || 0);
-
-    const meta =
-      Number(document.getElementById("meta").value || 0);
-
-    if (!metaAnual && meta > 0) {
-      metaAnual = meta * 12;
-    }
+  }
 
 
-    const empresa = {
+  /* =====================================================
+     CARREGAR DADOS SALVOS
+  ===================================================== */
 
-      empresa:
-        document.getElementById("empresa").value.trim(),
+  function carregarDados() {
 
-      responsavel:
-        document.getElementById("responsavel").value.trim(),
-
-      segmento:
-        document.getElementById("segmento").value,
-
-      cnpj:
-        document.getElementById("cnpj").value.trim(),
-
-      telefone:
-        document.getElementById("telefone").value.trim(),
-
-      email:
-        document.getElementById("email").value.trim(),
-
-      faturamento:
-        faturamento,
-
-      despesas:
-        despesas,
-
-      clientes:
-        clientes,
-
-      ticket:
-        ticket,
-
-      meta:
-        meta,
-
-      metaAnual:
-        metaAnual,
-
-      funcionarios:
-        Number(
-          document.getElementById("funcionarios").value || 0
-        ),
-
-      objetivo:
-        document.getElementById("objetivo").value
-
-    };
-
-
-    /* VALIDAÇÃO */
-
-    if (
-      !empresa.empresa ||
-      !empresa.responsavel ||
-      !empresa.segmento ||
-      empresa.faturamento < 0 ||
-      empresa.clientes < 0 ||
-      empresa.meta < 0 ||
-      empresa.despesas < 0 ||
-      !empresa.objetivo
-    ) {
-
-      alert(
-        "Preencha corretamente os campos obrigatórios."
+    const salvo =
+      localStorage.getItem(
+        "empresa"
       );
 
+
+    if (!salvo) {
       return;
     }
 
 
-    /* SALVAR */
+    try {
 
-    localStorage.setItem(
-      "empresa",
-      JSON.stringify(empresa)
-    );
+      const dados =
+        JSON.parse(salvo);
 
 
-    /* BOTÃO */
+      const campos = [
 
-    const button =
-      document.getElementById("submitButton");
+        "empresa",
+        "responsavel",
+        "segmento",
+        "cnpj",
+        "telefone",
+        "email",
+        "faturamento",
+        "despesas",
+        "clientes",
+        "ticket",
+        "meta",
+        "metaAnual",
+        "funcionarios",
+        "objetivo"
 
-    button.textContent =
-      "Empresa salva! Abrindo dashboard...";
-
-    button.disabled = true;
-
-
-    /* IR PARA DASHBOARD */
-
-    setTimeout(function() {
-
-      window.location.href = "dashboard.html";
-
-    }, 500);
-
-  });
+      ];
 
 
-/* CARREGAR DADOS ANTERIORES */
+      campos.forEach(
+        function (campo) {
 
-document.addEventListener("DOMContentLoaded", function() {
+          const elemento =
+            document.getElementById(
+              campo
+            );
 
-  const salvo =
-    localStorage.getItem("empresa");
 
-  if (!salvo) return;
+          if (
+            elemento &&
+            dados[campo] !== undefined
+          ) {
 
-  try {
+            elemento.value =
+              dados[campo];
 
-    const empresa =
-      JSON.parse(salvo);
+          }
 
-    const campos = [
-      "empresa",
-      "responsavel",
-      "segmento",
-      "cnpj",
-      "telefone",
-      "email",
-      "faturamento",
-      "despesas",
-      "clientes",
-      "ticket",
-      "meta",
-      "metaAnual",
-      "funcionarios",
-      "objetivo"
-    ];
+        }
+      );
 
-    campos.forEach(function(campo) {
 
-      const elemento =
-        document.getElementById(campo);
+    } catch (erro) {
 
-      if (
-        elemento &&
-        empresa[campo] !== undefined
-      ) {
+      console.error(
+        "Erro ao carregar dados:",
+        erro
+      );
 
-        elemento.value =
-          empresa[campo];
-
-      }
-
-    });
-
-  } catch (erro) {
-
-    console.warn(
-      "Não foi possível carregar os dados anteriores.",
-      erro
-    );
+    }
 
   }
 
-});
+
+  /* =====================================================
+     SALVAR
+  ===================================================== */
+
+  form.addEventListener(
+    "submit",
+    function (event) {
+
+      event.preventDefault();
+
+
+      try {
+
+        /* =================================================
+           DADOS
+        ================================================= */
+
+        const nomeEmpresa =
+          valor("empresa");
+
+
+        const responsavel =
+          valor("responsavel");
+
+
+        const segmento =
+          valor("segmento");
+
+
+        const cnpj =
+          valor("cnpj");
+
+
+        const telefone =
+          valor("telefone");
+
+
+        const email =
+          valor("email");
+
+
+        const faturamento =
+          Number(
+            valor("faturamento")
+          ) || 0;
+
+
+        const despesas =
+          Number(
+            valor("despesas")
+          ) || 0;
+
+
+        const clientes =
+          Number(
+            valor("clientes")
+          ) || 0;
+
+
+        let ticket =
+          Number(
+            valor("ticket")
+          ) || 0;
+
+
+        const meta =
+          Number(
+            valor("meta")
+          ) || 0;
+
+
+        let metaAnual =
+          Number(
+            valor("metaAnual")
+          ) || 0;
+
+
+        const funcionarios =
+          Number(
+            valor("funcionarios")
+          ) || 0;
+
+
+        const objetivo =
+          valor("objetivo");
+
+
+        /* =================================================
+           VALIDAÇÃO
+        ================================================= */
+
+        if (!nomeEmpresa) {
+
+          alert(
+            "Informe o nome da empresa."
+          );
+
+          document
+            .getElementById("empresa")
+            .focus();
+
+          return;
+
+        }
+
+
+        if (!responsavel) {
+
+          alert(
+            "Informe o responsável."
+          );
+
+          document
+            .getElementById("responsavel")
+            .focus();
+
+          return;
+
+        }
+
+
+        if (!segmento) {
+
+          alert(
+            "Selecione o segmento da empresa."
+          );
+
+          return;
+
+        }
+
+
+        if (faturamento <= 0) {
+
+          alert(
+            "Informe o faturamento mensal."
+          );
+
+          document
+            .getElementById("faturamento")
+            .focus();
+
+          return;
+
+        }
+
+
+        if (clientes < 0) {
+
+          alert(
+            "O número de clientes não pode ser negativo."
+          );
+
+          return;
+
+        }
+
+
+        if (meta <= 0) {
+
+          alert(
+            "Informe uma meta mensal maior que zero."
+          );
+
+          document
+            .getElementById("meta")
+            .focus();
+
+          return;
+
+        }
+
+
+        if (!objetivo) {
+
+          alert(
+            "Selecione o principal objetivo."
+          );
+
+          return;
+
+        }
+
+
+        /* =================================================
+           CÁLCULOS
+        ================================================= */
+
+        if (
+          ticket <= 0 &&
+          clientes > 0
+        ) {
+
+          ticket =
+            faturamento / clientes;
+
+        }
+
+
+        if (
+          metaAnual <= 0
+        ) {
+
+          metaAnual =
+            meta * 12;
+
+        }
+
+
+        const lucro =
+          faturamento -
+          despesas;
+
+
+        const margem =
+          faturamento > 0
+            ? (
+                lucro /
+                faturamento
+              ) * 100
+            : 0;
+
+
+        const progresso =
+          meta > 0
+            ? (
+                faturamento /
+                meta
+              ) * 100
+            : 0;
+
+
+        /* =================================================
+           OBJETO FINAL
+        ================================================= */
+
+        const dadosEmpresa = {
+
+          empresa:
+            nomeEmpresa,
+
+          responsavel:
+            responsavel,
+
+          segmento:
+            segmento,
+
+          cnpj:
+            cnpj,
+
+          telefone:
+            telefone,
+
+          email:
+            email,
+
+          faturamento:
+            faturamento,
+
+          despesas:
+            despesas,
+
+          clientes:
+            clientes,
+
+          ticket:
+            ticket,
+
+          meta:
+            meta,
+
+          metaAnual:
+            metaAnual,
+
+          funcionarios:
+            funcionarios,
+
+          objetivo:
+            objetivo,
+
+          lucro:
+            lucro,
+
+          margem:
+            margem,
+
+          progresso:
+            progresso,
+
+          atualizadoEm:
+            new Date().toISOString()
+
+        };
+
+
+        /* =================================================
+           SALVAR LOCALSTORAGE
+        ================================================= */
+
+        const json =
+          JSON.stringify(
+            dadosEmpresa
+          );
+
+
+        localStorage.setItem(
+          "empresa",
+          json
+        );
+
+
+        localStorage.setItem(
+          "empresaConfigurada",
+          "true"
+        );
+
+
+        /* =================================================
+           VERIFICAR SALVAMENTO
+        ================================================= */
+
+        const verificacao =
+          localStorage.getItem(
+            "empresa"
+          );
+
+
+        if (!verificacao) {
+
+          alert(
+            "Erro: o navegador não permitiu salvar os dados."
+          );
+
+          return;
+
+        }
+
+
+        const dadosVerificados =
+          JSON.parse(
+            verificacao
+          );
+
+
+        console.log(
+          "JZ PRIME — DADOS SALVOS:",
+          dadosVerificados
+        );
+
+
+        /* =================================================
+           CONFIRMAÇÃO
+        ================================================= */
+
+        button.disabled =
+          true;
+
+
+        button.textContent =
+          "✓ Dados salvos! Abrindo Dashboard...";
+
+
+        /* =================================================
+           IR PARA DASHBOARD
+        ================================================= */
+
+        setTimeout(
+          function () {
+
+            window.location.href =
+              "dashboard.html";
+
+          },
+          700
+        );
+
+      } catch (erro) {
+
+        console.error(
+          "ERRO AO SALVAR EMPRESA:",
+          erro
+        );
+
+
+        alert(
+          "Ocorreu um erro ao salvar os dados. Veja o console do navegador."
+        );
+
+      }
+
+    }
+  );
+
+
+  /* =====================================================
+     INICIAR
+  ===================================================== */
+
+  carregarDados();
+
+
+})();
 
 </script>
+
 
 </body>
 </html>
