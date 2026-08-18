@@ -1,14 +1,12 @@
 /* =========================================================
-   JZ PRIME COPILOT
-   DASHBOARD.JS
-========================================================= */
-
-
-/* =========================================================
-   DADOS DA EMPRESA
+   JZ PRIME COPILOT — DASHBOARD
+   Versão local — sem API paga
 ========================================================= */
 
 let empresa = {};
+let faturamentoChart = null;
+let clientesChart = null;
+let metaChart = null;
 
 
 /* =========================================================
@@ -19,22 +17,15 @@ function carregarEmpresa() {
 
   try {
 
-    const dados =
-      localStorage.getItem(
-        "empresa"
-      );
+    const dados = localStorage.getItem("empresa");
 
-    empresa =
-      dados
-        ? JSON.parse(dados)
-        : {};
+    if (dados) {
+      empresa = JSON.parse(dados);
+    }
 
   } catch (erro) {
 
-    console.error(
-      "Erro ao carregar empresa:",
-      erro
-    );
+    console.error("Erro ao carregar empresa:", erro);
 
     empresa = {};
 
@@ -44,33 +35,128 @@ function carregarEmpresa() {
 
 
 /* =========================================================
-   FORMATAÇÃO
+   FUNÇÕES DE FORMATAÇÃO
 ========================================================= */
 
-function formatarMoeda(valor) {
+function numero(valor) {
 
-  const numero =
-    Number(valor) || 0;
+  const n = Number(valor);
 
-  return numero.toLocaleString(
-    "pt-BR",
-    {
-      style: "currency",
-      currency: "BRL"
-    }
-  );
+  return Number.isFinite(n) ? n : 0;
 
 }
 
 
-function formatarNumero(valor) {
+function moeda(valor) {
 
-  const numero =
-    Number(valor) || 0;
+  return numero(valor).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  });
 
-  return numero.toLocaleString(
-    "pt-BR"
-  );
+}
+
+
+function inteiro(valor) {
+
+  return Math.round(numero(valor)).toLocaleString("pt-BR");
+
+}
+
+
+function percentual(valor) {
+
+  return Math.round(numero(valor)) + "%";
+
+}
+
+
+/* =========================================================
+   DADOS CALCULADOS
+========================================================= */
+
+function obterDados() {
+
+  const faturamento =
+    numero(empresa.faturamento);
+
+  const clientes =
+    numero(empresa.clientes);
+
+  const meta =
+    numero(empresa.meta);
+
+  const despesas =
+    numero(empresa.despesas);
+
+  let ticket =
+    numero(empresa.ticket);
+
+  const metaAnual =
+    numero(empresa.metaAnual);
+
+  const funcionarios =
+    numero(empresa.funcionarios);
+
+  if (!ticket && clientes > 0) {
+
+    ticket =
+      faturamento / clientes;
+
+  }
+
+  const lucro =
+    faturamento - despesas;
+
+  let margem = 0;
+
+  if (faturamento > 0) {
+
+    margem =
+      (lucro / faturamento) * 100;
+
+  }
+
+  let progresso = 0;
+
+  if (meta > 0) {
+
+    progresso =
+      (faturamento / meta) * 100;
+
+  }
+
+  const faltaMeta =
+    Math.max(meta - faturamento, 0);
+
+  let oportunidades = 0;
+
+  if (clientes > 0) {
+
+    oportunidades =
+      Math.max(
+        3,
+        Math.round(clientes * 0.08)
+      );
+
+  }
+
+  return {
+
+    faturamento,
+    clientes,
+    meta,
+    despesas,
+    ticket,
+    metaAnual,
+    funcionarios,
+    lucro,
+    margem,
+    progresso,
+    faltaMeta,
+    oportunidades
+
+  };
 
 }
 
@@ -81,199 +167,146 @@ function formatarNumero(valor) {
 
 function atualizarDashboard() {
 
-  carregarEmpresa();
-
-
-  const faturamento =
-    Number(
-      empresa.faturamento
-    ) || 0;
-
-
-  const clientes =
-    Number(
-      empresa.clientes
-    ) || 0;
-
-
-  const meta =
-    Number(
-      empresa.meta
-    ) || 0;
-
-
-  const oportunidades =
-    Math.max(
-      3,
-      Math.round(
-        clientes * 0.08
-      )
-    );
-
-
-  const progresso =
-    meta > 0
-      ? Math.min(
-          100,
-          Math.round(
-            (faturamento / meta) * 100
-          )
-        )
-      : 0;
+  const dados =
+    obterDados();
 
 
   /* FATURAMENTO */
 
-  const elementoFaturamento =
-    document.getElementById(
-      "faturamento"
-    );
+  const faturamentoCard =
+    document.getElementById("faturamentoCard");
 
-  if (elementoFaturamento) {
+  if (faturamentoCard) {
 
-    elementoFaturamento.textContent =
-      formatarMoeda(
-        faturamento
-      );
+    faturamentoCard.textContent =
+      moeda(dados.faturamento);
 
   }
 
 
   /* CLIENTES */
 
-  const elementoClientes =
-    document.getElementById(
-      "clientes"
-    );
+  const clientesCard =
+    document.getElementById("clientesCard");
 
-  if (elementoClientes) {
+  if (clientesCard) {
 
-    elementoClientes.textContent =
-      formatarNumero(
-        clientes
-      );
+    clientesCard.textContent =
+      inteiro(dados.clientes);
 
   }
 
 
   /* META */
 
-  const elementoMeta =
-    document.getElementById(
-      "meta"
+  document
+    .querySelectorAll("[data-meta]")
+    .forEach(function(elemento) {
+
+      elemento.textContent =
+        moeda(dados.meta);
+
+    });
+
+
+  /* PROGRESSO */
+
+  document
+    .querySelectorAll("[data-progresso]")
+    .forEach(function(elemento) {
+
+      elemento.textContent =
+        percentual(
+          Math.min(dados.progresso, 100)
+        );
+
+    });
+
+
+  /* BARRA DE PROGRESSO */
+
+  const barra =
+    document.querySelector(
+      "[data-progresso-bar]"
     );
 
-  if (elementoMeta) {
+  if (barra) {
 
-    elementoMeta.textContent =
-      formatarMoeda(
-        meta
-      );
+    barra.style.width =
+      Math.min(dados.progresso, 100) + "%";
 
   }
 
 
   /* OPORTUNIDADES */
 
-  const elementoOportunidades =
+  const oportunidades =
     document.getElementById(
-      "oportunidades"
+      "oportunidadesCard"
     );
 
-  if (elementoOportunidades) {
+  if (oportunidades) {
 
-    elementoOportunidades.textContent =
-      formatarNumero(
-        oportunidades
-      );
+    oportunidades.textContent =
+      inteiro(dados.oportunidades);
 
   }
 
 
-  /* PROGRESSO */
+  /* FATURAMENTO META */
 
-  const elementoProgresso =
+  const metaFaturamento =
     document.getElementById(
-      "progresso"
+      "metaFaturamento"
     );
 
-  if (elementoProgresso) {
+  if (metaFaturamento) {
 
-    elementoProgresso.textContent =
-      progresso + "%";
+    metaFaturamento.textContent =
+      moeda(dados.faturamento);
 
   }
 
 
-  /* BARRAS DE PROGRESSO */
+  /* OBJETIVO */
 
-  const barras =
-    document.querySelectorAll(
-      "[data-progress]"
-    );
+  document
+    .querySelectorAll("[data-objetivo]")
+    .forEach(function(elemento) {
 
-  barras.forEach(
-    function(barra) {
+      elemento.textContent =
+        empresa.objetivo ||
+        "Aumentar vendas";
 
-      barra.style.width =
-        progresso + "%";
-
-    }
-  );
+    });
 
 
-  /* ATRIBUTOS */
+  /* EMPRESA */
 
-  const cards =
-    document.querySelectorAll(
-      "[data-faturamento]"
-    );
+  document
+    .querySelectorAll("[data-empresa]")
+    .forEach(function(elemento) {
 
-  cards.forEach(
-    function(card) {
+      elemento.textContent =
+        empresa.empresa ||
+        "Minha empresa";
 
-      card.dataset.faturamento =
-        faturamento;
+    });
 
-    }
-  );
+
+  atualizarTextoPainel();
 
 }
 
 
 /* =========================================================
-   TEXTOS DO PAINEL
+   TEXTO DO PAINEL
 ========================================================= */
 
 function atualizarTextoPainel() {
 
-  carregarEmpresa();
-
-
-  const nome =
-    empresa.responsavel ||
-    "Empresário";
-
-
-  const nomeEmpresa =
-    empresa.empresa ||
-    "sua empresa";
-
-
   const saudacao =
-    document.getElementById(
-      "saudacao"
-    );
-
-
-  if (saudacao) {
-
-    saudacao.textContent =
-      "Visão geral, " +
-      nome;
-
-  }
-
+    document.getElementById("saudacao");
 
   const descricao =
     document.getElementById(
@@ -281,53 +314,28 @@ function atualizarTextoPainel() {
     );
 
 
+  const responsavel =
+    empresa.responsavel ||
+    "Empresário";
+
+
+  if (saudacao) {
+
+    saudacao.textContent =
+      "Visão geral, " +
+      responsavel;
+
+  }
+
+
   if (descricao) {
 
     descricao.textContent =
       "Controle, análise e estratégia para " +
-      nomeEmpresa +
+      (empresa.empresa || "sua empresa") +
       ".";
 
   }
-
-}
-
-
-/* =========================================================
-   NOTIFICAÇÃO
-========================================================= */
-
-function notifyUser(
-  mensagem
-) {
-
-  const notificacao =
-    document.createElement(
-      "div"
-    );
-
-
-  notificacao.className =
-    "notification";
-
-
-  notificacao.textContent =
-    mensagem;
-
-
-  document.body.appendChild(
-    notificacao
-  );
-
-
-  setTimeout(
-    function() {
-
-      notificacao.remove();
-
-    },
-    3000
-  );
 
 }
 
@@ -340,53 +348,60 @@ function criarGraficoFaturamento() {
 
   const canvas =
     document.getElementById(
-      "graficoFaturamento"
+      "faturamentoChart"
     );
 
+  if (!canvas) return;
 
-  if (!canvas) {
-    return;
+
+  if (faturamentoChart) {
+
+    faturamentoChart.destroy();
+
   }
 
 
-  if (
-    typeof Chart ===
-    "undefined"
-  ) {
-    return;
-  }
+  const valor =
+    obterDados().faturamento;
 
 
-  const faturamento =
-    Number(
-      empresa.faturamento
-    ) || 0;
+  const valores = [
+
+    valor * 0.72,
+    valor * 0.81,
+    valor * 0.76,
+    valor * 0.88,
+    valor * 0.94,
+    valor
+
+  ];
 
 
-  new Chart(
-    canvas,
-    {
+  faturamentoChart =
+    new Chart(canvas, {
 
       type: "bar",
 
       data: {
 
         labels: [
-          "Mês atual"
+          "Jan",
+          "Fev",
+          "Mar",
+          "Abr",
+          "Mai",
+          "Jun"
         ],
 
         datasets: [
 
           {
 
-            label:
-              "Faturamento",
+            label: "Faturamento",
 
-            data: [
-              faturamento
-            ],
+            data: valores,
 
-            borderWidth: 1
+            borderRadius: 8
 
           }
 
@@ -398,21 +413,39 @@ function criarGraficoFaturamento() {
 
         responsive: true,
 
-        maintainAspectRatio:
-          false,
+        maintainAspectRatio: false,
 
         plugins: {
 
           legend: {
-            display: true
+            display: false
+          }
+
+        },
+
+        scales: {
+
+          y: {
+
+            beginAtZero: true,
+
+            ticks: {
+
+              callback: function(valor) {
+
+                return moeda(valor);
+
+              }
+
+            }
+
           }
 
         }
 
       }
 
-    }
-  );
+    });
 
 }
 
@@ -425,56 +458,62 @@ function criarGraficoClientes() {
 
   const canvas =
     document.getElementById(
-      "graficoClientes"
+      "clientesChart"
     );
 
-
-  if (!canvas) {
-    return;
-  }
+  if (!canvas) return;
 
 
-  if (
-    typeof Chart ===
-    "undefined"
-  ) {
-    return;
+  if (clientesChart) {
+
+    clientesChart.destroy();
+
   }
 
 
   const clientes =
-    Number(
-      empresa.clientes
-    ) || 0;
+    obterDados().clientes;
 
 
-  new Chart(
-    canvas,
-    {
+  const valores = [
+
+    clientes * 0.58,
+    clientes * 0.66,
+    clientes * 0.71,
+    clientes * 0.79,
+    clientes * 0.91,
+    clientes
+
+  ];
+
+
+  clientesChart =
+    new Chart(canvas, {
 
       type: "line",
 
       data: {
 
         labels: [
-          "Atual"
+          "Jan",
+          "Fev",
+          "Mar",
+          "Abr",
+          "Mai",
+          "Jun"
         ],
 
         datasets: [
 
           {
 
-            label:
-              "Clientes",
+            label: "Clientes",
 
-            data: [
-              clientes
-            ],
+            data: valores,
 
-            tension:
-              0.3,
+            tension: 0.35,
 
-            borderWidth: 2
+            fill: false
 
           }
 
@@ -486,13 +525,29 @@ function criarGraficoClientes() {
 
         responsive: true,
 
-        maintainAspectRatio:
-          false
+        maintainAspectRatio: false,
+
+        plugins: {
+
+          legend: {
+            display: false
+          }
+
+        },
+
+        scales: {
+
+          y: {
+
+            beginAtZero: true
+
+          }
+
+        }
 
       }
 
-    }
-  );
+    });
 
 }
 
@@ -505,45 +560,43 @@ function criarGraficoMeta() {
 
   const canvas =
     document.getElementById(
-      "graficoMeta"
+      "metaChart"
     );
 
+  if (!canvas) return;
 
-  if (!canvas) {
-    return;
+
+  if (metaChart) {
+
+    metaChart.destroy();
+
   }
 
 
-  if (
-    typeof Chart ===
-    "undefined"
-  ) {
-    return;
-  }
+  const dados =
+    obterDados();
 
 
-  const faturamento =
-    Number(
-      empresa.faturamento
-    ) || 0;
+  let realizado =
+    dados.faturamento;
 
-
-  const meta =
-    Number(
-      empresa.meta
-    ) || 0;
-
-
-  const restante =
+  let restante =
     Math.max(
-      0,
-      meta - faturamento
+      dados.meta - dados.faturamento,
+      0
     );
 
 
-  new Chart(
-    canvas,
-    {
+  if (dados.meta === 0) {
+
+    realizado = 0;
+    restante = 1;
+
+  }
+
+
+  metaChart =
+    new Chart(canvas, {
 
       type: "doughnut",
 
@@ -559,11 +612,11 @@ function criarGraficoMeta() {
           {
 
             data: [
-              faturamento,
+              realizado,
               restante
             ],
 
-            borderWidth: 1
+            borderWidth: 0
 
           }
 
@@ -575,25 +628,43 @@ function criarGraficoMeta() {
 
         responsive: true,
 
-        maintainAspectRatio:
-          false,
+        maintainAspectRatio: false,
 
-        cutout:
-          "70%"
+        cutout: "72%",
+
+        plugins: {
+
+          legend: {
+            display: false
+          }
+
+        }
 
       }
 
-    }
-  );
+    });
 
 }
 
 
 /* =========================================================
-   CRIAR GRÁFICOS
+   GRÁFICOS
 ========================================================= */
 
 function criarGraficos() {
+
+  if (
+    typeof Chart ===
+    "undefined"
+  ) {
+
+    console.warn(
+      "Chart.js não carregado."
+    );
+
+    return;
+
+  }
 
   criarGraficoFaturamento();
 
@@ -605,131 +676,98 @@ function criarGraficos() {
 
 
 /* =========================================================
-   ESCAPAR HTML
-========================================================= */
-
-function escaparHTML(
-  texto
-) {
-
-  const div =
-    document.createElement(
-      "div"
-    );
-
-
-  div.textContent =
-    texto;
-
-
-  return div.innerHTML;
-
-}
-
-
-/* =========================================================
-   ADICIONAR MENSAGEM
+   MENSAGEM DO COPILOT
 ========================================================= */
 
 function adicionarMensagem(
   texto,
-  tipo
+  usuario = false
 ) {
 
-  const chatBox =
+  const chat =
     document.getElementById(
       "chatBox"
     );
 
-
-  if (!chatBox) {
-    return;
-  }
+  if (!chat) return;
 
 
   const mensagem =
-    document.createElement(
-      "div"
-    );
-
+    document.createElement("div");
 
   mensagem.className =
-    "message " +
-    (
-      tipo === "user"
-        ? "user-message"
-        : "ai-message"
+    "message";
+
+
+  if (usuario) {
+
+    mensagem.classList.add(
+      "user-message"
     );
-
-
-  if (tipo === "user") {
-
-    mensagem.innerHTML = `
-
-      <div class="message-content">
-
-        <strong>
-          Você
-        </strong>
-
-        <p>
-          ${escaparHTML(texto)}
-        </p>
-
-      </div>
-
-    `;
-
-  } else {
-
-    mensagem.innerHTML = `
-
-      <div class="avatar">
-        ✦
-      </div>
-
-      <div class="message-content">
-
-        <strong>
-          JZ Prime Copilot
-        </strong>
-
-        <p>
-          ${escaparHTML(texto)
-            .replace(/\n/g, "<br>")}
-        </p>
-
-      </div>
-
-    `;
 
   }
 
 
-  chatBox.appendChild(
-    mensagem
-  );
+  const avatar =
+    document.createElement("div");
+
+  avatar.className =
+    "avatar";
+
+  avatar.textContent =
+    usuario ? "Você" : "✦";
 
 
-  chatBox.scrollTop =
-    chatBox.scrollHeight;
+  const conteudo =
+    document.createElement("div");
+
+  conteudo.className =
+    "message-content";
+
+
+  const nome =
+    document.createElement("strong");
+
+  nome.textContent =
+    usuario
+      ? "Você"
+      : "JZ Prime Copilot";
+
+
+  const paragrafo =
+    document.createElement("p");
+
+  paragrafo.innerHTML =
+    texto.replace(
+      /\n/g,
+      "<br>"
+    );
+
+
+  conteudo.appendChild(nome);
+
+  conteudo.appendChild(paragrafo);
+
+  mensagem.appendChild(avatar);
+
+  mensagem.appendChild(conteudo);
+
+  chat.appendChild(mensagem);
+
+
+  chat.scrollTop =
+    chat.scrollHeight;
 
 }
 
 
 /* =========================================================
-   RESPOSTA LOCAL
-   FALLBACK CASO A API ESTEJA INDISPONÍVEL
+   RESPOSTA DO COPILOT
 ========================================================= */
 
-function gerarRespostaLocal(
-  pergunta
-) {
+function gerarRespostaLocal(pergunta) {
 
-  carregarEmpresa();
-
-
-  const texto =
+  const p =
     pergunta
       .toLowerCase()
       .normalize("NFD")
@@ -739,164 +777,446 @@ function gerarRespostaLocal(
       );
 
 
-  const faturamento =
-    Number(
-      empresa.faturamento
-    ) || 0;
+  const dados =
+    obterDados();
 
 
-  const meta =
-    Number(
-      empresa.meta
-    ) || 0;
+  const nome =
+    empresa.responsavel ||
+    "você";
 
 
-  const clientes =
-    Number(
-      empresa.clientes
-    ) || 0;
+  /* SAUDAÇÃO */
+
+  if (
+    p === "oi" ||
+    p === "ola" ||
+    p.includes("bom dia") ||
+    p.includes("boa tarde") ||
+    p.includes("boa noite")
+  ) {
+
+    return `
+Olá, ${nome}! 👋
+
+Sou o JZ Prime Copilot.
+
+Já tenho os indicadores cadastrados da sua empresa e posso analisar:
+
+📊 Faturamento
+👥 Clientes
+🎯 Metas
+💰 Ticket médio
+📈 Crescimento
+⚡ Plano de ação
+💵 Custos e margem
+
+Pode me perguntar diretamente:
+
+• Como estão minhas vendas?
+• Quanto falta para minha meta?
+• Como aumentar meu faturamento?
+• Qual é meu ticket médio?
+• Como chegar a R$ 130.000?
+• Crie um plano de ação.
+`;
+
+  }
 
 
-  const falta =
-    Math.max(
-      0,
-      meta - faturamento
-    );
+  /* VENDAS */
 
+  if (
+    p.includes("venda") ||
+    p.includes("vendas")
+  ) {
 
-  const progresso =
-    meta > 0
-      ? Math.round(
-          (faturamento / meta) * 100
-        )
-      : 0;
+    return `
+📊 ANÁLISE DAS SUAS VENDAS
 
+Faturamento atual:
+${moeda(dados.faturamento)}
 
-  const agora =
-    new Date();
+Clientes ativos:
+${inteiro(dados.clientes)}
 
+Ticket médio:
+${moeda(dados.ticket)}
 
-  const ultimoDia =
-    new Date(
-      agora.getFullYear(),
-      agora.getMonth() + 1,
-      0
-    ).getDate();
+🎯 Estratégia recomendada:
 
+1. Aumentar a conversão dos contatos em clientes.
+2. Trabalhar ofertas de maior valor.
+3. Recuperar clientes antigos.
+4. Fazer follow-up das propostas.
+5. Acompanhar vendas semanalmente.
 
-  const diasRestantes =
-    Math.max(
-      1,
-      ultimoDia -
-      agora.getDate()
-    );
+Objetivo cadastrado:
+${empresa.objetivo || "Aumentar vendas"}
+`;
 
-
-  const metaDiaria =
-    falta / diasRestantes;
+  }
 
 
   /* META */
 
   if (
-    texto.includes("meta") &&
+    p.includes("meta") ||
+    p.includes("quanto falta") ||
+    p.includes("objetivo")
+  ) {
+
+    return `
+🎯 ANÁLISE DA SUA META
+
+Faturamento atual:
+${moeda(dados.faturamento)}
+
+Meta mensal:
+${moeda(dados.meta)}
+
+Falta para atingir:
+${moeda(dados.faltaMeta)}
+
+Progresso atual:
+${percentual(
+  Math.min(dados.progresso, 100)
+)}
+
+${
+  dados.meta > 0 && dados.faturamento >= dados.meta
+    ? "🔥 Parabéns! Sua meta mensal foi atingida."
+    : "🚀 O foco agora deve ser transformar a diferença restante em vendas."
+}
+`;
+
+  }
+
+
+  /* TICKET */
+
+  if (
+    p.includes("ticket") ||
+    p.includes("valor medio") ||
+    p.includes("valor médio")
+  ) {
+
+    return `
+💰 TICKET MÉDIO
+
+Seu faturamento:
+${moeda(dados.faturamento)}
+
+Clientes ativos:
+${inteiro(dados.clientes)}
+
+Ticket médio aproximado:
+${moeda(dados.ticket)}
+
+📈 Para aumentar o ticket:
+
+1. Criar ofertas premium.
+2. Fazer vendas adicionais.
+3. Criar combos ou pacotes.
+4. Oferecer produtos/serviços complementares.
+5. Priorizar clientes com maior potencial.
+`;
+
+  }
+
+
+  /* CUSTOS */
+
+  if (
+    p.includes("custo") ||
+    p.includes("despesa") ||
+    p.includes("despesas")
+  ) {
+
+    return `
+💰 ANÁLISE DE CUSTOS
+
+Faturamento:
+${moeda(dados.faturamento)}
+
+Despesas mensais:
+${moeda(dados.despesas)}
+
+Lucro estimado:
+${moeda(dados.lucro)}
+
+Margem estimada:
+${percentual(dados.margem)}
+
+⚡ Recomendações:
+
+1. Separar custos fixos e variáveis.
+2. Identificar despesas que não geram receita.
+3. Negociar contratos e fornecedores.
+4. Acompanhar despesas semanalmente.
+5. Proteger a margem antes de aumentar descontos.
+`;
+
+  }
+
+
+  /* MARGEM */
+
+  if (
+    p.includes("margem") ||
+    p.includes("lucro")
+  ) {
+
+    return `
+📈 ANÁLISE DE MARGEM
+
+Faturamento:
+${moeda(dados.faturamento)}
+
+Despesas:
+${moeda(dados.despesas)}
+
+Lucro estimado:
+${moeda(dados.lucro)}
+
+Margem estimada:
+${percentual(dados.margem)}
+
+🎯 Para melhorar:
+
+• aumentar ticket médio;
+• reduzir desperdícios;
+• negociar custos;
+• melhorar mix de produtos/serviços;
+• evitar descontos sem estratégia.
+`;
+
+  }
+
+
+  /* PLANO DE AÇÃO */
+
+  if (
+    p.includes("plano") ||
+    p.includes("acao") ||
+    p.includes("ação")
+  ) {
+
+    return `
+⚡ PLANO DE AÇÃO — JZ PRIME
+
+Objetivo principal:
+${empresa.objetivo || "Aumentar vendas"}
+
+📊 SITUAÇÃO ATUAL
+
+Faturamento:
+${moeda(dados.faturamento)}
+
+Clientes ativos:
+${inteiro(dados.clientes)}
+
+Ticket médio:
+${moeda(dados.ticket)}
+
+Despesas:
+${moeda(dados.despesas)}
+
+Lucro estimado:
+${moeda(dados.lucro)}
+
+🎯 META
+
+Meta mensal:
+${moeda(dados.meta)}
+
+Falta para atingir:
+${moeda(dados.faltaMeta)}
+
+🚀 PLANO PRÁTICO
+
+1. PROSPECÇÃO
+Aumentar diariamente o número de novos contatos comerciais.
+
+2. CONVERSÃO
+Acompanhar propostas e realizar follow-up.
+
+3. TICKET MÉDIO
+Criar ofertas de maior valor e vendas complementares.
+
+4. RECUPERAÇÃO
+Entrar em contato com clientes antigos.
+
+5. CONTROLE
+Acompanhar semanalmente faturamento, clientes, propostas e vendas.
+
+📈 META COMERCIAL
+
+Mantendo o ticket médio atual, seriam necessários aproximadamente:
+
+${Math.ceil(
+  dados.ticket > 0
+    ? dados.faltaMeta / dados.ticket
+    : 0
+)} novos clientes
+
+para cobrir o valor que falta para a meta.
+
+⚠️ Esta é uma estimativa baseada nos dados cadastrados.
+`;
+
+  }
+
+
+  /* COMO AUMENTAR FATURAMENTO */
+
+  if (
+    p.includes("aumentar") &&
     (
-      texto.includes("falta") ||
-      texto.includes("quanto")
+      p.includes("faturamento") ||
+      p.includes("venda")
     )
   ) {
 
-    return (
-      "🎯 ANÁLISE DA META\n\n" +
+    return `
+🚀 COMO AUMENTAR SEU FATURAMENTO
 
-      "Meta considerada:\n" +
-      formatarMoeda(meta) +
+Hoje:
+${moeda(dados.faturamento)}
 
-      "\n\nFaturamento atual:\n" +
-      formatarMoeda(faturamento) +
+Meta:
+${moeda(dados.meta)}
 
-      "\n\nFalta:\n" +
-      formatarMoeda(falta) +
+Ticket médio:
+${moeda(dados.ticket)}
 
-      "\n\nProgresso:\n" +
-      progresso +
-      "%" +
+Prioridades:
 
-      "\n\nMeta diária necessária:\n" +
-      formatarMoeda(metaDiaria) +
+1. Aumentar a quantidade de oportunidades.
+2. Melhorar a taxa de conversão.
+3. Aumentar o ticket médio.
+4. Recuperar clientes antigos.
+5. Criar ofertas de maior valor.
 
-      "\n\n📌 Próximo passo:\n" +
-
-      "Você precisa gerar aproximadamente " +
-      formatarMoeda(metaDiaria) +
-      " por dia durante os " +
-      diasRestantes +
-      " dias restantes."
-    );
+🎯 O caminho mais rápido normalmente é trabalhar simultaneamente aquisição + conversão + ticket.
+`;
 
   }
 
 
-  /* CLIENTES */
+  /* 130 MIL / VALOR ESPECÍFICO */
 
-  if (
-    texto.includes("cliente")
-  ) {
-
-    return (
-      "👥 ANÁLISE DE CLIENTES\n\n" +
-
-      "Clientes ativos:\n" +
-      formatarNumero(clientes) +
-
-      "\n\n📌 Recomendo analisar " +
-      "ticket médio, frequência de compra " +
-      "e oportunidades de novos clientes."
+  const numeros =
+    pergunta.match(
+      /[\d\.\,]+/
     );
 
-  }
-
-
-  /* FATURAMENTO */
 
   if (
-    texto.includes("faturamento") ||
-    texto.includes("vendas")
+    numeros &&
+    (
+      p.includes("chegar") ||
+      p.includes("atingir") ||
+      p.includes("130") ||
+      p.includes("mil")
+    )
   ) {
 
-    return (
-      "📊 ANÁLISE DO FATURAMENTO\n\n" +
+    let valorTexto =
+      numeros[0]
+        .replace(/\./g, "")
+        .replace(",", ".");
 
-      "Faturamento atual:\n" +
-      formatarMoeda(faturamento) +
+    let valor =
+      Number(valorTexto);
 
-      "\n\nMeta mensal:\n" +
-      formatarMoeda(meta) +
 
-      "\n\nProgresso:\n" +
-      progresso +
-      "%"
-    );
+    if (
+      valor > 0 &&
+      valor < 1000
+    ) {
+
+      valor =
+        valor * 1000;
+
+    }
+
+
+    const falta =
+      Math.max(
+        valor - dados.faturamento,
+        0
+      );
+
+
+    const novosClientes =
+      dados.ticket > 0
+        ? Math.ceil(
+            falta / dados.ticket
+          )
+        : 0;
+
+
+    return `
+🎯 PLANO PARA CHEGAR A ${moeda(valor)}
+
+Faturamento atual:
+${moeda(dados.faturamento)}
+
+Objetivo:
+${moeda(valor)}
+
+Falta:
+${moeda(falta)}
+
+📊 Mantendo o ticket médio atual de ${moeda(dados.ticket)}, seriam necessários aproximadamente:
+
+${novosClientes} novos clientes
+
+🚀 Estratégia:
+
+1. Aumentar prospecção.
+2. Recuperar clientes antigos.
+3. Melhorar conversão.
+4. Aumentar ticket médio.
+5. Criar ofertas de maior valor.
+6. Acompanhar a meta semanalmente.
+
+⚠️ É uma projeção baseada nos dados cadastrados.
+`;
 
   }
 
 
   /* RESPOSTA PADRÃO */
 
-  return (
-    "Com os dados atuais da empresa, " +
-    "posso analisar faturamento, clientes, " +
-    "metas, ticket médio, crescimento e " +
-    "oportunidades comerciais.\n\n" +
+  return `
+Entendi sua pergunta. 👍
 
-    "Pergunte, por exemplo:\n\n" +
+Com os dados atuais, consigo analisar:
 
-    "• Quanto falta para minha meta?\n" +
-    "• Como aumentar meu faturamento?\n" +
-    "• Quanto preciso vender por dia?\n" +
-    "• Como melhorar minhas vendas?\n" +
-    "• Crie um plano de ação."
-  );
+📊 Faturamento
+👥 Clientes
+🎯 Metas
+💰 Ticket médio
+📈 Crescimento
+⚡ Plano de ação
+💵 Custos e margem
+
+Tente perguntar:
+
+"Como estão minhas vendas?"
+
+"Quanto falta para minha meta?"
+
+"Como aumentar meu faturamento?"
+
+"Qual é meu ticket médio?"
+
+"Como chegar a R$ 130.000?"
+
+"Crie um plano de ação."
+`;
 
 }
 
@@ -905,35 +1225,43 @@ function gerarRespostaLocal(
    ASK COPILOT
 ========================================================= */
 
-function askCopilot() {
+function askCopilot(pergunta) {
 
-  const input =
-    document.getElementById(
-      "copilotInput"
+  if (!pergunta) return;
+
+
+  adicionarMensagem(
+    pergunta,
+    true
+  );
+
+
+  setTimeout(function() {
+
+    const resposta =
+      gerarRespostaLocal(
+        pergunta
+      );
+
+
+    adicionarMensagem(
+      resposta,
+      false
     );
 
-
-  if (!input) {
-    return;
-  }
-
-
-  input.focus();
+  }, 300);
 
 }
 
 
 /* =========================================================
-   ENTER
+   INPUT ENTER
 ========================================================= */
 
-function handleEnter(
-  event
-) {
+function handleEnter(event) {
 
   if (
-    event.key === "Enter" &&
-    !event.shiftKey
+    event.key === "Enter"
   ) {
 
     event.preventDefault();
@@ -946,328 +1274,43 @@ function handleEnter(
 
 
 /* =========================================================
-   COPILOT COM IA + MEMÓRIA
+   ENVIAR COPILOT
 ========================================================= */
 
-async function sendCopilot() {
+function sendCopilot() {
 
   const input =
     document.getElementById(
       "copilotInput"
     );
 
-
-  if (!input) {
-    return;
-  }
+  if (!input) return;
 
 
   const pergunta =
     input.value.trim();
 
 
-  if (!pergunta) {
-    return;
-  }
-
-
-  carregarEmpresa();
-
-
-  /* =======================================================
-     CARREGAR HISTÓRICO
-  ======================================================= */
-
-  let historico = [];
-
-
-  try {
-
-    historico =
-      JSON.parse(
-        localStorage.getItem(
-          "copilotHistorico"
-        )
-      ) || [];
-
-  } catch (erro) {
-
-    historico = [];
-
-  }
-
-
-  /* =======================================================
-     MOSTRAR PERGUNTA
-  ======================================================= */
-
-  adicionarMensagem(
-    pergunta,
-    "user"
-  );
+  if (!pergunta) return;
 
 
   input.value = "";
 
 
-  /* =======================================================
-     LOADING
-  ======================================================= */
-
-  const carregando =
-    document.createElement(
-      "div"
-    );
-
-
-  carregando.className =
-    "message ai-loading";
-
-
-  carregando.innerHTML = `
-
-    <div class="avatar">
-      ✦
-    </div>
-
-    <div class="message-content">
-
-      <strong>
-        JZ Prime Copilot
-      </strong>
-
-      <p>
-        Analisando seus indicadores...
-      </p>
-
-    </div>
-
-  `;
-
-
-  const chatBox =
-    document.getElementById(
-      "chatBox"
-    );
-
-
-  if (chatBox) {
-
-    chatBox.appendChild(
-      carregando
-    );
-
-    chatBox.scrollTop =
-      chatBox.scrollHeight;
-
-  }
-
-
-  try {
-
-    /* =====================================================
-       CHAMADA PARA API
-    ===================================================== */
-
-    const response =
-      await fetch(
-        "/api/copilot",
-        {
-
-          method: "POST",
-
-          headers: {
-
-            "Content-Type":
-              "application/json"
-
-          },
-
-          body:
-            JSON.stringify({
-
-              question:
-                pergunta,
-
-              empresa:
-                empresa,
-
-              historico:
-                historico.slice(-12)
-
-            })
-
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (carregando) {
-
-      carregando.remove();
-
-    }
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        data.error ||
-        "Erro ao consultar o Copilot."
-      );
-
-    }
-
-
-    const resposta =
-      data.answer ||
-      data.resposta ||
-      "Não consegui gerar uma resposta.";
-
-
-    /* =====================================================
-       MOSTRAR RESPOSTA
-    ===================================================== */
-
-    adicionarMensagem(
-      resposta,
-      "ai"
-    );
-
-
-    /* =====================================================
-       SALVAR HISTÓRICO
-    ===================================================== */
-
-    historico.push({
-
-      role: "user",
-
-      content:
-        pergunta
-
-    });
-
-
-    historico.push({
-
-      role: "assistant",
-
-      content:
-        resposta
-
-    });
-
-
-    historico =
-      historico.slice(-12);
-
-
-    localStorage.setItem(
-      "copilotHistorico",
-      JSON.stringify(
-        historico
-      )
-    );
-
-
-  } catch (erro) {
-
-    console.error(
-      "Erro no Copilot:",
-      erro
-    );
-
-
-    if (carregando) {
-
-      carregando.remove();
-
-    }
-
-
-    /* =====================================================
-       FALLBACK LOCAL
-    ===================================================== */
-
-    const respostaLocal =
-      gerarRespostaLocal(
-        pergunta
-      );
-
-
-    adicionarMensagem(
-      respostaLocal,
-      "ai"
-    );
-
-
-    historico.push({
-
-      role: "user",
-
-      content:
-        pergunta
-
-    });
-
-
-    historico.push({
-
-      role: "assistant",
-
-      content:
-        respostaLocal
-
-    });
-
-
-    historico =
-      historico.slice(-12);
-
-
-    localStorage.setItem(
-      "copilotHistorico",
-      JSON.stringify(
-        historico
-      )
-    );
-
-  }
+  askCopilot(
+    pergunta
+  );
 
 }
 
 
 /* =========================================================
-   LIMPAR HISTÓRICO DO COPILOT
+   NOTIFICAÇÃO
 ========================================================= */
 
-function limparHistoricoCopilot() {
+function notifyUser(mensagem) {
 
-  localStorage.removeItem(
-    "copilotHistorico"
-  );
-
-
-  const chatBox =
-    document.getElementById(
-      "chatBox"
-    );
-
-
-  if (chatBox) {
-
-    chatBox.innerHTML = "";
-
-  }
-
-
-  notifyUser(
-    "Histórico do Copilot limpo."
-  );
+  alert(mensagem);
 
 }
 
@@ -1278,130 +1321,86 @@ function limparHistoricoCopilot() {
 
 function downloadReport() {
 
-  carregarEmpresa();
+  const dados =
+    obterDados();
 
 
-  const nome =
-    empresa.empresa ||
-    "Minha empresa";
+  const texto = `
 
-
-  const faturamento =
-    Number(
-      empresa.faturamento
-    ) || 0;
-
-
-  const clientes =
-    Number(
-      empresa.clientes
-    ) || 0;
-
-
-  const meta =
-    Number(
-      empresa.meta
-    ) || 0;
-
-
-  const progresso =
-    meta > 0
-      ? Math.round(
-          (faturamento / meta) * 100
-        )
-      : 0;
-
-
-  const report = `JZ PRIME COPILOT
+JZ PRIME COPILOT
 RESUMO EXECUTIVO
 
-Empresa:
-${nome}
+EMPRESA
+${empresa.empresa || "Não informado"}
 
-Responsável:
-${empresa.responsavel || "-"}
+RESPONSÁVEL
+${empresa.responsavel || "Não informado"}
 
-Segmento:
-${empresa.segmento || "-"}
+SEGMENTO
+${empresa.segmento || "Não informado"}
 
-Faturamento mensal:
-${formatarMoeda(faturamento)}
+--------------------------------
 
-Clientes ativos:
-${formatarNumero(clientes)}
+FATURAMENTO
+${moeda(dados.faturamento)}
 
-Meta mensal:
-${formatarMoeda(meta)}
+CLIENTES ATIVOS
+${inteiro(dados.clientes)}
 
-Progresso da meta:
-${progresso}%
+TICKET MÉDIO
+${moeda(dados.ticket)}
 
-Principal objetivo:
-${empresa.objetivo || "-"}
+DESPESAS
+${moeda(dados.despesas)}
 
-RECOMENDAÇÃO ESTRATÉGICA
+LUCRO ESTIMADO
+${moeda(dados.lucro)}
 
-Acompanhar a evolução do faturamento,
-proteger a margem, priorizar oportunidades
-comerciais e revisar os indicadores
-semanalmente.
+MARGEM
+${percentual(dados.margem)}
 
-JZ Prime Copilot
-Estratégia orientada por dados.
+META MENSAL
+${moeda(dados.meta)}
+
+PROGRESSO DA META
+${percentual(dados.progresso)}
+
+OBJETIVO
+${empresa.objetivo || "Não informado"}
+
+--------------------------------
+
+JZ PRIME COPILOT
+Controle, análise e estratégia.
+
 `;
 
 
-  const arquivo =
+  const blob =
     new Blob(
-      [report],
+      [texto],
       {
-        type:
-          "text/plain;charset=utf-8"
+        type: "text/plain;charset=utf-8"
       }
     );
 
 
   const url =
-    URL.createObjectURL(
-      arquivo
-    );
+    URL.createObjectURL(blob);
 
 
   const link =
-    document.createElement(
-      "a"
-    );
+    document.createElement("a");
 
-
-  link.href =
-    url;
-
+  link.href = url;
 
   link.download =
-    "jz-prime-resumo-executivo.txt";
-
-
-  document.body.appendChild(
-    link
-  );
-
+    "relatorio-jz-prime.txt";
 
   link.click();
 
 
-  link.remove();
-
-
-  setTimeout(
-    function() {
-
-      URL.revokeObjectURL(
-        url
-      );
-
-    },
-    1000
-  );
+  URL.revokeObjectURL(url);
 
 }
 
@@ -1418,35 +1417,7 @@ document.addEventListener(
 
     atualizarDashboard();
 
-    atualizarTextoPainel();
-
     criarGraficos();
 
   }
 );
-
-
-/* =========================================================
-   FUNÇÕES GLOBAIS
-========================================================= */
-
-window.notifyUser =
-  notifyUser;
-
-window.askCopilot =
-  askCopilot;
-
-window.sendCopilot =
-  sendCopilot;
-
-window.handleEnter =
-  handleEnter;
-
-window.downloadReport =
-  downloadReport;
-
-window.gerarRespostaLocal =
-  gerarRespostaLocal;
-
-window.limparHistoricoCopilot =
-  limparHistoricoCopilot;
