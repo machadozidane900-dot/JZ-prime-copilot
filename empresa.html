@@ -2,18 +2,12 @@
 <html lang="pt-BR">
 
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>JZ Prime Copilot — Cadastro da Empresa</title>
+  <title>JZ Prime Copilot — Empresa</title>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -25,25 +19,13 @@
     body {
       margin: 0;
       min-height: 100vh;
-
       background:
-        radial-gradient(
-          circle at top right,
-          #123d2b 0%,
-          #07130e 35%,
-          #040907 75%
-        );
-
+        radial-gradient(circle at 90% 0%, #123d2b 0%, transparent 32%),
+        radial-gradient(circle at 10% 40%, #0a2117 0%, transparent 30%),
+        #040907;
       color: #f5faf7;
-
-      font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     a {
@@ -51,43 +33,47 @@
       text-decoration: none;
     }
 
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    /* =========================
+       TOPO
+    ========================= */
+
     .topbar {
       width: 100%;
-      height: 78px;
-
+      min-height: 78px;
       padding: 0 6%;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       border-bottom: 1px solid #172a22;
-
-      background: rgba(4, 12, 8, .92);
-
+      background: rgba(4, 12, 8, .94);
       backdrop-filter: blur(18px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-
       font-weight: 800;
     }
 
     .brand-icon {
-      width: 38px;
-      height: 38px;
-
+      width: 40px;
+      height: 40px;
       display: grid;
       place-items: center;
-
       border: 1px solid #35d99b;
       border-radius: 10px;
-
       color: #35d99b;
-
       font-size: 13px;
       font-weight: 900;
     }
@@ -105,12 +91,18 @@
       font-size: 13px;
     }
 
+    .back:hover {
+      color: #fff;
+    }
+
+    /* =========================
+       CONTAINER
+    ========================= */
+
     .container {
-      width: min(1000px, calc(100% - 32px));
-
+      width: min(1050px, calc(100% - 32px));
       margin: 0 auto;
-
-      padding: 60px 0 80px;
+      padding: 55px 0 80px;
     }
 
     .intro {
@@ -120,30 +112,21 @@
 
     .badge {
       display: inline-flex;
-
-      padding: 7px 12px;
-
+      padding: 7px 13px;
       border: 1px solid #20533f;
       border-radius: 999px;
-
       background: #091c14;
-
       color: #42dca2;
-
       font-size: 10px;
       font-weight: 900;
-
       letter-spacing: 1.6px;
     }
 
     .intro h1 {
-      margin: 20px 0 14px;
-
-      font-size: clamp(36px, 6vw, 58px);
-
+      margin: 18px 0 12px;
+      font-size: clamp(34px, 6vw, 54px);
       line-height: 1;
-
-      letter-spacing: -3px;
+      letter-spacing: -2.5px;
     }
 
     .intro h1 span {
@@ -151,250 +134,231 @@
     }
 
     .intro p {
-      max-width: 680px;
-
+      max-width: 700px;
       margin: 0 auto;
-
       color: #8fa39a;
-
       font-size: 15px;
-
       line-height: 1.7;
     }
 
-    .card {
-      padding: 38px;
+    /* =========================
+       CARD
+    ========================= */
 
+    .card {
+      padding: 34px;
       border: 1px solid #1c372c;
       border-radius: 20px;
-
-      background:
-        linear-gradient(
-          145deg,
-          #0d1c15,
-          #08130e
-        );
-
-      box-shadow:
-        0 30px 90px rgba(0, 0, 0, .55);
+      background: linear-gradient(145deg, #0d1c15, #08130e);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, .5);
     }
 
-    .card-top {
-      margin-bottom: 30px;
+    .section {
+      padding: 28px 0;
+      border-bottom: 1px solid #183127;
     }
 
-    .card-top h2 {
-      margin: 0 0 8px;
-
-      font-size: 24px;
+    .section:first-child {
+      padding-top: 0;
     }
 
-    .card-top p {
-      margin: 0;
-
-      color: #8fa39a;
-
-      font-size: 14px;
-
-      line-height: 1.6;
+    .section:last-of-type {
+      border-bottom: 0;
     }
 
     .section-title {
-      margin: 32px 0 18px;
-
-      padding-bottom: 10px;
-
-      border-bottom: 1px solid #1a3027;
-
-      color: #35d99b;
-
-      font-size: 12px;
-      font-weight: 900;
-
-      letter-spacing: 1px;
-
-      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 22px;
     }
+
+    .section-icon {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: #0d3022;
+      border: 1px solid #20533f;
+      color: #35d99b;
+      font-size: 18px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .section-title p {
+      margin: 4px 0 0;
+      color: #71877d;
+      font-size: 12px;
+    }
+
+    /* =========================
+       GRID
+    ========================= */
 
     .grid {
       display: grid;
-
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-      gap: 20px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
     }
 
     .field {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
     }
 
     .field.full {
       grid-column: 1 / -1;
     }
 
-    .field label {
+    label {
       color: #dce8e3;
-
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
     }
 
-    .field small {
-      color: #60766c;
-      font-size: 11px;
-    }
-
-    .field input,
-    .field select {
+    input,
+    select,
+    textarea {
       width: 100%;
-      height: 50px;
-
-      padding: 0 15px;
-
       border: 1px solid #294439;
       border-radius: 10px;
-
       outline: none;
-
       background: #06100c;
-
       color: #f5faf7;
-
-      font: inherit;
-
       transition: .2s ease;
     }
 
-    .field input::placeholder {
+    input,
+    select {
+      height: 48px;
+      padding: 0 14px;
+    }
+
+    textarea {
+      min-height: 100px;
+      padding: 13px 14px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
       color: #60766c;
     }
 
-    .field input:hover,
-    .field select:hover {
+    input:hover,
+    select:hover,
+    textarea:hover {
       border-color: #3b5c4e;
     }
 
-    .field input:focus,
-    .field select:focus {
+    input:focus,
+    select:focus,
+    textarea:focus {
       border-color: #35d99b;
-
-      box-shadow:
-        0 0 0 3px rgba(53, 217, 155, .09);
-
+      box-shadow: 0 0 0 3px rgba(53, 217, 155, .09);
       background: #07150f;
     }
 
-    .field select {
+    select {
       cursor: pointer;
     }
 
+    /* =========================
+       INFO
+    ========================= */
+
     .info {
       display: flex;
-
       gap: 13px;
-
-      margin-top: 30px;
-
+      margin-top: 25px;
       padding: 15px;
-
       border: 1px solid #1b4735;
       border-radius: 12px;
-
       background: #0a1d15;
     }
 
     .info-icon {
       width: 30px;
       height: 30px;
-
       flex: 0 0 30px;
-
       display: grid;
       place-items: center;
-
       border-radius: 8px;
-
       background: #123d2c;
-
       color: #35d99b;
     }
 
     .info p {
       margin: 0;
-
       color: #8fa39a;
-
       font-size: 12px;
-
       line-height: 1.6;
     }
 
+    /* =========================
+       BOTÃO
+    ========================= */
+
     .button {
       width: 100%;
-
-      height: 54px;
-
+      height: 55px;
       margin-top: 25px;
-
       border: 0;
       border-radius: 11px;
-
       background: #35d99b;
-
       color: #04100b;
-
-      font: inherit;
-
       font-weight: 900;
-
       cursor: pointer;
-
       transition: .2s ease;
     }
 
     .button:hover {
       background: #4ae5ac;
-
       transform: translateY(-1px);
-
-      box-shadow:
-        0 12px 30px rgba(53, 217, 155, .16);
+      box-shadow: 0 12px 30px rgba(53, 217, 155, .16);
     }
 
     .button:disabled {
       opacity: .7;
       cursor: wait;
+      transform: none;
     }
 
     .note {
-      margin: 20px 0 0;
-
+      margin: 18px 0 0;
       text-align: center;
-
       color: #60756c;
-
       font-size: 11px;
-
       line-height: 1.6;
     }
 
-    @media (max-width: 650px) {
+    /* =========================
+       RESPONSIVO
+    ========================= */
 
+    @media (max-width: 700px) {
       .topbar {
-        height: 70px;
         padding: 0 18px;
+      }
+
+      .back {
+        font-size: 11px;
       }
 
       .container {
         width: calc(100% - 24px);
-        padding-top: 42px;
+        padding-top: 35px;
       }
 
       .card {
-        padding: 24px;
+        padding: 22px;
       }
 
       .grid {
@@ -405,988 +369,997 @@
         grid-column: auto;
       }
 
-      .intro h1 {
-        letter-spacing: -2px;
+      .section {
+        padding: 24px 0;
       }
-
     }
-
   </style>
-
 </head>
-
 
 <body>
 
+  <header class="topbar">
 
-<header class="topbar">
+    <a class="brand" href="index.html">
+      <div class="brand-icon">JZ</div>
 
-  <a class="brand" href="index.html">
+      <div class="brand-name">
+        JZ PRIME <span>Copilot</span>
+      </div>
+    </a>
 
-    <div class="brand-icon">
-      JZ
-    </div>
+    <a class="back" href="index.html">
+      ← Voltar para o site
+    </a>
 
-    <div class="brand-name">
-      JZ PRIME <span>Copilot</span>
-    </div>
+  </header>
 
-  </a>
+  <main class="container">
 
-  <a class="back" href="index.html">
-    ← Voltar para o site
-  </a>
+    <section class="intro">
 
-</header>
+      <div class="badge">
+        ✦ PERFIL ESTRATÉGICO
+      </div>
 
-
-<main class="container">
-
-
-  <section class="intro">
-
-    <div class="badge">
-      ✦ CONFIGURAÇÃO INICIAL
-    </div>
-
-    <h1>
-      Vamos conhecer sua <span>empresa.</span>
-    </h1>
-
-    <p>
-      Quanto mais informações você fornecer,
-      mais inteligente será a análise do
-      JZ Prime Copilot.
-    </p>
-
-  </section>
-
-
-  <section class="card">
-
-
-    <div class="card-top">
-
-      <h2>
-        Dados da empresa
-      </h2>
+      <h1>
+        Conheça sua <span>empresa.</span>
+      </h1>
 
       <p>
-        Essas informações serão usadas para
-        personalizar seus indicadores,
-        metas e recomendações.
+        Quanto mais informações você cadastrar, mais completo será
+        o diagnóstico do JZ Prime Copilot sobre sua operação.
       </p>
 
-    </div>
+    </section>
 
+    <section class="card">
 
-    <form id="empresaForm">
+      <form id="empresaForm">
 
+        <!-- =========================
+             1. IDENTIFICAÇÃO
+        ========================== -->
 
-      <div class="section-title">
-        Informações básicas
-      </div>
+        <section class="section">
 
+          <div class="section-title">
 
-      <div class="grid">
+            <div class="section-icon">🏢</div>
 
+            <div>
+              <h2>Identificação da empresa</h2>
+              <p>Informações básicas do negócio.</p>
+            </div>
 
-        <div class="field full">
+          </div>
 
-          <label for="empresa">
-            Nome da empresa
-          </label>
+          <div class="grid">
 
-          <input
-            id="empresa"
-            name="empresa"
-            type="text"
-            placeholder="Ex.: JZ Prime"
-            autocomplete="organization"
-            required
-          >
+            <div class="field full">
+              <label for="empresa">Nome da empresa *</label>
+              <input
+                id="empresa"
+                name="empresa"
+                type="text"
+                placeholder="Ex.: JZ Comércio e Serviços"
+                required
+              >
+            </div>
+
+            <div class="field">
+              <label for="nomeFantasia">Nome fantasia</label>
+              <input
+                id="nomeFantasia"
+                name="nomeFantasia"
+                type="text"
+                placeholder="Nome comercial"
+              >
+            </div>
+
+            <div class="field">
+              <label for="cnpj">CNPJ</label>
+              <input
+                id="cnpj"
+                name="cnpj"
+                type="text"
+                placeholder="00.000.000/0001-00"
+              >
+            </div>
+
+            <div class="field">
+              <label for="responsavel">Responsável *</label>
+              <input
+                id="responsavel"
+                name="responsavel"
+                type="text"
+                placeholder="Nome do responsável"
+                required
+              >
+            </div>
+
+            <div class="field">
+              <label for="cargo">Cargo do responsável</label>
+              <input
+                id="cargo"
+                name="cargo"
+                type="text"
+                placeholder="Ex.: Diretor / Sócio"
+              >
+            </div>
+
+            <div class="field">
+              <label for="segmento">Segmento *</label>
+              <select id="segmento" name="segmento" required>
+                <option value="">Selecione</option>
+                <option>Comércio</option>
+                <option>Serviços</option>
+                <option>Indústria</option>
+                <option>Tecnologia</option>
+                <option>Construção</option>
+                <option>Saúde</option>
+                <option>Educação</option>
+                <option>Alimentação</option>
+                <option>Agronegócio</option>
+                <option>Transportes</option>
+                <option>Consultoria</option>
+                <option>Outro</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="subsegmento">Subsegmento</label>
+              <input
+                id="subsegmento"
+                name="subsegmento"
+                type="text"
+                placeholder="Ex.: Contabilidade"
+              >
+            </div>
+
+            <div class="field">
+              <label for="fundacao">Ano de fundação</label>
+              <input
+                id="fundacao"
+                name="fundacao"
+                type="number"
+                min="1800"
+                max="2100"
+                placeholder="Ex.: 2020"
+              >
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- =========================
+             2. CONTATO
+        ========================== -->
+
+        <section class="section">
+
+          <div class="section-title">
+
+            <div class="section-icon">📍</div>
+
+            <div>
+              <h2>Localização e contato</h2>
+              <p>Onde a empresa está e como ela atende seus clientes.</p>
+            </div>
+
+          </div>
+
+          <div class="grid">
+
+            <div class="field">
+              <label for="cep">CEP</label>
+              <input
+                id="cep"
+                name="cep"
+                type="text"
+                placeholder="00000-000"
+              >
+            </div>
+
+            <div class="field">
+              <label for="cidade">Cidade</label>
+              <input
+                id="cidade"
+                name="cidade"
+                type="text"
+                placeholder="Ex.: Porto Alegre"
+              >
+            </div>
+
+            <div class="field">
+              <label for="estado">Estado</label>
+              <select id="estado" name="estado">
+                <option value="">Selecione</option>
+                <option>AC</option>
+                <option>AL</option>
+                <option>AP</option>
+                <option>AM</option>
+                <option>BA</option>
+                <option>CE</option>
+                <option>DF</option>
+                <option>ES</option>
+                <option>GO</option>
+                <option>MA</option>
+                <option>MG</option>
+                <option>MS</option>
+                <option>MT</option>
+                <option>PA</option>
+                <option>PB</option>
+                <option>PR</option>
+                <option>PE</option>
+                <option>PI</option>
+                <option>RJ</option>
+                <option>RN</option>
+                <option>RO</option>
+                <option>RR</option>
+                <option>RS</option>
+                <option>SC</option>
+                <option>SE</option>
+                <option>SP</option>
+                <option>TO</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="endereco">Endereço</label>
+              <input
+                id="endereco"
+                name="endereco"
+                type="text"
+                placeholder="Rua / Avenida"
+              >
+            </div>
+
+            <div class="field">
+              <label for="numero">Número</label>
+              <input
+                id="numero"
+                name="numero"
+                type="text"
+                placeholder="Ex.: 150"
+              >
+            </div>
+
+            <div class="field">
+              <label for="telefone">Telefone / WhatsApp</label>
+              <input
+                id="telefone"
+                name="telefone"
+                type="tel"
+                placeholder="(00) 00000-0000"
+              >
+            </div>
+
+            <div class="field">
+              <label for="email">E-mail empresarial</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="contato@empresa.com"
+              >
+            </div>
+
+            <div class="field">
+              <label for="site">Site / Instagram</label>
+              <input
+                id="site"
+                name="site"
+                type="text"
+                placeholder="www.empresa.com.br"
+              >
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- =========================
+             3. ESTRUTURA
+        ========================== -->
+
+        <section class="section">
+
+          <div class="section-title">
+
+            <div class="section-icon">👥</div>
+
+            <div>
+              <h2>Estrutura do negócio</h2>
+              <p>Ajude o Copilot a entender o tamanho da operação.</p>
+            </div>
+
+          </div>
+
+          <div class="grid">
+
+            <div class="field">
+              <label for="funcionarios">Número de funcionários</label>
+              <input
+                id="funcionarios"
+                name="funcionarios"
+                type="number"
+                min="0"
+                placeholder="Ex.: 15"
+              >
+            </div>
+
+            <div class="field">
+              <label for="unidades">Número de unidades</label>
+              <input
+                id="unidades"
+                name="unidades"
+                type="number"
+                min="1"
+                placeholder="Ex.: 1"
+              >
+            </div>
+
+            <div class="field">
+              <label for="modeloNegocio">Modelo de negócio</label>
+              <select id="modeloNegocio" name="modeloNegocio">
+                <option value="">Selecione</option>
+                <option>B2B</option>
+                <option>B2C</option>
+                <option>B2B e B2C</option>
+                <option>Marketplace</option>
+                <option>Assinatura</option>
+                <option>Prestação de serviços</option>
+                <option>Outro</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="regiao">Região de atuação</label>
+              <select id="regiao" name="regiao">
+                <option value="">Selecione</option>
+                <option>Local</option>
+                <option>Regional</option>
+                <option>Nacional</option>
+                <option>Internacional</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label for="publicoAlvo">Público-alvo</label>
+              <textarea
+                id="publicoAlvo"
+                name="publicoAlvo"
+                placeholder="Descreva quem são seus principais clientes."
+              ></textarea>
+            </div>
+
+            <div class="field full">
+              <label for="produtos">Principais produtos ou serviços</label>
+              <textarea
+                id="produtos"
+                name="produtos"
+                placeholder="Ex.: consultoria, produtos físicos, serviços recorrentes..."
+              ></textarea>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- =========================
+             4. FINANCEIRO
+        ========================== -->
+
+        <section class="section">
+
+          <div class="section-title">
+
+            <div class="section-icon">💰</div>
+
+            <div>
+              <h2>Financeiro</h2>
+              <p>Indicadores financeiros usados nas análises.</p>
+            </div>
+
+          </div>
+
+          <div class="grid">
+
+            <div class="field">
+              <label for="faturamento">Faturamento mensal *</label>
+              <input
+                id="faturamento"
+                name="faturamento"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Ex.: 50000"
+                required
+              >
+            </div>
+
+            <div class="field">
+              <label for="faturamentoAnual">Faturamento anual</label>
+              <input
+                id="faturamentoAnual"
+                name="faturamentoAnual"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Ex.: 600000"
+              >
+            </div>
+
+            <div class="field">
+              <label for="custosFixos">Custos fixos mensais</label>
+              <input
+                id="custosFixos"
+                name="custosFixos"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Ex.: 10000"
+              >
+            </div>
+
+            <div class="field">
+              <label for="custosVariaveis">Custos variáveis mensais</label>
+              <input
+                id="custosVariaveis"
+                name="custosVariaveis"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Ex.: 15000"
+              >
+            </div>
+
+            <div class="field">
+              <label for="despesas">Despesas mensais</label>
+              <input
+                id="despesas"
+                name="despesas"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Ex.: 5000"
+              >
+            </div>
+
+            <div class="field">
+              <label for="lucro">Lucro médio mensal</label>
+              <input
+                id="lucro"
+                name="lucro"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Ex.: 20000"
+              >
+            </div>
+
+            <div class="field">
+              <label for="margem">Margem de lucro (%)</label>
+              <input
+                id="margem"
+                name="margem"
+                type="number"
+                min="0"
+                max="100"
+                step="0.01"
+                placeholder="Ex.: 25"
+              >
+            </div>
+
+            <div class="field">
+              <label for="ticketMedio">Ticket médio</label>
+              <input
+                id="ticketMedio"
+                name="ticketMedio"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Ex.: 2173"
+              >
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- =========================
+             5. COMERCIAL
+        ========================== -->
+
+        <section class="section">
+
+          <div class="section-title">
+
+            <div class="section-icon">📈</div>
+
+            <div>
+              <h2>Comercial e vendas</h2>
+              <p>Dados para o Copilot analisar sua operação comercial.</p>
+            </div>
+
+          </div>
+
+          <div class="grid">
+
+            <div class="field">
+              <label for="clientes">Clientes ativos *</label>
+              <input
+                id="clientes"
+                name="clientes"
+                type="number"
+                min="0"
+                placeholder="Ex.: 120"
+                required
+              >
+            </div>
+
+            <div class="field">
+              <label for="novosClientes">Novos clientes por mês</label>
+              <input
+                id="novosClientes"
+                name="novosClientes"
+                type="number"
+                min="0"
+                placeholder="Ex.: 10"
+              >
+            </div>
+
+            <div class="field">
+              <label for="vendasMes">Vendas por mês</label>
+              <input
+                id="vendasMes"
+                name="vendasMes"
+                type="number"
+                min="0"
+                placeholder="Ex.: 25"
+              >
+            </div>
+
+            <div class="field">
+              <label for="conversao">Taxa de conversão (%)</label>
+              <input
+                id="conversao"
+                name="conversao"
+                type="number"
+                min="0"
+                max="100"
+                step="0.01"
+                placeholder="Ex.: 20"
+              >
+            </div>
+
+            <div class="field">
+              <label for="meta">Meta mensal *</label>
+              <input
+                id="meta"
+                name="meta"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Ex.: 70000"
+                required
+              >
+            </div>
+
+            <div class="field">
+              <label for="metaAnual">Meta anual</label>
+              <input
+                id="metaAnual"
+                name="metaAnual"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Ex.: 840000"
+              >
+            </div>
+
+            <div class="field full">
+              <label for="canalVendas">Principal canal de vendas</label>
+              <select id="canalVendas" name="canalVendas">
+                <option value="">Selecione</option>
+                <option>WhatsApp</option>
+                <option>Instagram</option>
+                <option>Site</option>
+                <option>Loja física</option>
+                <option>Equipe comercial</option>
+                <option>Indicação</option>
+                <option>Marketplace</option>
+                <option>Outros</option>
+              </select>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- =========================
+             6. OBJETIVOS
+        ========================== -->
+
+        <section class="section">
+
+          <div class="section-title">
+
+            <div class="section-icon">🎯</div>
+
+            <div>
+              <h2>Objetivos e desafios</h2>
+              <p>Defina onde a empresa quer chegar.</p>
+            </div>
+
+          </div>
+
+          <div class="grid">
+
+            <div class="field">
+              <label for="objetivo">Principal objetivo *</label>
+              <select id="objetivo" name="objetivo" required>
+                <option value="">Selecione</option>
+                <option>Aumentar vendas</option>
+                <option>Reduzir custos</option>
+                <option>Aumentar lucro</option>
+                <option>Organizar a empresa</option>
+                <option>Conquistar mais clientes</option>
+                <option>Melhorar a gestão financeira</option>
+                <option>Planejar crescimento</option>
+                <option>Expandir a empresa</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="crescimento">Crescimento desejado (%)</label>
+              <input
+                id="crescimento"
+                name="crescimento"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Ex.: 30"
+              >
+            </div>
+
+            <div class="field">
+              <label for="prazoMeta">Prazo para atingir o objetivo</label>
+              <select id="prazoMeta" name="prazoMeta">
+                <option value="">Selecione</option>
+                <option>30 dias</option>
+                <option>60 dias</option>
+                <option>90 dias</option>
+                <option>6 meses</option>
+                <option>12 meses</option>
+                <option>Mais de 12 meses</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="prioridade">Prioridade atual</label>
+              <select id="prioridade" name="prioridade">
+                <option value="">Selecione</option>
+                <option>Vendas</option>
+                <option>Lucro</option>
+                <option>Clientes</option>
+                <option>Custos</option>
+                <option>Organização</option>
+                <option>Expansão</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label for="desafios">Principais desafios da empresa</label>
+              <textarea
+                id="desafios"
+                name="desafios"
+                placeholder="Ex.: poucas vendas, custos altos, dificuldade para captar clientes..."
+              ></textarea>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- =========================
+             7. COPILOT
+        ========================== -->
+
+        <section class="section">
+
+          <div class="section-title">
+
+            <div class="section-icon">🤖</div>
+
+            <div>
+              <h2>Informações estratégicas para o Copilot</h2>
+              <p>Essas informações ajudam o Copilot a entender seu negócio.</p>
+            </div>
+
+          </div>
+
+          <div class="grid">
+
+            <div class="field full">
+              <label for="diferencial">
+                Principal diferencial da empresa
+              </label>
+
+              <textarea
+                id="diferencial"
+                name="diferencial"
+                placeholder="O que diferencia sua empresa dos concorrentes?"
+              ></textarea>
+            </div>
+
+            <div class="field full">
+              <label for="concorrentes">
+                Principais concorrentes
+              </label>
+
+              <textarea
+                id="concorrentes"
+                name="concorrentes"
+                placeholder="Informe concorrentes ou empresas que disputam o mesmo mercado."
+              ></textarea>
+            </div>
+
+            <div class="field full">
+              <label for="estrategia">
+                Estratégia atual da empresa
+              </label>
+
+              <textarea
+                id="estrategia"
+                name="estrategia"
+                placeholder="Descreva como a empresa atualmente busca clientes, vende e cresce."
+              ></textarea>
+            </div>
+
+          </div>
+
+        </section>
+
+        <div class="info">
+
+          <div class="info-icon">✦</div>
+
+          <p>
+            Os dados serão salvos neste dispositivo e utilizados para
+            personalizar o Dashboard e as análises estratégicas do
+            JZ Prime Copilot.
+          </p>
 
         </div>
 
-
-        <div class="field">
-
-          <label for="responsavel">
-            Responsável
-          </label>
-
-          <input
-            id="responsavel"
-            name="responsavel"
-            type="text"
-            placeholder="Nome do responsável"
-            autocomplete="name"
-            required
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="segmento">
-            Segmento
-          </label>
-
-          <select
-            id="segmento"
-            name="segmento"
-            required
-          >
-
-            <option value="">
-              Selecione
-            </option>
-
-            <option value="Comércio">
-              Comércio
-            </option>
-
-            <option value="Serviços">
-              Serviços
-            </option>
-
-            <option value="Indústria">
-              Indústria
-            </option>
-
-            <option value="Tecnologia">
-              Tecnologia
-            </option>
-
-            <option value="Construção">
-              Construção
-            </option>
-
-            <option value="Saúde">
-              Saúde
-            </option>
-
-            <option value="Educação">
-              Educação
-            </option>
-
-            <option value="Alimentação">
-              Alimentação
-            </option>
-
-            <option value="Outro">
-              Outro
-            </option>
-
-          </select>
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="cnpj">
-            CNPJ
-          </label>
-
-          <input
-            id="cnpj"
-            name="cnpj"
-            type="text"
-            placeholder="00.000.000/0000-00"
-            inputmode="numeric"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="telefone">
-            WhatsApp / Telefone
-          </label>
-
-          <input
-            id="telefone"
-            name="telefone"
-            type="tel"
-            placeholder="(51) 99999-9999"
-            autocomplete="tel"
-          >
-
-        </div>
-
-
-        <div class="field full">
-
-          <label for="email">
-            E-mail empresarial
-          </label>
-
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="contato@empresa.com"
-            autocomplete="email"
-          >
-
-        </div>
-
-      </div>
-
-
-      <div class="section-title">
-        Indicadores financeiros
-      </div>
-
-
-      <div class="grid">
-
-
-        <div class="field">
-
-          <label for="faturamento">
-            Faturamento mensal
-          </label>
-
-          <input
-            id="faturamento"
-            name="faturamento"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="Ex.: 50000"
-            required
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="despesas">
-            Despesas mensais
-          </label>
-
-          <input
-            id="despesas"
-            name="despesas"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="Ex.: 25000"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="clientes">
-            Clientes ativos
-          </label>
-
-          <input
-            id="clientes"
-            name="clientes"
-            type="number"
-            min="0"
-            placeholder="Ex.: 25"
-            required
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="ticket">
-            Ticket médio
-          </label>
-
-          <input
-            id="ticket"
-            name="ticket"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="Ex.: 2173.91"
-          >
-
-          <small>
-            Se deixar vazio, será calculado automaticamente.
-          </small>
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="meta">
-            Meta mensal
-          </label>
-
-          <input
-            id="meta"
-            name="meta"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="Ex.: 70000"
-            required
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="metaAnual">
-            Meta anual
-          </label>
-
-          <input
-            id="metaAnual"
-            name="metaAnual"
-            type="number"
-            min="0"
-            step="0.01"
-            placeholder="Ex.: 840000"
-          >
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="funcionarios">
-            Funcionários
-          </label>
-
-          <input
-            id="funcionarios"
-            name="funcionarios"
-            type="number"
-            min="0"
-            placeholder="Ex.: 5"
-          >
-
-        </div>
-
-      </div>
-
-
-      <div class="section-title">
-        Estratégia
-      </div>
-
-
-      <div class="grid">
-
-        <div class="field full">
-
-          <label for="objetivo">
-            Principal objetivo
-          </label>
-
-          <select
-            id="objetivo"
-            name="objetivo"
-            required
-          >
-
-            <option value="">
-              Selecione
-            </option>
-
-            <option value="Aumentar vendas">
-              Aumentar vendas
-            </option>
-
-            <option value="Reduzir custos">
-              Reduzir custos
-            </option>
-
-            <option value="Aumentar lucro">
-              Aumentar lucro
-            </option>
-
-            <option value="Organizar a empresa">
-              Organizar a empresa
-            </option>
-
-            <option value="Conquistar mais clientes">
-              Conquistar mais clientes
-            </option>
-
-            <option value="Melhorar a gestão financeira">
-              Melhorar a gestão financeira
-            </option>
-
-            <option value="Planejar crescimento">
-              Planejar crescimento
-            </option>
-
-          </select>
-
-        </div>
-
-      </div>
-
-
-      <div class="info">
-
-        <div class="info-icon">
-          ✦
-        </div>
-
-        <p>
-          O Copilot utilizará esses dados para
-          calcular ticket médio, lucro estimado,
-          margem, crescimento, distância da meta
-          e oportunidades comerciais.
-        </p>
-
-      </div>
-
-
-      <button
-        class="button"
-        type="submit"
-        id="submitButton"
-      >
-        Salvar empresa e continuar →
-      </button>
-
-
-    </form>
-
-
-    <p class="note">
-      Seus dados ficam salvos neste dispositivo
-      para personalizar sua experiência no
-      JZ Prime Copilot.
-    </p>
-
-
-  </section>
-
-
-</main>
-
-
-<script>
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-
-
-    const form =
-      document.getElementById(
-        "empresaForm"
-      );
-
-
-    const button =
-      document.getElementById(
-        "submitButton"
-      );
-
-
-    if (!form) {
-
-      console.error(
-        "ERRO: empresaForm não encontrado."
-      );
-
-      return;
-
-    }
-
-
-    /* =====================================================
-       CARREGAR DADOS EXISTENTES
-    ===================================================== */
-
-    try {
-
-      const dadosSalvos =
-        localStorage.getItem(
-          "empresa"
-        );
-
-
-      if (dadosSalvos) {
-
-        const dados =
-          JSON.parse(
-            dadosSalvos
-          );
-
-
-        const campos = [
-
-          "empresa",
-          "responsavel",
-          "segmento",
-          "cnpj",
-          "telefone",
-          "email",
-          "faturamento",
-          "despesas",
-          "clientes",
-          "ticket",
-          "meta",
-          "metaAnual",
-          "funcionarios",
-          "objetivo"
-
-        ];
-
-
-        campos.forEach(
-          function (campo) {
-
-            const elemento =
-              document.getElementById(
-                campo
-              );
-
-
-            if (
-              elemento &&
-              dados[campo] !== undefined
-            ) {
-
-              elemento.value =
-                dados[campo];
-
-            }
-
-          }
-        );
-
-      }
-
-    } catch (erro) {
-
-      console.error(
-        "Erro ao carregar dados:",
-        erro
-      );
-
-    }
-
-
-    /* =====================================================
-       SALVAR FORMULÁRIO
-    ===================================================== */
-
-    form.addEventListener(
-      "submit",
-      function (event) {
+        <button
+          class="button"
+          type="submit"
+          id="submitButton"
+        >
+          Salvar empresa e continuar →
+        </button>
+
+      </form>
+
+      <p class="note">
+        Você poderá alterar essas informações posteriormente.
+      </p>
+
+    </section>
+
+  </main>
+
+  <script>
+    document
+      .getElementById("empresaForm")
+      .addEventListener("submit", function(event) {
 
         event.preventDefault();
 
+        const campos = [
+          "empresa",
+          "nomeFantasia",
+          "cnpj",
+          "responsavel",
+          "cargo",
+          "segmento",
+          "subsegmento",
+          "fundacao",
+          "cep",
+          "cidade",
+          "estado",
+          "endereco",
+          "numero",
+          "telefone",
+          "email",
+          "site",
+          "funcionarios",
+          "unidades",
+          "modeloNegocio",
+          "regiao",
+          "publicoAlvo",
+          "produtos",
+          "faturamento",
+          "faturamentoAnual",
+          "custosFixos",
+          "custosVariaveis",
+          "despesas",
+          "lucro",
+          "margem",
+          "ticketMedio",
+          "clientes",
+          "novosClientes",
+          "vendasMes",
+          "conversao",
+          "meta",
+          "metaAnual",
+          "canalVendas",
+          "objetivo",
+          "crescimento",
+          "prazoMeta",
+          "prioridade",
+          "desafios",
+          "diferencial",
+          "concorrentes",
+          "estrategia"
+        ];
 
-        try {
+        const dados = {};
 
+        campos.forEach(function(campo) {
 
-          const nomeEmpresa =
-            document
-              .getElementById("empresa")
-              .value
-              .trim();
+          const elemento = document.getElementById(campo);
 
+          if (!elemento) return;
 
-          const responsavel =
-            document
-              .getElementById("responsavel")
-              .value
-              .trim();
+          if (elemento.type === "number") {
+            dados[campo] = Number(elemento.value || 0);
+          } else {
+            dados[campo] = elemento.value.trim();
+          }
 
+        });
 
-          const segmento =
-            document
-              .getElementById("segmento")
-              .value;
+        if (
+          !dados.empresa ||
+          !dados.responsavel ||
+          !dados.segmento ||
+          !dados.objetivo
+        ) {
 
+          alert("Preencha os campos obrigatórios.");
+          return;
+        }
 
-          const cnpj =
-            document
-              .getElementById("cnpj")
-              .value
-              .trim();
+        if (
+          dados.faturamento < 0 ||
+          dados.clientes < 0 ||
+          dados.meta < 0
+        ) {
 
+          alert("Os valores financeiros não podem ser negativos.");
+          return;
+        }
 
-          const telefone =
-            document
-              .getElementById("telefone")
-              .value
-              .trim();
+        /*
+          Calcula automaticamente o ticket médio
+          caso o usuário não tenha informado.
+        */
 
+        if (
+          !dados.ticketMedio &&
+          dados.clientes > 0 &&
+          dados.faturamento > 0
+        ) {
 
-          const email =
-            document
-              .getElementById("email")
-              .value
-              .trim();
-
-
-          const faturamento =
+          dados.ticketMedio =
             Number(
-              document
-                .getElementById("faturamento")
-                .value
-            ) || 0;
-
-
-          const despesas =
-            Number(
-              document
-                .getElementById("despesas")
-                .value
-            ) || 0;
-
-
-          const clientes =
-            Number(
-              document
-                .getElementById("clientes")
-                .value
-            ) || 0;
-
-
-          let ticket =
-            Number(
-              document
-                .getElementById("ticket")
-                .value
-            ) || 0;
-
-
-          const meta =
-            Number(
-              document
-                .getElementById("meta")
-                .value
-            ) || 0;
-
-
-          let metaAnual =
-            Number(
-              document
-                .getElementById("metaAnual")
-                .value
-            ) || 0;
-
-
-          const funcionarios =
-            Number(
-              document
-                .getElementById("funcionarios")
-                .value
-            ) || 0;
-
-
-          const objetivo =
-            document
-              .getElementById("objetivo")
-              .value;
-
-
-          /* =================================================
-             VALIDAÇÃO
-          ================================================= */
-
-          if (!nomeEmpresa) {
-
-            alert(
-              "Digite o nome da empresa."
+              (dados.faturamento / dados.clientes).toFixed(2)
             );
-
-            return;
-
-          }
-
-
-          if (!responsavel) {
-
-            alert(
-              "Digite o nome do responsável."
-            );
-
-            return;
-
-          }
-
-
-          if (!segmento) {
-
-            alert(
-              "Selecione o segmento."
-            );
-
-            return;
-
-          }
-
-
-          if (faturamento <= 0) {
-
-            alert(
-              "Digite o faturamento mensal."
-            );
-
-            return;
-
-          }
-
-
-          if (clientes < 0) {
-
-            alert(
-              "Digite um número válido de clientes."
-            );
-
-            return;
-
-          }
-
-
-          if (meta <= 0) {
-
-            alert(
-              "Digite uma meta mensal maior que zero."
-            );
-
-            return;
-
-          }
-
-
-          if (!objetivo) {
-
-            alert(
-              "Selecione o principal objetivo."
-            );
-
-            return;
-
-          }
-
-
-          /* =================================================
-             CÁLCULOS
-          ================================================= */
-
-          if (
-            ticket <= 0 &&
-            clientes > 0
-          ) {
-
-            ticket =
-              faturamento /
-              clientes;
-
-          }
-
-
-          if (
-            metaAnual <= 0
-          ) {
-
-            metaAnual =
-              meta * 12;
-
-          }
-
-
-          const lucro =
-            faturamento -
-            despesas;
-
-
-          const margem =
-            faturamento > 0
-              ? (
-                  lucro /
-                  faturamento
-                ) * 100
-              : 0;
-
-
-          const progresso =
-            meta > 0
-              ? (
-                  faturamento /
-                  meta
-                ) * 100
-              : 0;
-
-
-          /* =================================================
-             OBJETO
-          ================================================= */
-
-          const dadosEmpresa = {
-
-            empresa:
-              nomeEmpresa,
-
-            responsavel:
-              responsavel,
-
-            segmento:
-              segmento,
-
-            cnpj:
-              cnpj,
-
-            telefone:
-              telefone,
-
-            email:
-              email,
-
-            faturamento:
-              faturamento,
-
-            despesas:
-              despesas,
-
-            clientes:
-              clientes,
-
-            ticket:
-              ticket,
-
-            meta:
-              meta,
-
-            metaAnual:
-              metaAnual,
-
-            funcionarios:
-              funcionarios,
-
-            objetivo:
-              objetivo,
-
-            lucro:
-              lucro,
-
-            margem:
-              margem,
-
-            progresso:
-              progresso,
-
-            atualizadoEm:
-              new Date().toISOString()
-
-          };
-
-
-          /* =================================================
-             SALVAR
-          ================================================= */
-
-          localStorage.setItem(
-            "empresa",
-            JSON.stringify(
-              dadosEmpresa
-            )
-          );
-
-
-          localStorage.setItem(
-            "empresaConfigurada",
-            "true"
-          );
-
-
-          /* =================================================
-             VERIFICAR
-          ================================================= */
-
-          const teste =
-            localStorage.getItem(
-              "empresa"
-            );
-
-
-          if (!teste) {
-
-            alert(
-              "ERRO: os dados não foram salvos."
-            );
-
-            return;
-
-          }
-
-
-          console.log(
-            "JZ PRIME — DADOS SALVOS:",
-            JSON.parse(teste)
-          );
-
-
-          /* =================================================
-             BOTÃO
-          ================================================= */
-
-          button.disabled =
-            true;
-
-
-          button.textContent =
-            "✓ Dados salvos! Abrindo Dashboard...";
-
-
-          /* =================================================
-             REDIRECIONAR
-          ================================================= */
-
-          setTimeout(
-            function () {
-
-              window.location.href =
-                "dashboard.html";
-
-            },
-            700
-          );
-
-
-        } catch (erro) {
-
-          console.error(
-            "ERRO AO SALVAR:",
-            erro
-          );
-
-
-          alert(
-            "Erro ao salvar os dados. Verifique o console do navegador."
-          );
 
         }
 
+        /*
+          Calcula automaticamente o faturamento anual
+          quando não foi informado.
+        */
+
+        if (
+          !dados.faturamentoAnual &&
+          dados.faturamento > 0
+        ) {
+
+          dados.faturamentoAnual =
+            Number(
+              (dados.faturamento * 12).toFixed(2)
+            );
+
+        }
+
+        /*
+          Calcula automaticamente a meta anual.
+        */
+
+        if (
+          !dados.metaAnual &&
+          dados.meta > 0
+        ) {
+
+          dados.metaAnual =
+            Number(
+              (dados.meta * 12).toFixed(2)
+            );
+
+        }
+
+        /*
+          Salva os dados.
+        */
+
+        localStorage.setItem(
+          "empresa",
+          JSON.stringify(dados)
+        );
+
+        const button =
+          document.getElementById("submitButton");
+
+        button.textContent =
+          "Empresa salva! Abrindo Dashboard...";
+
+        button.disabled = true;
+
+        setTimeout(function() {
+
+          window.location.href = "dashboard.html";
+
+        }, 500);
+
+      });
+
+    /*
+      Carrega dados existentes para edição.
+    */
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+      const salvo =
+        localStorage.getItem("empresa");
+
+      if (!salvo) return;
+
+      try {
+
+        const dados =
+          JSON.parse(salvo);
+
+        Object.keys(dados).forEach(function(campo) {
+
+          const elemento =
+            document.getElementById(campo);
+
+          if (!elemento) return;
+
+          elemento.value =
+            dados[campo] ?? "";
+
+        });
+
+      } catch (erro) {
+
+        console.warn(
+          "Não foi possível carregar os dados salvos.",
+          erro
+        );
+
       }
-    );
 
-
-  }
-);
-
-</script>
-
+    });
+  </script>
 
 </body>
-
 </html>
